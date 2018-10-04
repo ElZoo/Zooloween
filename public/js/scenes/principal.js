@@ -2,7 +2,6 @@ var scenePrincipal = new Phaser.Scene('principal');
 
 scenePrincipal.init = function() {
   this.size_mundo = 16;
-  this.tiles_mundo = [];
   this.generarMundo();
 }
 
@@ -16,56 +15,73 @@ scenePrincipal.update = function(time, delta) {
 }
 
 scenePrincipal.generarMundo = function() {
-  for(var x=0; x<this.size_mundo; x++) {
-    this.tiles_mundo[x] = [];
-    for(var y=0; y<this.size_mundo; y++) {
-      this.tiles_mundo[x][y] = "aire";
-
-      if(x > 1 && x < 14) {
-        if(y == 1) {
-          var rnd = Math.random() > 0.5 ? 0 : 1;
-          this.tiles_mundo[x][y] = "suelo_arriba_"+rnd;
-        } else if(y == 14) {
-          var rnd = Math.random() > 0.5 ? 0 : 1;
-          this.tiles_mundo[x][y] = "suelo_abajo_"+rnd;
-        } else if(y == 15) {
-          var rnd = Math.random() > 0.5 ? 0 : 1;
-          this.tiles_mundo[x][y] = "suelo_borde_"+rnd;
-        } else if(y > 1 && y < 14) {
-          var rnd = Math.random() > 0.5 ? 0 : 1;
-          this.tiles_mundo[x][y] = "suelo_medio_"+rnd;
-        }
-      } else if(x == 1) {
-        if(y == 1) {
-          this.tiles_mundo[x][y] = "suelo_arriba_izq";
-        } else if(y == 14) {
-          this.tiles_mundo[x][y] = "suelo_abajo_izq";
-        } else if(y == 15) {
-          this.tiles_mundo[x][y] = "suelo_borde_izq";
-        } else if(y > 1 && y < 14) {
-          this.tiles_mundo[x][y] = "suelo_medio_izq";
-        }
-      } else if(x == 14) {
-        if(y == 1) {
-          this.tiles_mundo[x][y] = "suelo_arriba_drc";
-        } else if(y == 14) {
-          this.tiles_mundo[x][y] = "suelo_abajo_drc";
-        } else if(y == 15) {
-          this.tiles_mundo[x][y] = "suelo_borde_drc";
-        } else if(y > 1 && y < 14) {
-          this.tiles_mundo[x][y] = "suelo_medio_drc";
-        }
-      }
-    }
-  }
+  this.tiles_mundo = [
+    [0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0],
+    [0,  1,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  3,  0],
+    [0,  4,  5,  5,  5,  5,  5,  5,  5,  5,  5,  5,  5,  5,  6,  0],
+    [0,  4,  5,  5,  5,  5,  5,  5,  5,  5,  5,  5,  5,  5,  6,  0],
+    [0,  4,  5,  5,  5,  5,  5,  5,  5,  5,  5,  5,  5,  5,  6,  0],
+    [0,  4,  5,  5,  5,  5,  5,  5,  5,  5,  5,  5,  5,  5,  6,  0],
+    [0,  4,  5,  5,  5,  5,  5,  5,  5,  5,  5,  5,  5,  5,  6,  0],
+    [0,  4,  5,  5,  5,  5,  5,  5,  5,  5,  5,  5,  5,  5,  6,  0],
+    [0,  4,  5,  5,  5,  5,  5,  5,  5,  5,  5,  5,  5,  5,  6,  0],
+    [0,  4,  5,  5,  5,  5,  5,  5,  5,  5,  5,  5,  5,  5,  6,  0],
+    [0,  4,  5,  5,  5,  5,  5,  5,  5,  5,  5,  5,  5,  5,  6,  0],
+    [0,  4,  5,  5,  5,  5,  5,  5,  5,  5,  5,  5,  5,  5,  6,  0],
+    [0,  4,  5,  5,  5,  5,  5,  5,  5,  5,  5,  5,  5,  5,  6,  0],
+    [0,  4,  5,  5,  5,  5,  5,  5,  5,  5,  5,  5,  5,  5,  6,  0],
+    [0,  7,  8,  8,  8,  8,  8,  8,  8,  8,  8,  8,  8,  8,  9,  0],
+    [0, 10, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 12,  0]
+  ];
 }
 
 scenePrincipal.pintarMundo = function() {
   for(var x=0; x<this.size_mundo; x++) {
     for(var y=0; y<this.size_mundo; y++) {
-      var textura = this.tiles_mundo[x][y];
       var coordX = x*32;
       var coordY = y*32;
+      var textura = "aire";
+      var rnd = Math.random() > 0.5 ? 0 : 1;
+
+      var tile = this.tiles_mundo[y][x];
+      switch(tile) {
+        case 1:
+          textura = "suelo_arriba_izq";
+          break;
+        case 2:
+          textura = "suelo_arriba_"+rnd;
+          break;
+        case 3:
+          textura = "suelo_arriba_drc";
+          break;
+        case 4:
+          textura = "suelo_medio_izq";
+          break;
+        case 5:
+          textura = "suelo_medio_"+rnd;
+          break;
+        case 6:
+          textura = "suelo_medio_drc";
+          break;
+        case 7:
+          textura = "suelo_abajo_izq";
+          break;
+        case 8:
+          textura = "suelo_abajo_"+rnd;
+          break;
+        case 9:
+          textura = "suelo_abajo_drc";
+          break;
+        case 10:
+          textura = "suelo_borde_izq";
+          break;
+        case 11:
+          textura = "suelo_borde_"+rnd;
+          break;
+        case 12:
+          textura = "suelo_borde_drc";
+          break;
+      }
 
       this.add.image(coordX, coordY, 'dungeon', textura);
     }
