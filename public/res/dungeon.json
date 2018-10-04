@@ -71,6 +71,11 @@
     {
       "filename": "suelo_borde_drc",
       "frame": {"x": 96, "y": 114, "w": 32, "h": 32}
+    },
+
+    {
+      "filename": "muro",
+      "frame": {"x": 0, "y": 371, "w": 64, "h": 64}
     }
   ]
 }

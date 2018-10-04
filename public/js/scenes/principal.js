@@ -81,6 +81,11 @@ scenePrincipal.pintarMundo = function() {
         case 12:
           textura = "suelo_borde_drc";
           break;
+        case 13:
+          textura = "muro";
+          break;
+        default:
+          textura = "aire";
       }
 
       this.add.image(coordX, coordY, 'dungeon', textura);
@@ -101,7 +106,7 @@ scenePrincipal.crearCamara = function() {
     drag: 0.5,
     maxSpeed: 3.0
   };
-  this.cameras.main.setBounds(0, 0, 512, 512).setZoom(3).centerOn(256, 256);
+  this.cameras.main.setBounds(-32, -32, 544, 544).setZoom(3).centerOn(240, 240);
 
   controls = new Phaser.Cameras.Controls.SmoothedKeyControl(configControles);
 }
