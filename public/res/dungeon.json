@@ -1,0 +1,76 @@
+{
+  "frames": [
+    {
+      "filename": "aire",
+      "frame": {"x": 0, "y": 146, "w": 32, "h": 32}
+    },
+
+    {
+      "filename": "suelo_arriba_izq",
+      "frame": {"x": 0, "y": 18, "w": 32, "h": 32}
+    },
+    {
+      "filename": "suelo_arriba_0",
+      "frame": {"x": 32, "y": 18, "w": 32, "h": 32}
+    },
+    {
+      "filename": "suelo_arriba_1",
+      "frame": {"x": 64, "y": 18, "w": 32, "h": 32}
+    },
+    {
+      "filename": "suelo_arriba_drc",
+      "frame": {"x": 96, "y": 18, "w": 32, "h": 32}
+    },
+
+    {
+      "filename": "suelo_medio_izq",
+      "frame": {"x": 0, "y": 50, "w": 32, "h": 32}
+    },
+    {
+      "filename": "suelo_medio_0",
+      "frame": {"x": 32, "y": 50, "w": 32, "h": 32}
+    },
+    {
+      "filename": "suelo_medio_1",
+      "frame": {"x": 64, "y": 50, "w": 32, "h": 32}
+    },
+    {
+      "filename": "suelo_medio_drc",
+      "frame": {"x": 96, "y": 50, "w": 32, "h": 32}
+    },
+
+    {
+      "filename": "suelo_abajo_izq",
+      "frame": {"x": 0, "y": 82, "w": 32, "h": 32}
+    },
+    {
+      "filename": "suelo_abajo_0",
+      "frame": {"x": 32, "y": 82, "w": 32, "h": 32}
+    },
+    {
+      "filename": "suelo_abajo_1",
+      "frame": {"x": 64, "y": 82, "w": 32, "h": 32}
+    },
+    {
+      "filename": "suelo_abajo_drc",
+      "frame": {"x": 96, "y": 82, "w": 32, "h": 32}
+    },
+
+    {
+      "filename": "suelo_borde_izq",
+      "frame": {"x": 0, "y": 114, "w": 32, "h": 32}
+    },
+    {
+      "filename": "suelo_borde_0",
+      "frame": {"x": 32, "y": 114, "w": 32, "h": 32}
+    },
+    {
+      "filename": "suelo_borde_1",
+      "frame": {"x": 64, "y": 114, "w": 32, "h": 32}
+    },
+    {
+      "filename": "suelo_borde_drc",
+      "frame": {"x": 96, "y": 114, "w": 32, "h": 32}
+    }
+  ]
+}
