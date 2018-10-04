@@ -82,7 +82,7 @@ scenePrincipal.pintarMundo = function() {
           textura = "suelo_borde_drc";
           break;
         case 13:
-          textura = "muro";
+          textura = "muro_"+rnd;
           break;
         default:
           textura = "aire";

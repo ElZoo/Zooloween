@@ -74,7 +74,11 @@
     },
 
     {
-      "filename": "muro",
+      "filename": "muro_0",
+      "frame": {"x": 64, "y": 275, "w": 64, "h": 64}
+    },
+    {
+      "filename": "muro_1",
       "frame": {"x": 0, "y": 371, "w": 64, "h": 64}
     }
   ]
