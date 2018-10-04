@@ -60,7 +60,7 @@ scenePrincipal.pintarMundo = function() {
       var coordX = x*32;
       var coordY = y*32;
       var textura = "aire";
-      var or = [0, 0];
+      var or = [0.5, 0.5];
       var rnd = Math.random() > 0.5 ? 0 : 1;
 
       var tile = this.tiles_mundo[y][x];
@@ -103,15 +103,15 @@ scenePrincipal.pintarMundo = function() {
           break;
         case 13:
           textura = "muro_izq";
-          or = [0, 0.5];
+          or = [0.25, 0.75];
           break;
         case 14:
           textura = "muro_medio";
-          or = [0, 0.5];
+          or = [0.25, 0.75];
           break;
         case 15:
           textura = "muro_drc";
-          or = [0, 0.5];
+          or = [0.25, 0.75];
           break;
       }
 
@@ -126,18 +126,17 @@ scenePrincipal.pintarMundo = function() {
       var coordX = x*32;
       var coordY = y*32;
       var textura = "aire";
-      var or = [0, 0];
+      var or = [0.5, 0.5];
       var rnd = Math.random() > 0.5 ? 0 : 1;
 
       var item = this.items_mundo[y][x];
       switch(item) {
         case 1:
           textura = "puente";
-          or = [0.25, 0];
           break;
         case 2:
           textura = "cadena";
-          or = [0, 0.25];
+          or = [0.5, 0.75];
           break;
       }
 
