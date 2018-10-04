@@ -1,0 +1,71 @@
+body {
+  overflow: hidden;
+  margin: 0;
+  font-family: "Verdana";
+  text-align: center;
+  background-image: radial-gradient(circle, #FEC163 50%, black);
+  background-attachment: fixed;
+}
+h1 {
+  font-size: 50px;
+  margin: 5px;
+  text-align: center;
+  letter-spacing: 2px;
+  color: white;
+  text-shadow: 0 1px 0 #ccc, 0 2px 0 #c9c9c9, 0 3px 0 #bbb, 0 4px 0 #b9b9b9, 0 5px 0 #aaa, 0 6px 1px rgba(0,0,0,.1), 0 0 5px rgba(0,0,0,.1), 0 1px 3px rgba(0,0,0,.3), 0 3px 5px rgba(0,0,0,.2), 0 5px 10px rgba(0,0,0,.25), 0 10px 10px rgba(0,0,0,.2), 0 20px 20px rgba(0,0,0,.15);
+}
+#juegoDiv {
+  margin: 0 auto;
+  border: 10px solid white;
+  border-radius: 10px;
+  box-shadow: 0 0 20px black;
+  width: fit-content;
+  height: fit-content;
+  background: white;
+}
+canvas {
+  height: 100%;
+}
+
+#arbol_1 {
+  position: absolute;
+  width: 10%;
+  left: 5%;
+  bottom: 0;
+  z-index: -1;
+}
+#arbol_2 {
+  position: absolute;
+  width: 10%;
+  left: 15%;
+  bottom: -5%;
+  z-index: -1;
+}
+#arbol_3 {
+  position: absolute;
+  width: 10%;
+  bottom: -5%;
+  left: 0;
+  z-index: -1;
+}
+#arbol_esquina {
+  position: absolute;
+  width: 15%;
+  left: 0;
+  top: 0;
+  z-index: -1;
+}
+#tela {
+  position: absolute;
+  width: 10%;
+  right: 0;
+  top: 0;
+  z-index: -1;
+}
+#tumbas {
+  position: absolute;
+  width: 15%;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+}
