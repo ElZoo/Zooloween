@@ -7,6 +7,7 @@ var config = {
     antialias: false
   },
   banner: false,
+  backgroundColor: '#1d1923',
   scene: [
     scenePrecarga,
     scenePrincipal
