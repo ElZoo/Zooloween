@@ -3,7 +3,15 @@ var scenePrecarga = {
   active: true,
 
   init: function() {
-    this.socket = io();
+    var self = this;
+
+    this.game.datos = {};
+    this.game.datos.socket = io();
+    this.game.datos.socket.on('datosMapa', function(datos) {
+      self.game.datos.jugadores = datos[0];
+      self.game.datos.tiles_mundo = datos[1];
+      self.game.datos.items_mundo = datos[2];
+    });
   },
 
   preload: function() {
