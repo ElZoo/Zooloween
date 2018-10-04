@@ -8,7 +8,8 @@ var config = {
   },
   banner: false,
   scene: [
-    scenePrecarga
+    scenePrecarga,
+    scenePrincipal
   ],
 }
 
