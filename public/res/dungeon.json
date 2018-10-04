@@ -1,11 +1,6 @@
 {
   "frames": [
     {
-      "filename": "aire",
-      "frame": {"x": 0, "y": 146, "w": 32, "h": 32}
-    },
-
-    {
       "filename": "suelo_arriba_izq",
       "frame": {"x": 0, "y": 18, "w": 32, "h": 32}
     },
@@ -84,6 +79,15 @@
     {
       "filename": "muro_drc",
       "frame": {"x": 0, "y": 371, "w": 64, "h": 64}
+    },
+
+    {
+      "filename": "puente",
+      "frame": {"x": 21, "y": 698, "w": 55, "h": 32}
+    },
+    {
+      "filename": "cadena",
+      "frame": {"x": 96, "y": 204, "w": 32, "h": 32}
     }
   ]
 }

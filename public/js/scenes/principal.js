@@ -1,7 +1,6 @@
 var scenePrincipal = new Phaser.Scene('principal');
 
 scenePrincipal.init = function() {
-  this.size_mundo = 16;
   this.generarMundo();
 }
 
@@ -32,6 +31,26 @@ scenePrincipal.generarMundo = function() {
     [0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0],
     [0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0],
     [0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0],
+  ];
+  this.size_mundo = this.tiles_mundo.length;
+
+  this.items_mundo = [
+    [0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0],
+    [0,  2,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  2,  0,  0],
+    [0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0],
+    [0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0],
+    [0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0],
+    [0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0],
+    [0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0],
+    [0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0],
+    [0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0],
+    [0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0],
+    [0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0],
+    [0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0],
+    [0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0],
+    [0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0],
+    [0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0],
+    [0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0]
   ];
 }
 
@@ -94,21 +113,37 @@ scenePrincipal.pintarMundo = function() {
           textura = "muro_drc";
           or = [0, 0.5];
           break;
-        case 16:
-          textura = "suelo_arriba_sombra";
+      }
+
+      if(textura != "aire") {
+          this.add.image(coordX, coordY, 'dungeon', textura).setOrigin(or[0], or[1]);
+      }
+    }
+  }
+
+  for(var x=0; x<this.size_mundo; x++) {
+    for(var y=0; y<this.size_mundo; y++) {
+      var coordX = x*32;
+      var coordY = y*32;
+      var textura = "aire";
+      var or = [0, 0];
+      var rnd = Math.random() > 0.5 ? 0 : 1;
+
+      var item = this.items_mundo[y][x];
+      switch(item) {
+        case 1:
+          textura = "puente";
+          or = [0.25, 0];
           break;
-        case 17:
-          textura = "suelo_medio_sombra";
-          break;
-        case 18:
-          textura = "suelo_abajo_sombra";
-          break;
-        case 19:
-          textura = "suelo_borde_sombra";
+        case 2:
+          textura = "cadena";
+          or = [0, 0.25];
           break;
       }
 
-      this.add.image(coordX, coordY, 'dungeon', textura).setOrigin(or[0], or[1]);
+      if(textura != "aire") {
+        this.add.image(coordX, coordY, 'dungeon', textura).setOrigin(or[0], or[1]);
+      }
     }
   }
 }
