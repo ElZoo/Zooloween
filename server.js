@@ -9,11 +9,15 @@ app.get('/', function(req, res) {
   res.sendFile(__dirname + '/index.hmtl');
 });
 
-io.on('connection', function(socket) {
+io.sockets.on('connection', function(socket) {
   crearJugador(socket);
 
   socket.on('disconnect', function() {
     borrarJugador(socket);
+  });
+
+  socket.on('moverJugador', function(teclas) {
+    moverJugador(socket, teclas);
   });
 });
 
@@ -23,7 +27,10 @@ function crearJugador(socket) {
   console.log(`Se ha conectado un jugador (${socket.id})`);
 
   jugadores[socket.id] = {
-    playerId: socket.id
+    id: socket.id,
+    x: 0,
+    y: 0,
+    vida: 100
   }
 
   socket.emit('datosMapa', [jugadores, tiles_mundo, items_mundo]);
@@ -36,6 +43,26 @@ function borrarJugador(socket) {
   delete jugadores[socket.id];
   io.emit('disconnect', socket.id);
 }
+
+function moverJugador(socket, teclas) {
+  var jugador = jugadores[socket.id];
+  if(teclas['abajo']) {
+    jugador.y += 0.05;
+  }
+  if(teclas['arriba']) {
+    jugador.y -= 0.05;
+  }
+  if(teclas['izquierda']) {
+    jugador.x -= 0.05;
+  }
+  if(teclas['derecha']) {
+    jugador.x += 0.05;
+  }
+}
+
+setInterval(function() {
+  io.emit('updateJugadores', jugadores);
+}, 5);
 
 server.listen(8081, function() {
   console.log(`Escuchando en ${server.address().port}`);
