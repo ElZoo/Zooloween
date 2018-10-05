@@ -40,7 +40,7 @@ scenePrincipal.create = function() {
     };
 
     self.game.datos.socket.emit('moverJugador', datos_teclas);
-  }, 200);
+  }, 50);
 }
 
 scenePrincipal.update = function(time, delta) {
