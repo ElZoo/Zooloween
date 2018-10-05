@@ -28,9 +28,11 @@ function crearJugador(socket) {
 
   jugadores[socket.id] = {
     id: socket.id,
-    x: 0,
-    y: 0,
-    vida: 100
+    x: 2,
+    y: 2,
+    vida: 100,
+    dir: 'quieto',
+    vel: 0.033
   }
 
   socket.emit('datosMapa', [jugadores, tiles_mundo, items_mundo]);
@@ -46,17 +48,31 @@ function borrarJugador(socket) {
 
 function moverJugador(socket, teclas) {
   var jugador = jugadores[socket.id];
+  var cambioPos = [0,0];
   if(teclas['abajo']) {
-    jugador.y += 0.05;
+    jugador.y += jugador.vel;
+    jugador.dir = 'abajo';
+    cambioPos[1] += 1;
   }
   if(teclas['arriba']) {
-    jugador.y -= 0.05;
+    jugador.y -= jugador.vel;
+    jugador.dir = 'arriba';
+    cambioPos[1] -= 1;
   }
+
   if(teclas['izquierda']) {
-    jugador.x -= 0.05;
+    jugador.x -= jugador.vel;
+    jugador.dir = 'izquierda';
+    cambioPos[0] -= 1;
   }
   if(teclas['derecha']) {
-    jugador.x += 0.05;
+    jugador.x += jugador.vel;
+    jugador.dir = 'derecha';
+    cambioPos[0] += 1;
+  }
+
+  if(cambioPos[0] == 0 && cambioPos[1] == 0) {
+    jugador.dir = 'quieto';
   }
 }
 
