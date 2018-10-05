@@ -7,12 +7,68 @@ scenePrincipal.init = function() {
 }
 
 scenePrincipal.create = function() {
+  var self = this;
+
   this.pintarMundo();
-  this.crearCamara();
+  this.pintarJugadores();
+
+  this.game.datos.socket.on('updateJugadores', function(jugadores) {
+    for(var id in jugadores) {
+      var jugador = jugadores[id];
+      var j = self.game.datos.jugadores[id];
+      j.x = jugador.x;
+      j.y = jugador.y;
+      j.vida = jugador.vida;
+    }
+  });
+  this.game.datos.socket.on('nuevoJugador', function(jugador) {
+    jugador.sprite = self.add.image(jugador.x * 32, jugador.y * 32, 'pj_base', 'abajo_0');
+    self.game.datos.jugadores[jugador.id] = jugador;
+  });
+  this.game.datos.socket.on('disconnect', function(id) {
+    self.game.datos.jugadores[id].sprite.destroy();
+    delete self.game.datos.jugadores[id];
+  });
 }
 
 scenePrincipal.update = function(time, delta) {
-  controls.update(delta);
+  var jugadores = this.game.datos.jugadores;
+  for(var id in jugadores) {
+    var jugador = jugadores[id];
+
+    jugador.sprite.x = jugador.x * 32;
+    jugador.sprite.y = jugador.y * 32;
+  }
+
+  datos_teclas = {
+    "arriba": this.tecla_arriba.isDown,
+    "abajo": this.tecla_abajo.isDown,
+    "izquierda": this.tecla_izquierda.isDown,
+    "derecha": this.tecla_derecha.isDown,
+  };
+  if(this.tecla_arriba.isDown || this.tecla_abajo.isDown || this.tecla_izquierda.isDown || this.tecla_derecha.isDown) {
+      this.game.datos.socket.emit('moverJugador', datos_teclas);
+  }
+}
+
+scenePrincipal.pintarJugadores = function() {
+  var jugadores = this.game.datos.jugadores;
+  for(var id in jugadores) {
+    var jugador = jugadores[id];
+
+    jugador.sprite = this.add.image(jugador.x * 32, jugador.y * 32, 'pj_base', 'abajo_0');
+    if(id == this.game.datos.socket.id) {
+      this.game.datos.jugador = jugador;
+      this.cameras.main.setBounds(-32, -32, 544, 544).setZoom(3);
+      this.cameras.main.startFollow(jugador.sprite);
+      //this.cameras.main.followOffset.set(-300, -300);
+
+      this.tecla_arriba = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
+      this.tecla_abajo = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
+      this.tecla_izquierda = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
+      this.tecla_derecha = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
+    }
+  }
 }
 
 scenePrincipal.pintarMundo = function() {
@@ -106,22 +162,4 @@ scenePrincipal.pintarMundo = function() {
       }
     }
   }
-}
-
-scenePrincipal.crearCamara = function() {
-  var self = this;
-
-  var configControles = {
-    camera: this.cameras.main,
-    left: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A),
-    right: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D),
-    up: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W),
-    down: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S),
-    acceleration: 0.4,
-    drag: 0.5,
-    maxSpeed: 3.0
-  };
-  this.cameras.main.setBounds(-32, -32, 544, 544).setZoom(3).centerOn(240, 240);
-
-  controls = new Phaser.Cameras.Controls.SmoothedKeyControl(configControles);
 }

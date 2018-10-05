@@ -16,6 +16,7 @@ var scenePrecarga = {
 
   preload: function() {
     this.load.atlas('dungeon', 'res/dungeon.png', 'res/dungeon.json');
+    this.load.atlas('pj_base', 'res/pj_base.png', 'res/pj_base.json');
   },
 
   create: function() {
