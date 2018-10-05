@@ -19,10 +19,11 @@ scenePrincipal.create = function() {
       j.x = jugador.x;
       j.y = jugador.y;
       j.vida = jugador.vida;
+      j.dir = jugador.dir;
     }
   });
   this.game.datos.socket.on('nuevoJugador', function(jugador) {
-    jugador.sprite = self.add.image(jugador.x * 32, jugador.y * 32, 'pj_base', 'abajo_0');
+    jugador.sprite = self.add.sprite(jugador.x * 32, jugador.y * 32, 'pj_base', 'abajo_0').setFrame('quieto');
     self.game.datos.jugadores[jugador.id] = jugador;
   });
   this.game.datos.socket.on('disconnect', function(id) {
@@ -38,6 +39,25 @@ scenePrincipal.update = function(time, delta) {
 
     jugador.sprite.x = jugador.x * 32;
     jugador.sprite.y = jugador.y * 32;
+    
+    switch(jugador.dir) {
+      case 'arriba':
+        jugador.sprite.anims.play('pj_arriba', true);
+        break;
+      case 'abajo':
+        jugador.sprite.anims.play('pj_abajo', true);
+        break;
+      case 'izquierda':
+        jugador.sprite.anims.play('pj_izquierda', true);
+        break;
+      case 'derecha':
+        jugador.sprite.anims.play('pj_derecha', true);
+        break;
+      case 'quieto':
+        jugador.sprite.anims.stop();
+        jugador.sprite.setFrame('quieto');
+        break;
+    }
   }
 
   datos_teclas = {
@@ -46,9 +66,8 @@ scenePrincipal.update = function(time, delta) {
     "izquierda": this.tecla_izquierda.isDown,
     "derecha": this.tecla_derecha.isDown,
   };
-  if(this.tecla_arriba.isDown || this.tecla_abajo.isDown || this.tecla_izquierda.isDown || this.tecla_derecha.isDown) {
-      this.game.datos.socket.emit('moverJugador', datos_teclas);
-  }
+
+  this.game.datos.socket.emit('moverJugador', datos_teclas);
 }
 
 scenePrincipal.pintarJugadores = function() {
@@ -56,12 +75,11 @@ scenePrincipal.pintarJugadores = function() {
   for(var id in jugadores) {
     var jugador = jugadores[id];
 
-    jugador.sprite = this.add.image(jugador.x * 32, jugador.y * 32, 'pj_base', 'abajo_0');
+    jugador.sprite = this.add.sprite(jugador.x * 32, jugador.y * 32, 'pj_base').setFrame('quieto');
     if(id == this.game.datos.socket.id) {
       this.game.datos.jugador = jugador;
       this.cameras.main.setBounds(-32, -32, 544, 544).setZoom(3);
       this.cameras.main.startFollow(jugador.sprite);
-      //this.cameras.main.followOffset.set(-300, -300);
 
       this.tecla_arriba = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
       this.tecla_abajo = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
