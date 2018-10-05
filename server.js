@@ -32,7 +32,7 @@ function crearJugador(socket) {
     y: 2,
     vida: 100,
     dir: 'quieto',
-    vel: 0.033
+    vel: 0.015
   }
 
   socket.emit('datosMapa', [jugadores, tiles_mundo, items_mundo]);
