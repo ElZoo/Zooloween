@@ -32,7 +32,7 @@ function crearJugador(socket) {
     y: 2,
     vida: 100,
     dir: 'quieto',
-    vel: 0.015
+    vel: 0.01
   }
 
   socket.emit('datosMapa', [jugadores, tiles_mundo, items_mundo]);
@@ -50,23 +50,19 @@ function moverJugador(socket, teclas) {
   var jugador = jugadores[socket.id];
   var cambioPos = [0,0];
   if(teclas['abajo']) {
-    jugador.y += jugador.vel;
     jugador.dir = 'abajo';
     cambioPos[1] += 1;
   }
   if(teclas['arriba']) {
-    jugador.y -= jugador.vel;
     jugador.dir = 'arriba';
     cambioPos[1] -= 1;
   }
 
   if(teclas['izquierda']) {
-    jugador.x -= jugador.vel;
     jugador.dir = 'izquierda';
     cambioPos[0] -= 1;
   }
   if(teclas['derecha']) {
-    jugador.x += jugador.vel;
     jugador.dir = 'derecha';
     cambioPos[0] += 1;
   }
@@ -78,6 +74,23 @@ function moverJugador(socket, teclas) {
 
 setInterval(function() {
   io.emit('updateJugadores', jugadores);
+  for(var id in jugadores) {
+    var jugador = jugadores[id];
+    switch(jugador.dir) {
+      case 'abajo':
+        jugador.y += jugador.vel;
+        break;
+      case 'arriba':
+        jugador.y -= jugador.vel;
+        break;
+      case 'izquierda':
+        jugador.x -= jugador.vel;
+        break;
+      case 'derecha':
+        jugador.x += jugador.vel;
+        break;
+    }
+  }
 }, 5);
 
 server.listen(8081, function() {
