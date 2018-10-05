@@ -30,6 +30,17 @@ scenePrincipal.create = function() {
     self.game.datos.jugadores[id].sprite.destroy();
     delete self.game.datos.jugadores[id];
   });
+
+  setInterval(function() {
+    datos_teclas = {
+      "arriba": self.tecla_arriba.isDown,
+      "abajo": self.tecla_abajo.isDown,
+      "izquierda": self.tecla_izquierda.isDown,
+      "derecha": self.tecla_derecha.isDown,
+    };
+
+    self.game.datos.socket.emit('moverJugador', datos_teclas);
+  }, 10);
 }
 
 scenePrincipal.update = function(time, delta) {
@@ -39,7 +50,7 @@ scenePrincipal.update = function(time, delta) {
 
     jugador.sprite.x = jugador.x * 32;
     jugador.sprite.y = jugador.y * 32;
-    
+
     switch(jugador.dir) {
       case 'arriba':
         jugador.sprite.anims.play('pj_arriba', true);
@@ -59,15 +70,6 @@ scenePrincipal.update = function(time, delta) {
         break;
     }
   }
-
-  datos_teclas = {
-    "arriba": this.tecla_arriba.isDown,
-    "abajo": this.tecla_abajo.isDown,
-    "izquierda": this.tecla_izquierda.isDown,
-    "derecha": this.tecla_derecha.isDown,
-  };
-
-  this.game.datos.socket.emit('moverJugador', datos_teclas);
 }
 
 scenePrincipal.pintarJugadores = function() {
