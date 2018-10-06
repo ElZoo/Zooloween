@@ -11,7 +11,8 @@ var config = {
   scene: [
     scenePrecarga,
     scenePrincipal,
-    sceneHud
+    sceneHud,
+    sceneFinal
   ],
 }
 

@@ -9,6 +9,8 @@ scenePrincipal.init = function() {
 scenePrincipal.create = function() {
   var self = this;
 
+  this.scene.stop('final');
+
   this.pintarMundo();
   this.pintarJugadores();
   this.pintarMobs();
@@ -66,6 +68,15 @@ scenePrincipal.create = function() {
         jugador.sprite.setTint();
       }
     });
+  });
+
+  this.game.datos.socket.on('matarJugador', function(id) {
+    if(id == self.game.datos.jugador.id) {
+      self.scene.launch('final');
+    } else {
+      self.game.datos.jugadores[id].sprite.destroy();
+      delete self.game.datos.jugadores[id];
+    }
   });
 
   setInterval(function() {
