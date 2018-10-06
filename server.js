@@ -95,7 +95,10 @@ function crearMob() {
     y: Math.random() * 16,
     vida: 100,
     dir: 'derecha',
-    vel: 0.01
+    vel: 0.01,
+    tickAtaque: 0,
+    delayAtaque: 10,
+    fuerzaAtaque: 5
   }
   mobs[id] = mob;
 
@@ -218,6 +221,44 @@ function check_colision_mob(mob) {
   }
 
   return false;
+}
+
+setInterval(function() {
+  for(var id in mobs) {
+    var mob = mobs[id];
+    if(!mob.target || !jugadores[mob.target]) {
+      mob.tickAtaque = 0;
+      continue;
+    }
+    mob.tickAtaque++;
+
+    var target = jugadores[mob.target];
+    var distancia = Math.sqrt(Math.pow(mob.x - target.x, 2) + Math.pow(mob.y - target.y, 2));
+    if(distancia > 0.3) {
+      continue;
+    }
+
+    mob_atacar(mob, target);
+  }
+}, 100);
+
+function mob_atacar(mob, target) {
+  if(mob.tickAtaque < mob.delayAtaque || target.vida <= 0) {
+    return;
+  }
+  mob.tickAtaque = 0;
+  target.vida -= mob.fuerzaAtaque;
+
+  io.emit('mob_atacar', [mob.id, target.id]);
+
+  if(target.vida <= 0) {
+    matarJugador(target);
+    io.emit('matarJugador', target.id);
+  }
+}
+
+function matarJugador(jugador) {
+  jugador.vida = 0;
 }
 
 server.listen(8081, function() {
