@@ -7,6 +7,7 @@ var scenePrecarga = {
   },
 
   preload: function() {
+    this.load.atlas('hud', 'res/hud.png', 'res/hud.json');
     this.load.atlas('dungeon', 'res/dungeon.png', 'res/dungeon.json');
     this.load.atlas('pj_base', 'res/pj_base.png', 'res/pj_base.json');
     this.load.atlas('murcielago', 'res/murcielago.png', 'res/murcielago.json');

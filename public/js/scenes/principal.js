@@ -49,6 +49,25 @@ scenePrincipal.create = function() {
     delete self.game.datos.jugadores[id];
   });
 
+  this.game.datos.socket.on('mob_atacar', function(datos) {
+    var mob = self.game.datos.mobs[datos[0]];
+    var jugador = self.game.datos.jugadores[datos[1]];
+
+    self.tweens.addCounter({
+      from: 0,
+      to: 255,
+      yoyo: true,
+      duration: 50,
+      onUpdate: function (tween) {
+          var value = Math.floor(tween.getValue());
+          jugador.sprite.setTint(Phaser.Display.Color.GetColor(value, 0, 0));
+      },
+      onComplete: function(tween) {
+        jugador.sprite.setTint();
+      }
+    });
+  });
+
   setInterval(function() {
     datos_teclas = {
       "arriba": self.tecla_arriba.isDown,
@@ -62,6 +81,18 @@ scenePrincipal.create = function() {
 }
 
 scenePrincipal.update = function(time, delta) {
+  var pj = this.game.datos.jugador;
+  pj.barra_vida.x = pj.x * 32;
+  pj.barra_vida.y = pj.y * 32 - 16;
+  pj.barra_vida.getAt(1).width = Math.round(pj.vida / 100 * 32);
+  if(pj.vida < 33) {
+    pj.barra_vida.getAt(1).fillColor = 0xff0000;
+  } else if(pj.vida < 66) {
+    pj.barra_vida.getAt(1).fillColor = 0xffff00;
+  } else {
+    pj.barra_vida.getAt(1).fillColor = 0x00ff00;
+  }
+
   var jugadores = this.game.datos.jugadores;
   for(var id in jugadores) {
     var jugador = jugadores[id];
@@ -116,6 +147,11 @@ scenePrincipal.pintarJugadores = function() {
       this.tecla_abajo = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
       this.tecla_izquierda = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
       this.tecla_derecha = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
+
+      var vida_borde = this.add.image(0, 0, 'hud', 'vida_borde');
+      var vida_fondo = this.add.image(0, 0, 'hud', 'vida_fondo');
+      var vida_color = this.add.rectangle(-15, 2, 1, 5, 0xffffff).setOrigin(0.5, 1);
+      jugador.barra_vida = this.add.container(0, 0, [vida_fondo, vida_color, vida_borde]).setScale(0.5, 0.5);
     }
   }
 }

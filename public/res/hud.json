@@ -1,0 +1,16 @@
+{
+  "frames": [
+    {
+      "filename": "vida_borde",
+      "frame": {"x": 0, "y": 0, "w": 34, "h": 7}
+    },
+    {
+      "filename": "vida_fondo",
+      "frame": {"x": 0, "y": 7, "w": 34, "h": 7}
+    },
+    {
+      "filename": "vida_barra",
+      "frame": {"x": 1, "y": 15, "w": 1, "h": 5}
+    }
+  ]
+}
