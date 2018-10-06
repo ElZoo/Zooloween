@@ -11,6 +11,10 @@
     {
       "filename": "vida_barra",
       "frame": {"x": 1, "y": 15, "w": 1, "h": 5}
+    },
+    {
+      "filename": "boton",
+      "frame": {"x": 0, "y": 20, "w": 16, "h": 16}
     }
   ]
 }

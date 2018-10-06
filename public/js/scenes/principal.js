@@ -152,6 +152,7 @@ scenePrincipal.pintarJugadores = function() {
       var vida_fondo = this.add.image(0, 0, 'hud', 'vida_fondo');
       var vida_color = this.add.rectangle(-15, 2, 1, 5, 0xffffff).setOrigin(0.5, 1);
       jugador.barra_vida = this.add.container(0, 0, [vida_fondo, vida_color, vida_borde]).setScale(0.5, 0.5);
+      jugador.barra_vida.depth = 999999;
     }
   }
 }

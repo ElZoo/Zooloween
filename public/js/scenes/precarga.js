@@ -25,6 +25,7 @@ var scenePrecarga = {
       self.game.datos.items_mundo = datos[3];
 
       self.scene.launch('principal');
+      self.scene.launch('hud');
     });
 
     this.anims.create({key: 'pj_quieto', frames: [0], repeat: -1});
