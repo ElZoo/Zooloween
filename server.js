@@ -32,7 +32,7 @@ function crearJugador(socket) {
     y: 2,
     vida: 100,
     dir: 'quieto',
-    vel: 0.01
+    vel: 0.02
   }
 
   socket.emit('datosMapa', [jugadores, tiles_mundo, items_mundo]);
@@ -73,9 +73,9 @@ function moverJugador(socket, teclas) {
 }
 
 setInterval(function() {
-  io.emit('updateJugadores', jugadores);
   for(var id in jugadores) {
     var jugador = jugadores[id];
+    var old_coords = [jugador.x, jugador.y];
     switch(jugador.dir) {
       case 'abajo':
         jugador.y += jugador.vel;
@@ -90,12 +90,35 @@ setInterval(function() {
         jugador.x += jugador.vel;
         break;
     }
+
+    if(check_colision(jugador.x, jugador.y)) {
+      jugador.x = old_coords[0];
+      jugador.y = old_coords[1];
+    }
   }
-}, 5);
+
+  io.emit('updateJugadores', jugadores);
+}, 10);
+
+function check_colision(x, y) {
+  var tile_mundo = tiles_mundo[Math.round(y)][Math.round(x)];
+  var item_mundo = items_mundo[Math.round(y)][Math.round(x)];
+
+  if(tiles_barrera.indexOf(tile_mundo) > -1) {
+    if(item_mundo == 1 && Math.round(y)-y >= -0.2 && Math.round(y)-y <= 0.3) {
+      return false;
+    }
+    return true;
+  }
+
+  return false;
+}
 
 server.listen(8081, function() {
   console.log(`Escuchando en ${server.address().port}`);
 });
+
+var tiles_barrera = [0, 10, 11, 12, 13, 14, 15];
 
 var tiles_mundo = [
   [0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0],

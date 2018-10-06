@@ -77,7 +77,7 @@ scenePrincipal.pintarJugadores = function() {
   for(var id in jugadores) {
     var jugador = jugadores[id];
 
-    jugador.sprite = this.add.sprite(jugador.x * 32, jugador.y * 32, 'pj_base').setFrame('quieto');
+    jugador.sprite = this.add.sprite(jugador.x * 32, jugador.y * 32, 'pj_base').setOrigin(0.5, 0.75).setFrame('quieto');
     if(id == this.game.datos.socket.id) {
       this.game.datos.jugador = jugador;
       this.cameras.main.setBounds(-32, -32, 544, 544).setZoom(3);
