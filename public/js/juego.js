@@ -10,7 +10,8 @@ var config = {
   backgroundColor: '#1d1923',
   scene: [
     scenePrecarga,
-    scenePrincipal
+    scenePrincipal,
+    sceneHud
   ],
 }
 
