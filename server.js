@@ -22,6 +22,8 @@ io.sockets.on('connection', function(socket) {
 });
 
 var jugadores = {};
+var mobs = {};
+var id_mob = 0;
 
 function crearJugador(socket) {
   console.log(`Se ha conectado un jugador (${socket.id})`);
@@ -35,7 +37,7 @@ function crearJugador(socket) {
     vel: 0.02
   }
 
-  socket.emit('datosMapa', [jugadores, tiles_mundo, items_mundo]);
+  socket.emit('datosMapa', [jugadores, mobs, tiles_mundo, items_mundo]);
   socket.broadcast.emit('nuevoJugador', jugadores[socket.id]);
 }
 
@@ -73,6 +75,42 @@ function moverJugador(socket, teclas) {
 }
 
 setInterval(function() {
+  crearMob();
+}, 10000);
+
+function crearMob() {
+  var num_mobs = Object.keys(mobs).length;
+  var num_players = Object.keys(jugadores).length;
+  if(num_mobs >= num_players * 3) {
+    return;
+  }
+
+  var id = id_mob;
+  id_mob++;
+
+  var mob = {
+    id: id,
+    tipo: 'murcielago',
+    x: Math.random() * 16,
+    y: Math.random() * 16,
+    vida: 100,
+    dir: 'derecha',
+    vel: 0.01
+  }
+  mobs[id] = mob;
+
+  console.log(`Nuevo mob: ${mob.tipo} (${id})`);
+  io.emit('nuevoMob', mob);
+}
+
+setInterval(function() {
+  updateJugadores();
+  updateMobs();
+
+  io.emit('update', [jugadores, mobs]);
+}, 10);
+
+function updateJugadores() {
   for(var id in jugadores) {
     var jugador = jugadores[id];
     var old_coords = [jugador.x, jugador.y];
@@ -96,9 +134,55 @@ setInterval(function() {
       jugador.y = old_coords[1];
     }
   }
+}
 
-  io.emit('updateJugadores', jugadores);
-}, 10);
+function updateMobs() {
+  for(var id in mobs) {
+    var mob = mobs[id];
+    buscarTarget(mob);
+
+    if(!mob.target) {
+      continue;
+    }
+
+    var target = jugadores[mob.target];
+    if(mob.x < target.x - 0.2) {
+      mob.x += mob.vel;
+      mob.dir = 'derecha';
+    } else if(mob.x > target.x + 0.2) {
+      mob.x -= mob.vel;
+      mob.dir = 'izquierda';
+    }
+    if(mob.y < target.y - 0.2) {
+      mob.y += mob.vel;
+    } else if(mob.y > target.y + 0.2) {
+      mob.y -= mob.vel;
+    }
+  }
+}
+
+function buscarTarget(mob) {
+  if(mob.target) {
+    if(jugadores[mob.target]) {
+      return;
+    }
+    mob.target = false;
+  }
+  distancia_min = 999999;
+  id_min = -1;
+  for(var id in jugadores) {
+    var jugador = jugadores[id];
+    var distancia = Math.sqrt(Math.pow(jugador.x - mob.x, 2) + Math.pow(jugador.y - mob.y, 2));
+    if(distancia < distancia_min) {
+      distancia_min = distancia;
+      id_min = id;
+    }
+  }
+  if(id_min == -1) {
+    return;
+  }
+  mob.target = id_min;
+}
 
 function check_colision(x, y) {
   var tile_mundo = tiles_mundo[Math.round(y)][Math.round(x)];

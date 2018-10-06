@@ -11,8 +11,10 @@ scenePrincipal.create = function() {
 
   this.pintarMundo();
   this.pintarJugadores();
+  this.pintarMobs();
 
-  this.game.datos.socket.on('updateJugadores', function(jugadores) {
+  this.game.datos.socket.on('update', function(datos) {
+    var jugadores = datos[0];
     for(var id in jugadores) {
       var jugador = jugadores[id];
       var j = self.game.datos.jugadores[id];
@@ -21,10 +23,26 @@ scenePrincipal.create = function() {
       j.vida = jugador.vida;
       j.dir = jugador.dir;
     }
+
+    var mobs = datos[1];
+    for(var id in mobs) {
+      var mob = mobs[id];
+      var m = self.game.datos.mobs[id];
+      m.x = mob.x;
+      m.y = mob.y;
+      m.vida = mob.vida;
+      m.dir = mob.dir;
+    }
   });
   this.game.datos.socket.on('nuevoJugador', function(jugador) {
     jugador.sprite = self.add.sprite(jugador.x * 32, jugador.y * 32, 'pj_base', 'abajo_0').setFrame('quieto');
     self.game.datos.jugadores[jugador.id] = jugador;
+  });
+  this.game.datos.socket.on('nuevoMob', function(mob) {
+    if(mob.tipo == 'murcielago') {
+      mob.sprite = self.add.sprite(mob.x * 32, mob.y * 32, 'murcielago', 'volar_0').play('murcielago_volar');
+      self.game.datos.mobs[mob.id] = mob;
+    }
   });
   this.game.datos.socket.on('disconnect', function(id) {
     self.game.datos.jugadores[id].sprite.destroy();
@@ -50,6 +68,7 @@ scenePrincipal.update = function(time, delta) {
 
     jugador.sprite.x = jugador.x * 32;
     jugador.sprite.y = jugador.y * 32;
+    jugador.sprite.depth = jugador.sprite.y;
 
     switch(jugador.dir) {
       case 'arriba':
@@ -70,6 +89,16 @@ scenePrincipal.update = function(time, delta) {
         break;
     }
   }
+
+  var mobs = this.game.datos.mobs;
+  for(var id in mobs) {
+    var mob = mobs[id];
+    mob.sprite.x = mob.x * 32;
+    mob.sprite.y = mob.y * 32;
+    mob.sprite.depth = mob.sprite.y;
+
+    mob.sprite.flipX = (mob.dir == 'izquierda');
+  }
 }
 
 scenePrincipal.pintarJugadores = function() {
@@ -87,6 +116,16 @@ scenePrincipal.pintarJugadores = function() {
       this.tecla_abajo = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
       this.tecla_izquierda = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
       this.tecla_derecha = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
+    }
+  }
+}
+
+scenePrincipal.pintarMobs = function() {
+  var mobs = this.game.datos.mobs;
+  for(var id in mobs) {
+    var mob = mobs[id];
+    if(mob.tipo == 'murcielago') {
+      mob.sprite = this.add.sprite(mob.x * 32, mob.y * 32, 'murcielago', 'volar_0').play('murcielago_volar');
     }
   }
 }
