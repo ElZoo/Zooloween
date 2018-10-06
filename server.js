@@ -50,6 +50,15 @@ function borrarJugador(socket) {
 
 function moverJugador(socket, teclas) {
   var jugador = jugadores[socket.id];
+  if(!jugador) {
+    return;
+  }
+
+  if(jugador.vida <= 0) {
+    jugador.dir = 'quieto';
+    return;
+  }
+
   var cambioPos = [0,0];
   if(teclas['abajo']) {
     jugador.dir = 'abajo';
@@ -116,6 +125,10 @@ setInterval(function() {
 function updateJugadores() {
   for(var id in jugadores) {
     var jugador = jugadores[id];
+    if(jugador.vida <= 0) {
+      continue;
+    }
+
     var old_coords = [jugador.x, jugador.y];
     switch(jugador.dir) {
       case 'abajo':
@@ -172,7 +185,7 @@ function updateMobs() {
 
 function buscarTarget(mob) {
   if(mob.target) {
-    if(jugadores[mob.target]) {
+    if(jugadores[mob.target] && jugadores[mob.target].vida > 0) {
       return;
     }
     mob.target = false;
@@ -181,6 +194,9 @@ function buscarTarget(mob) {
   id_min = -1;
   for(var id in jugadores) {
     var jugador = jugadores[id];
+    if(jugador.vida <= 0) {
+      continue;
+    }
     var distancia = Math.sqrt(Math.pow(jugador.x - mob.x, 2) + Math.pow(jugador.y - mob.y, 2));
     if(distancia < distancia_min) {
       distancia_min = distancia;
@@ -253,12 +269,13 @@ function mob_atacar(mob, target) {
 
   if(target.vida <= 0) {
     matarJugador(target);
-    io.emit('matarJugador', target.id);
   }
 }
 
 function matarJugador(jugador) {
   jugador.vida = 0;
+  delete jugadores[jugador.id];
+  io.emit('matarJugador', jugador.id);
 }
 
 server.listen(8081, function() {
