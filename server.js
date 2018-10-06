@@ -146,6 +146,7 @@ function updateMobs() {
     }
 
     var target = jugadores[mob.target];
+    var old_coords = [mob.x, mob.y];
     if(mob.x < target.x - 0.2) {
       mob.x += mob.vel;
       mob.dir = 'derecha';
@@ -157,6 +158,11 @@ function updateMobs() {
       mob.y += mob.vel;
     } else if(mob.y > target.y + 0.2) {
       mob.y -= mob.vel;
+    }
+
+    if(check_colision_mob(mob)) {
+      mob.x = old_coords[0];
+      mob.y = old_coords[1];
     }
   }
 }
@@ -193,6 +199,22 @@ function check_colision(x, y) {
       return false;
     }
     return true;
+  }
+
+  return false;
+}
+
+function check_colision_mob(mob) {
+  for(var id in mobs) {
+    var target = mobs[id];
+    if(target.id == mob.id) {
+      continue;
+    }
+
+    var distancia = Math.sqrt(Math.pow(mob.x - target.x, 2) + Math.pow(mob.y - target.y, 2));
+    if(distancia <= 0.2) {
+      return true;
+    }
   }
 
   return false;
