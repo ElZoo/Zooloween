@@ -19,6 +19,10 @@ io.sockets.on('connection', function(socket) {
   socket.on('moverJugador', function(teclas) {
     moverJugador(socket, teclas);
   });
+
+  socket.on('player_atacar', function() {
+    player_atacar(socket.id);
+  });
 });
 
 var jugadores = {};
@@ -35,7 +39,10 @@ function crearJugador(socket) {
     vida: 100,
     dirX: 'quieto',
     dirY: 'quieto',
-    vel: 0.02
+    vel: 0.02,
+    tickAtaque: 0,
+    delayAtaque: 50,
+    fuerzaAtaque: 5
   }
 
   socket.emit('datosMapa', [jugadores, mobs, tiles_mundo, items_mundo]);
@@ -130,7 +137,7 @@ function crearMob() {
     tipo: 'murcielago',
     x: Math.random() * 16,
     y: Math.random() * 16,
-    vida: 100,
+    vida: 15,
     dir: 'derecha',
     vel: 0.01,
     tickAtaque: 0,
@@ -156,6 +163,7 @@ function updateJugadores() {
     if(jugador.vida <= 0) {
       continue;
     }
+    jugador.tickAtaque++;
 
     var old_coords = [jugador.x, jugador.y];
     switch(jugador.dirY) {
@@ -231,7 +239,7 @@ function buscarTarget(mob) {
     if(jugador.vida <= 0) {
       continue;
     }
-    var distancia = Math.sqrt(Math.pow(jugador.x - mob.x, 2) + Math.pow(jugador.y - mob.y, 2));
+    var distancia = calcularDistancia(jugador, mob);
     if(distancia < distancia_min) {
       distancia_min = distancia;
       id_min = id;
@@ -264,7 +272,7 @@ function check_colision_mob(mob) {
       continue;
     }
 
-    var distancia = Math.sqrt(Math.pow(mob.x - target.x, 2) + Math.pow(mob.y - target.y, 2));
+    var distancia = calcularDistancia(mob, target);
     if(distancia <= 0.2) {
       return true;
     }
@@ -283,7 +291,7 @@ setInterval(function() {
     mob.tickAtaque++;
 
     var target = jugadores[mob.target];
-    var distancia = Math.sqrt(Math.pow(mob.x - target.x, 2) + Math.pow(mob.y - target.y, 2));
+    var distancia = calcularDistancia(mob, target);
     if(distancia > 0.3) {
       continue;
     }
@@ -312,9 +320,43 @@ function matarJugador(jugador) {
   io.emit('matarJugador', jugador.id);
 }
 
+function matarMob(mob) {
+  mob.vida = 0;
+  delete mobs[mob.id];
+  io.emit('matarMob', mob.id);
+}
+
+function player_atacar(id) {
+  var jugador = jugadores[id];
+  if(jugador.tickAtaque < jugador.delayAtaque || jugador.vida <= 0) {
+    return;
+  }
+  jugador.tickAtaque = 0;
+
+  var mobs_afectados = [];
+  for(var idMob in mobs) {
+    var mob = mobs[idMob];
+    var distancia = calcularDistancia(jugador, mob);
+    if(distancia > 0.3) {
+      continue;
+    }
+    mob.vida -= jugador.fuerzaAtaque;
+    if(mob.vida <= 0) {
+      matarMob(mob);
+    }
+    mobs_afectados.push(idMob);
+  }
+
+  io.emit('ataque_player', [id, mobs_afectados]);
+}
+
 server.listen(8081, function() {
   console.log(`Escuchando en ${server.address().port}`);
 });
+
+function calcularDistancia(ent1, ent2) {
+  return Math.sqrt(Math.pow(ent1.x - ent2.x, 2) + Math.pow(ent1.y - ent2.y, 2));
+}
 
 var tiles_barrera = [0, 10, 11, 12, 13, 14, 15];
 
