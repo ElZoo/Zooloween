@@ -349,7 +349,6 @@ scenePrincipal.pintarMundo = function() {
 scenePrincipal.ataque_player = function(player_id, mob_ids) {
   var self = this;
   var jugador = this.game.datos.jugadores[player_id];
-  console.log("Atacar")
   jugador.sprite.play('pj_atacar');
 
   mob_ids.forEach(function(mob_id) {
