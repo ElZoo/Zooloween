@@ -25,6 +25,7 @@ scenePrincipal.create = function() {
       j.vida = jugador.vida;
       j.dirX = jugador.dirX;
       j.dirY = jugador.dirY;
+      j.lastDir = jugador.lastDir;
     }
 
     var mobs = datos[1];
@@ -38,7 +39,7 @@ scenePrincipal.create = function() {
     }
   });
   this.game.datos.socket.on('nuevoJugador', function(jugador) {
-    jugador.sprite = self.add.sprite(jugador.x * 32, jugador.y * 32, 'pj_base', 'abajo_0').setFrame('quieto');
+    jugador.sprite = self.add.sprite(jugador.x * 32, jugador.y * 32, 'pj_base', 'abajo_0').setFrame('quieto_abajo');
     self.game.datos.jugadores[jugador.id] = jugador;
   });
   this.game.datos.socket.on('nuevoMob', function(mob) {
@@ -133,9 +134,9 @@ scenePrincipal.update = function(time, delta) {
           case 'abajo':
             jugador.sprite.anims.play('pj_abajo', true);
             break;
-          case 'quieto':
+          default:
             jugador.sprite.anims.stop();
-            jugador.sprite.setFrame('quieto');
+            jugador.sprite.setFrame(jugador.lastDir);
             break;
         }
     }
@@ -173,7 +174,7 @@ scenePrincipal.pintarJugadores = function() {
   for(var id in jugadores) {
     var jugador = jugadores[id];
 
-    jugador.sprite = this.add.sprite(jugador.x * 32, jugador.y * 32, 'pj_base').setOrigin(0.5, 0.75).setFrame('quieto');
+    jugador.sprite = this.add.sprite(jugador.x * 32, jugador.y * 32, 'pj_base').setOrigin(0.5, 0.75).setFrame(jugador.lastDir);
     if(id == this.game.datos.socket.id) {
       this.game.datos.jugador = jugador;
       this.cameras.main.setBounds(-32, -32, 544, 544).setZoom(3);
