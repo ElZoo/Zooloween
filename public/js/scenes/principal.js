@@ -32,6 +32,9 @@ scenePrincipal.create = function() {
     for(var id in mobs) {
       var mob = mobs[id];
       var m = self.game.datos.mobs[id];
+      if(!m) {
+        continue;
+      }
       m.x = mob.x;
       m.y = mob.y;
       m.vida = mob.vida;
@@ -86,6 +89,20 @@ scenePrincipal.create = function() {
     }
   });
 
+  this.game.datos.socket.on('matarMob', function(id) {
+    self.game.datos.mobs[id].ticksMuerto = 0;
+    self.game.datos.mobs[id].vida = 0;
+    self.game.datos.mobs[id].sprite.play('murcielago_morir', true);
+  });
+
+  this.game.datos.socket.on('ataque_player', function(datos) {
+    self.ataque_player(datos[0], datos[1]);
+  });
+
+  this.input.on('pointerdown', function(pointer) {
+    self.game.datos.socket.emit('player_atacar');
+  });
+
   setInterval(function() {
     datos_teclas = {
       "arriba": self.tecla_arriba.isDown,
@@ -99,10 +116,12 @@ scenePrincipal.create = function() {
 }
 
 scenePrincipal.update = function(time, delta) {
+  var self = this;
+
   var pj = this.game.datos.jugador;
   pj.barra_vida.x = pj.x * 32;
   pj.barra_vida.y = pj.y * 32 - 16;
-  pj.barra_vida.getAt(1).width = Math.round(pj.vida / 100 * 32);
+  pj.barra_vida.getAt(1).width = Math.round(pj.vida / pj.vidaMax * 32);
   if(pj.vida < pj.vidaMax * 0.33) {
     pj.barra_vida.getAt(1).fillColor = 0xff0000;
   } else if(pj.vida < pj.vidaMax * 0.66) {
@@ -119,6 +138,10 @@ scenePrincipal.update = function(time, delta) {
     jugador.sprite.y = jugador.y * 32;
     jugador.sprite.depth = jugador.sprite.y;
 
+    var currentAnim = jugador.sprite.anims.currentAnim
+    if(currentAnim && currentAnim.key.includes('pj_atacar') && jugador.sprite.anims.isPlaying) {
+      continue;
+    }
     switch (jugador.dirX) {
       case 'izquierda':
         jugador.sprite.anims.play('pj_izquierda', true);
@@ -143,17 +166,18 @@ scenePrincipal.update = function(time, delta) {
   }
 
   var mobs = this.game.datos.mobs;
-  for(var id in mobs) {
+  Object.keys(mobs).forEach(function(id) {
+    var mob_id = id+0;
     var mob = mobs[id];
     mob.sprite.x = mob.x * 32;
     mob.sprite.y = mob.y * 32;
     mob.sprite.depth = mob.sprite.y;
-    var distancia = Math.sqrt(Math.pow(pj.x - mob.x, 2) + Math.pow(pj.y - mob.y, 2));
+    var distancia = calcularDistancia(pj, mob);
     if(distancia < 2) {
       mob.barra_vida.visible = true;
       mob.barra_vida.x = mob.x * 32;
       mob.barra_vida.y = mob.y * 32 - 12;
-      mob.barra_vida.getAt(1).width = Math.round(mob.vida / 100 * 32);
+      mob.barra_vida.getAt(1).width = Math.round(mob.vida / mob.vidaMax * 32);
       if(mob.vida < mob.vidaMax * 0.33) {
         mob.barra_vida.getAt(1).fillColor = 0xff0000;
       } else if(mob.vida < mob.vidaMax * 0.66) {
@@ -166,7 +190,28 @@ scenePrincipal.update = function(time, delta) {
     }
 
     mob.sprite.flipX = (mob.dir == 'izquierda');
-  }
+    if(mob.vida <= 0) {
+      mob.ticksMuerto++;
+      if(mob.ticksMuerto == 75) {
+        self.tweens.addCounter({
+          from: 0,
+          to: 50,
+          duration: 500,
+          onUpdate: function(tween) {
+            var val = Math.round(tween.getValue());
+            if(val % 10 == 0) {
+              mobs[id].sprite.setVisible(mobs[id].sprite.visible != true);
+            }
+          },
+          onComplete: function(tween) {
+            mobs[id].sprite.destroy();
+            mobs[id].barra_vida.destroy();
+            delete self.game.datos.mobs[id];
+          }
+        });
+      }
+    }
+  });
 }
 
 scenePrincipal.pintarJugadores = function() {
@@ -300,4 +345,34 @@ scenePrincipal.pintarMundo = function() {
       }
     }
   }
+}
+
+scenePrincipal.ataque_player = function(player_id, mob_ids) {
+  var self = this;
+  var jugador = this.game.datos.jugadores[player_id];
+  jugador.sprite.play('pj_atacar');
+
+  mob_ids.forEach(function(mob_id) {
+    var mob = this.game.datos.mobs[mob_id];
+
+    self.tweens.addCounter({
+      from: 0,
+      to: 255,
+      yoyo: true,
+      duration: 50,
+      onUpdate: function (tween) {
+        if(!mob) {
+          return;
+        }
+        var value = Math.floor(tween.getValue());
+        mob.sprite.setTintFill(Phaser.Display.Color.GetColor(value, 0, 0));
+      },
+      onComplete: function(tween) {
+        if(!mob) {
+          return;
+        }
+        mob.sprite.setTint();
+      }
+    });
+  });
 }
