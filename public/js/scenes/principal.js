@@ -23,7 +23,8 @@ scenePrincipal.create = function() {
       j.x = jugador.x;
       j.y = jugador.y;
       j.vida = jugador.vida;
-      j.dir = jugador.dir;
+      j.dirX = jugador.dirX;
+      j.dirY = jugador.dirY;
     }
 
     var mobs = datos[1];
@@ -112,23 +113,26 @@ scenePrincipal.update = function(time, delta) {
     jugador.sprite.y = jugador.y * 32;
     jugador.sprite.depth = jugador.sprite.y;
 
-    switch(jugador.dir) {
-      case 'arriba':
-        jugador.sprite.anims.play('pj_arriba', true);
-        break;
-      case 'abajo':
-        jugador.sprite.anims.play('pj_abajo', true);
-        break;
+    switch (jugador.dirX) {
       case 'izquierda':
         jugador.sprite.anims.play('pj_izquierda', true);
         break;
       case 'derecha':
         jugador.sprite.anims.play('pj_derecha', true);
         break;
-      case 'quieto':
-        jugador.sprite.anims.stop();
-        jugador.sprite.setFrame('quieto');
-        break;
+      default:
+        switch(jugador.dirY) {
+          case 'arriba':
+            jugador.sprite.anims.play('pj_arriba', true);
+            break;
+          case 'abajo':
+            jugador.sprite.anims.play('pj_abajo', true);
+            break;
+          case 'quieto':
+            jugador.sprite.anims.stop();
+            jugador.sprite.setFrame('quieto');
+            break;
+        }
     }
   }
 
