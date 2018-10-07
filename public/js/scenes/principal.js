@@ -49,6 +49,11 @@ scenePrincipal.create = function() {
       mob.sprite = self.add.sprite(mob.x * 32, mob.y * 32, 'murcielago', 'volar_0').play('murcielago_volar');
       self.game.datos.mobs[mob.id] = mob;
     }
+    var vida_borde = self.add.image(0, 0, 'hud', 'vida_borde');
+    var vida_fondo = self.add.image(0, 0, 'hud', 'vida_fondo');
+    var vida_color = self.add.rectangle(-15, 2, 1, 5, 0xffffff).setOrigin(0.5, 1);
+    mob.barra_vida = self.add.container(0, 0, [vida_fondo, vida_color, vida_borde]).setScale(0.4, 0.4);
+    mob.barra_vida.depth = 999999;
   });
   this.game.datos.socket.on('disconnect', function(id) {
     self.game.datos.jugadores[id].sprite.destroy();
@@ -115,10 +120,10 @@ scenePrincipal.update = function(time, delta) {
   var pj = this.game.datos.jugador;
   pj.barra_vida.x = pj.x * 32;
   pj.barra_vida.y = pj.y * 32 - 16;
-  pj.barra_vida.getAt(1).width = Math.round(pj.vida / 100 * 32);
-  if(pj.vida < 33) {
+  pj.barra_vida.getAt(1).width = Math.round(pj.vida / pj.vidaMax * 32);
+  if(pj.vida < pj.vidaMax * 0.33) {
     pj.barra_vida.getAt(1).fillColor = 0xff0000;
-  } else if(pj.vida < 66) {
+  } else if(pj.vida < pj.vidaMax * 0.66) {
     pj.barra_vida.getAt(1).fillColor = 0xffff00;
   } else {
     pj.barra_vida.getAt(1).fillColor = 0x00ff00;
@@ -166,6 +171,22 @@ scenePrincipal.update = function(time, delta) {
     mob.sprite.x = mob.x * 32;
     mob.sprite.y = mob.y * 32;
     mob.sprite.depth = mob.sprite.y;
+    var distancia = calcularDistancia(pj, mob);
+    if(distancia < 2) {
+      mob.barra_vida.visible = true;
+      mob.barra_vida.x = mob.x * 32;
+      mob.barra_vida.y = mob.y * 32 - 12;
+      mob.barra_vida.getAt(1).width = Math.round(mob.vida / mob.vidaMax * 32);
+      if(mob.vida < mob.vidaMax * 0.33) {
+        mob.barra_vida.getAt(1).fillColor = 0xff0000;
+      } else if(mob.vida < mob.vidaMax * 0.66) {
+        mob.barra_vida.getAt(1).fillColor = 0xffff00;
+      } else {
+        mob.barra_vida.getAt(1).fillColor = 0x00ff00;
+      }
+    } else {
+      mob.barra_vida.visible = false;
+    }
 
     mob.sprite.flipX = (mob.dir == 'izquierda');
     if(mob.vida <= 0) {
@@ -183,6 +204,7 @@ scenePrincipal.update = function(time, delta) {
           },
           onComplete: function(tween) {
             mobs[id].sprite.destroy();
+            mobs[id].barra_vida.destroy();
             delete self.game.datos.mobs[id];
           }
         });
@@ -223,6 +245,11 @@ scenePrincipal.pintarMobs = function() {
     if(mob.tipo == 'murcielago') {
       mob.sprite = this.add.sprite(mob.x * 32, mob.y * 32, 'murcielago', 'volar_0').play('murcielago_volar');
     }
+    var vida_borde = this.add.image(0, 0, 'hud', 'vida_borde');
+    var vida_fondo = this.add.image(0, 0, 'hud', 'vida_fondo');
+    var vida_color = this.add.rectangle(-15, 2, 1, 5, 0xffffff).setOrigin(0.5, 1);
+    mob.barra_vida = this.add.container(0, 0, [vida_fondo, vida_color, vida_borde]).setScale(0.4, 0.4);
+    mob.barra_vida.depth = 999999;
   }
 }
 
