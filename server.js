@@ -33,7 +33,8 @@ function crearJugador(socket) {
     x: 2,
     y: 2,
     vida: 100,
-    dir: 'quieto',
+    dirX: 'quieto',
+    dirY: 'quieto',
     vel: 0.02
   }
 
@@ -55,31 +56,58 @@ function moverJugador(socket, teclas) {
   }
 
   if(jugador.vida <= 0) {
-    jugador.dir = 'quieto';
+    jugador.dirX = 'quieto';
+    jugador.dirY = 'quieto';
     return;
   }
 
   var cambioPos = [0,0];
+
+  if(teclas['izquierda']) {
+    jugador.dirX = 'izquierda';
+    cambioPos[0] -= 1;
+    if(teclas['arriba']) {
+      jugador.dirY = 'arriba';
+      cambioPos[1] -= 1;
+    }
+    if(teclas['abajo']) {
+      jugador.dirY = 'abajo';
+      cambioPos[1] += 1;
+    }
+  }
+
+  if(teclas['derecha']) {
+    jugador.dirX = 'derecha';
+    cambioPos[0] += 1;
+    if(teclas['arriba']) {
+      jugador.dirY = 'arriba';
+      cambioPos[1] -= 1;
+    }
+    if(teclas['abajo']) {
+      jugador.dirY = 'abajo';
+      cambioPos[1] += 1;
+    }
+  }
+
   if(teclas['abajo']) {
-    jugador.dir = 'abajo';
+    jugador.dirY = 'abajo';
     cambioPos[1] += 1;
   }
+
   if(teclas['arriba']) {
-    jugador.dir = 'arriba';
+    jugador.dirY = 'arriba';
     cambioPos[1] -= 1;
   }
 
-  if(teclas['izquierda']) {
-    jugador.dir = 'izquierda';
-    cambioPos[0] -= 1;
+  if(cambioPos[0] == 0) {
+    jugador.dirX = 'quieto';
   }
-  if(teclas['derecha']) {
-    jugador.dir = 'derecha';
-    cambioPos[0] += 1;
+  if(cambioPos[1] == 0) {
+    jugador.dirY = 'quieto';
   }
-
   if(cambioPos[0] == 0 && cambioPos[1] == 0) {
-    jugador.dir = 'quieto';
+    jugador.dirX = 'quieto';
+    jugador.dirY = 'quieto';
   }
 }
 
@@ -130,13 +158,15 @@ function updateJugadores() {
     }
 
     var old_coords = [jugador.x, jugador.y];
-    switch(jugador.dir) {
+    switch(jugador.dirY) {
       case 'abajo':
         jugador.y += jugador.vel;
         break;
       case 'arriba':
         jugador.y -= jugador.vel;
         break;
+    }
+    switch (jugador.dirX) {
       case 'izquierda':
         jugador.x -= jugador.vel;
         break;
@@ -146,8 +176,12 @@ function updateJugadores() {
     }
 
     if(check_colision(jugador.x, jugador.y)) {
-      jugador.x = old_coords[0];
-      jugador.y = old_coords[1];
+      if(check_colision(jugador.x, old_coords[1])) {
+        jugador.x = old_coords[0];
+      }
+      if(check_colision(old_coords[0], jugador.y)) {
+        jugador.y = old_coords[1];
+      }
     }
   }
 }
