@@ -34,8 +34,9 @@ function crearJugador(socket) {
     y: 2,
     vidaMax : 100,
     vida: 100,
-    dirX: 'quieto',
-    dirY: 'quieto',
+    dirX: 'quieto_abajo',
+    dirY: 'quieto_abajo',
+    lastDir: 'quieto_abajo',
     vel: 0.02
   }
 
@@ -57,8 +58,8 @@ function moverJugador(socket, teclas) {
   }
 
   if(jugador.vida <= 0) {
-    jugador.dirX = 'quieto';
-    jugador.dirY = 'quieto';
+    jugador.dirX = 'quieto_abajo';
+    jugador.dirY = 'quieto_abajo';
     return;
   }
 
@@ -66,6 +67,7 @@ function moverJugador(socket, teclas) {
 
   if(teclas['izquierda']) {
     jugador.dirX = 'izquierda';
+    jugador.lastDir = 'quieto_izquierda';
     cambioPos[0] -= 1;
     if(teclas['arriba']) {
       jugador.dirY = 'arriba';
@@ -79,6 +81,7 @@ function moverJugador(socket, teclas) {
 
   if(teclas['derecha']) {
     jugador.dirX = 'derecha';
+    jugador.lastDir = 'quieto_derecha';
     cambioPos[0] += 1;
     if(teclas['arriba']) {
       jugador.dirY = 'arriba';
@@ -92,23 +95,25 @@ function moverJugador(socket, teclas) {
 
   if(teclas['abajo']) {
     jugador.dirY = 'abajo';
+    jugador.lastDir = 'quieto_abajo';
     cambioPos[1] += 1;
   }
 
   if(teclas['arriba']) {
     jugador.dirY = 'arriba';
+    jugador.lastDir = 'quieto_arriba';
     cambioPos[1] -= 1;
   }
 
   if(cambioPos[0] == 0) {
-    jugador.dirX = 'quieto';
+    jugador.dirX = jugador.lastDir;
   }
   if(cambioPos[1] == 0) {
-    jugador.dirY = 'quieto';
+    jugador.dirY = jugador.lastDir;
   }
   if(cambioPos[0] == 0 && cambioPos[1] == 0) {
-    jugador.dirX = 'quieto';
-    jugador.dirY = 'quieto';
+    jugador.dirX = jugador.lastDir;
+    jugador.dirY = jugador.lastDir;
   }
 }
 

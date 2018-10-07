@@ -1,8 +1,20 @@
 {
   "frames": [
     {
-      "filename": "quieto",
+      "filename": "quieto_abajo",
       "frame": {"x": 0, "y": 0, "w": 16, "h": 16}
+    },
+    {
+      "filename": "quieto_arriba",
+      "frame": {"x": 0, "y": 16, "w": 16, "h": 16}
+    },
+    {
+      "filename": "quieto_derecha",
+      "frame": {"x": 0, "y": 32, "w": 16, "h": 16}
+    },
+    {
+      "filename": "quieto_izquierda",
+      "frame": {"x": 0, "y": 48, "w": 16, "h": 16}
     },
 
     {
