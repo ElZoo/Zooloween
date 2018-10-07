@@ -18,6 +18,7 @@ var config = {
 
 var game = new Phaser.Game(config);
 
+//Test
 function calcularDistancia(ent1, ent2) {
   return Math.sqrt(Math.pow(ent1.x - ent2.x, 2) + Math.pow(ent1.y - ent2.y, 2));
 }
