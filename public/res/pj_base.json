@@ -18,6 +18,15 @@
     },
 
     {
+      "filename": "atacar_0",
+      "frame": {"x": 16, "y": 0, "w": 16, "h": 16}
+    },
+    {
+      "filename": "atacar_1",
+      "frame": {"x": 0, "y": 0, "w": 16, "h": 16}
+    },
+
+    {
       "filename": "abajo_0",
       "frame": {"x": 16, "y": 0, "w": 16, "h": 16}
     },
