@@ -251,7 +251,7 @@ scenePrincipal.pintarMobs = function() {
     var vida_fondo = this.add.image(0, 0, 'hud', 'vida_fondo');
     var vida_color = this.add.rectangle(-15, 2, 1, 5, 0xffffff).setOrigin(0.5, 1);
     mob.barra_vida = this.add.container(0, 0, [vida_fondo, vida_color, vida_borde]).setScale(0.4, 0.4);
-    mob.barra_vida.depth = 999999;
+    mob.barra_vida.depth = 999989;
   }
 }
 
