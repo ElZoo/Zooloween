@@ -235,7 +235,7 @@ scenePrincipal.pintarJugadores = function() {
 
     jugador.sprite = this.add.sprite(jugador.x * 32, jugador.y * 32, 'pj_base').setOrigin(0.5, 0.75).setFrame(jugador.lastDir);
     if(id == this.game.datos.socket.id) {
-      jugador.texto_nivel.visible = true;
+      jugador.texto_nivel.visible = false;
       this.game.datos.jugador = jugador;
       this.cameras.main.setBounds(-32, -32, 544, 544).setZoom(3);
       this.cameras.main.startFollow(jugador.sprite);
