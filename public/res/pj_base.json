@@ -18,12 +18,36 @@
     },
 
     {
-      "filename": "atacar_0",
+      "filename": "atacar_abajo_0",
       "frame": {"x": 16, "y": 0, "w": 16, "h": 16}
     },
     {
-      "filename": "atacar_1",
+      "filename": "atacar_abajo_1",
       "frame": {"x": 0, "y": 0, "w": 16, "h": 16}
+    },
+    {
+      "filename": "atacar_arriba_0",
+      "frame": {"x": 16, "y": 16, "w": 16, "h": 16}
+    },
+    {
+      "filename": "atacar_arriba_1",
+      "frame": {"x": 0, "y": 16, "w": 16, "h": 16}
+    },
+    {
+      "filename": "atacar_derecha_0",
+      "frame": {"x": 16, "y": 32, "w": 16, "h": 16}
+    },
+    {
+      "filename": "atacar_derecha_1",
+      "frame": {"x": 0, "y": 32, "w": 16, "h": 16}
+    },
+    {
+      "filename": "atacar_izquierda_0",
+      "frame": {"x": 16, "y": 48, "w": 16, "h": 16}
+    },
+    {
+      "filename": "atacar_izquierda_1",
+      "frame": {"x": 0, "y": 48, "w": 16, "h": 16}
     },
 
     {

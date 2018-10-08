@@ -33,7 +33,10 @@ var scenePrecarga = {
     this.anims.create({key: 'pj_abajo', frames: this.anims.generateFrameNames('pj_base', {prefix: 'abajo_', end: 3}), repeat: -1, frameRate: 4});
     this.anims.create({key: 'pj_izquierda', frames: this.anims.generateFrameNames('pj_base', {prefix: 'izquierda_', end: 3}), repeat: -1, frameRate: 4});
     this.anims.create({key: 'pj_derecha', frames: this.anims.generateFrameNames('pj_base', {prefix: 'derecha_', end: 3}), repeat: -1, frameRate: 4});
-    this.anims.create({key: 'pj_atacar', frames: this.anims.generateFrameNames('pj_base', {prefix: 'atacar_', end: 1}), repeat: 0, frameRate: 4});
+    this.anims.create({key: 'pj_atacar_arriba', frames: this.anims.generateFrameNames('pj_base', {prefix: 'atacar_arriba_', end: 1}), repeat: 0, frameRate: 4});
+    this.anims.create({key: 'pj_atacar_abajo', frames: this.anims.generateFrameNames('pj_base', {prefix: 'atacar_abajo_', end: 1}), repeat: 0, frameRate: 4});
+    this.anims.create({key: 'pj_atacar_izquierda', frames: this.anims.generateFrameNames('pj_base', {prefix: 'atacar_izquierda_', end: 1}), repeat: 0, frameRate: 4});
+    this.anims.create({key: 'pj_atacar_derecha', frames: this.anims.generateFrameNames('pj_base', {prefix: 'atacar_derecha_', end: 1}), repeat: 0, frameRate: 4});
 
     this.anims.create({key: 'murcielago_volar', frames: this.anims.generateFrameNames('murcielago', {prefix: 'volar_', end: 4}), repeat: -1, frameRate: 8});
     this.anims.create({key: 'murcielago_morir', frames: this.anims.generateFrameNames('murcielago', {prefix: 'morir_', end: 4}), repeat: 0, frameRate: 8});

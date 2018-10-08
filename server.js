@@ -84,9 +84,7 @@ function moverJugador(socket, teclas) {
       jugador.dirY = 'abajo';
       cambioPos[1] += 1;
     }
-  }
-
-  if(teclas['derecha']) {
+  } else if(teclas['derecha']) {
     jugador.dirX = 'derecha';
     jugador.lastDir = 'quieto_derecha';
     cambioPos[0] += 1;
@@ -98,15 +96,11 @@ function moverJugador(socket, teclas) {
       jugador.dirY = 'abajo';
       cambioPos[1] += 1;
     }
-  }
-
-  if(teclas['abajo']) {
+  } else if(teclas['abajo']) {
     jugador.dirY = 'abajo';
     jugador.lastDir = 'quieto_abajo';
     cambioPos[1] += 1;
-  }
-
-  if(teclas['arriba']) {
+  } else if(teclas['arriba']) {
     jugador.dirY = 'arriba';
     jugador.lastDir = 'quieto_arriba';
     cambioPos[1] -= 1;

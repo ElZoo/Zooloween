@@ -350,7 +350,20 @@ scenePrincipal.pintarMundo = function() {
 scenePrincipal.ataque_player = function(player_id, mob_ids) {
   var self = this;
   var jugador = this.game.datos.jugadores[player_id];
-  jugador.sprite.play('pj_atacar');
+  switch (jugador.lastDir) {
+    case 'quieto_abajo':
+      jugador.sprite.play('pj_atacar_abajo');
+      break;
+    case 'quieto_arriba':
+      jugador.sprite.play('pj_atacar_arriba');
+      break;
+    case 'quieto_derecha':
+      jugador.sprite.play('pj_atacar_derecha');
+      break;
+    case 'quieto_izquierda':
+      jugador.sprite.play('pj_atacar_izquierda');
+      break;
+  }
 
   mob_ids.forEach(function(mob_id) {
     var mob = this.game.datos.mobs[mob_id];
