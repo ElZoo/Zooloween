@@ -38,19 +38,13 @@ function crearJugador(socket) {
     y: 2,
     vidaMax : 100,
     vida: 100,
-<<<<<<< HEAD
     dirX: 'quieto_abajo',
     dirY: 'quieto_abajo',
     lastDir: 'quieto_abajo',
-    vel: 0.02
-=======
-    dirX: 'quieto',
-    dirY: 'quieto',
     vel: 0.02,
     tickAtaque: 0,
     delayAtaque: 50,
     fuerzaAtaque: 5
->>>>>>> b9a172cdea679d62641b0e20ba3dee214b08804d
   }
 
   socket.emit('datosMapa', [jugadores, mobs, tiles_mundo, items_mundo]);
