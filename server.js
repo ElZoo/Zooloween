@@ -339,6 +339,20 @@ function player_atacar(id) {
   var mobs_afectados = [];
   for(var idMob in mobs) {
     var mob = mobs[idMob];
+
+    if(jugador.lastDir.includes('derecha') && mob.x < jugador.x) {
+      continue;
+    }
+    if(jugador.lastDir.includes('izquierda') && mob.x > jugador.x) {
+      continue;
+    }
+    if(jugador.lastDir.includes('arriba') && mob.y > jugador.y) {
+      continue;
+    }
+    if(jugador.lastDir.includes('abajo') && mob.y < jugador.y) {
+      continue;
+    }
+
     var distancia = calcularDistancia(jugador, mob);
     if(distancia > 0.3) {
       continue;
