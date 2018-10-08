@@ -1,10 +1,14 @@
 var sceneHud = new Phaser.Scene('hud');
 
 sceneHud.init = function() {
-
+  var containerNivel;
 }
 
 sceneHud.create = function() {
+  containerNivel = this.add.container(10, 10).setScale(1.5, 1.5);
+  containerNivel.add(this.add.text(0, 0, "Nivel: " + this.game.datos.jugador.nivel));
+  containerNivel.add(this.add.text(0, 15, "Experiencia: " + this.game.datos.jugador.exp).setScale(0.8, 0.8));
+
   var container = this.add.container(640, 650).setScale(4, 4);
 
   container.add(this.add.image(8+1, 0, 'hud', 'boton'));
@@ -50,5 +54,11 @@ sceneHud.create = function() {
 }
 
 sceneHud.update = function() {
+  this.game.datos.socket.on('subirLvl', function(jugador) {
+    containerNivel.getAt(0).text = 'Nivel: ' + jugador.nivel;
+  });
 
+  this.game.datos.socket.on('subirExp', function(jugador) {
+    containerNivel.getAt(1).text = 'Experiencia: ' + jugador.exp;
+  });
 }

@@ -38,6 +38,8 @@ function crearJugador(socket) {
     y: 2,
     vidaMax : 100,
     vida: 100,
+    nivel: 1,
+    exp: 0,
     dirX: 'quieto_abajo',
     dirY: 'quieto_abajo',
     lastDir: 'quieto_abajo',
@@ -344,11 +346,29 @@ function player_atacar(id) {
     mob.vida -= jugador.fuerzaAtaque;
     if(mob.vida <= 0) {
       matarMob(mob);
+      subirExp(jugador, 5);
     }
     mobs_afectados.push(idMob);
   }
 
   io.emit('ataque_player', [id, mobs_afectados]);
+}
+
+function subirExp(jugador, exp) {
+    jugador.exp += exp;
+
+    if(calcularExpMaxNivel(jugador.nivel) <= jugador.exp) {
+      subirLvl(jugador, exp);
+    }
+
+    io.to(jugador.id).emit('subirExp', jugador);
+}
+
+function subirLvl(jugador, exp) {
+  jugador.exp -= calcularExpMaxNivel(jugador.nivel);
+  jugador.nivel++;
+
+  io.emit('subirLvl', jugador);
 }
 
 server.listen(8081, function() {
@@ -357,6 +377,10 @@ server.listen(8081, function() {
 
 function calcularDistancia(ent1, ent2) {
   return Math.sqrt(Math.pow(ent1.x - ent2.x, 2) + Math.pow(ent1.y - ent2.y, 2));
+}
+
+function calcularExpMaxNivel(nivel) {
+  return Math.round(nivel + nivel*1.25 + 3);
 }
 
 var tiles_barrera = [0, 10, 11, 12, 13, 14, 15];

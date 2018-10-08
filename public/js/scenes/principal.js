@@ -26,6 +26,7 @@ scenePrincipal.create = function() {
       j.dirX = jugador.dirX;
       j.dirY = jugador.dirY;
       j.lastDir = jugador.lastDir;
+      j.nivel = jugador.nivel;
     }
 
     var mobs = datos[1];
@@ -44,6 +45,9 @@ scenePrincipal.create = function() {
   this.game.datos.socket.on('nuevoJugador', function(jugador) {
     jugador.sprite = self.add.sprite(jugador.x * 32, jugador.y * 32, 'pj_base', 'abajo_0').setFrame('quieto_abajo');
     self.game.datos.jugadores[jugador.id] = jugador;
+
+    jugador.texto_nivel = self.add.container(0, 0).setScale(0.3, 0.3);
+    jugador.texto_nivel.add(this.add.text(0, 0, 'Lvl ' + jugador.nivel));
   });
   this.game.datos.socket.on('nuevoMob', function(mob) {
     if(mob.tipo == 'murcielago') {
@@ -139,6 +143,10 @@ scenePrincipal.update = function(time, delta) {
     jugador.sprite.y = jugador.y * 32;
     jugador.sprite.depth = jugador.sprite.y;
 
+    jugador.texto_nivel.x = jugador.x * 32 - 7;
+    jugador.texto_nivel.y = jugador.y * 32 - 18;
+    jugador.texto_nivel.getAt(0).text = 'Lvl ' + jugador.nivel;
+
     var currentAnim = jugador.sprite.anims.currentAnim
     if(currentAnim && currentAnim.key.includes('pj_atacar') && jugador.sprite.anims.isPlaying) {
       continue;
@@ -220,8 +228,14 @@ scenePrincipal.pintarJugadores = function() {
   for(var id in jugadores) {
     var jugador = jugadores[id];
 
+    jugador.texto_nivel = this.add.container(0, 0).setScale(0.3, 0.3);
+    jugador.texto_nivel.add(this.add.text(0, 0, 'Lvl ' + jugador.nivel));
+    jugador.texto_nivel.x = jugador.x * 32 - 7;
+    jugador.texto_nivel.y = jugador.y * 32 - 18;
+
     jugador.sprite = this.add.sprite(jugador.x * 32, jugador.y * 32, 'pj_base').setOrigin(0.5, 0.75).setFrame(jugador.lastDir);
     if(id == this.game.datos.socket.id) {
+      jugador.texto_nivel.visible = true;
       this.game.datos.jugador = jugador;
       this.cameras.main.setBounds(-32, -32, 544, 544).setZoom(3);
       this.cameras.main.startFollow(jugador.sprite);
