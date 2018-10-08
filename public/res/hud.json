@@ -15,6 +15,11 @@
     {
       "filename": "boton",
       "frame": {"x": 0, "y": 20, "w": 16, "h": 16}
+    },
+
+    {
+      "filename": "item_espada",
+      "frame": {"x": 0, "y": 36, "w": 32, "h": 32}
     }
   ]
 }

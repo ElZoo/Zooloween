@@ -101,6 +101,7 @@ scenePrincipal.create = function() {
 
   this.input.on('pointerdown', function(pointer) {
     self.game.datos.socket.emit('player_atacar');
+    self.events.emit('click_principal');
   });
 
   setInterval(function() {
@@ -349,6 +350,11 @@ scenePrincipal.pintarMundo = function() {
 
 scenePrincipal.ataque_player = function(player_id, mob_ids) {
   var self = this;
+
+  if(player_id == this.game.datos.jugador.id) {
+    this.events.emit('ataque_principal');
+  }
+
   var jugador = this.game.datos.jugadores[player_id];
   switch (jugador.lastDir) {
     case 'quieto_abajo':
