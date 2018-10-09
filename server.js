@@ -46,7 +46,7 @@ function crearJugador(socket) {
     vel: 0.02,
     tickAtaque: 0
   }
-  ponerArma(socket.id, "item_mano");
+  ponerArma(socket.id, "item_espada");
 
   socket.emit('datosMapa', [jugadores, mobs, tiles_mundo, items_mundo]);
   socket.broadcast.emit('nuevoJugador', jugadores[socket.id]);

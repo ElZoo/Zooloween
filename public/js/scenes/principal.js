@@ -246,15 +246,13 @@ scenePrincipal.pintarJugadores = function() {
   for(var id in jugadores) {
     var jugador = jugadores[id];
 
-    jugador.sprite = this.add.sprite(jugador.x * 32, jugador.y * 32, 'pj_base').setOrigin(0.5, 0.9).setScale(0.5, 0.5).setFrame(jugador.lastDir);
-    jugador.spriteArma = this.add.sprite(jugador.x * 32, jugador.y * 32, jugador.arma).setOrigin(0.5, 0.9).setScale(0.5, 0.5).setFrame('abajo_0');
-
     jugador.texto_nivel = this.add.container(0, 0).setScale(0.3, 0.3);
     jugador.texto_nivel.add(this.add.text(0, 0, 'Lvl ' + jugador.nivel));
     jugador.texto_nivel.x = jugador.x * 32 - 7;
     jugador.texto_nivel.y = jugador.y * 32 - 16;
 
-    jugador.sprite = this.add.sprite(jugador.x * 32, jugador.y * 32, 'pj_base').setOrigin(0.5, 0.75).setFrame(jugador.lastDir);
+    jugador.sprite = this.add.sprite(jugador.x * 32, jugador.y * 32, 'pj_base').setOrigin(0.5, 0.9).setScale(0.5, 0.5).setFrame(jugador.lastDir);
+    jugador.spriteArma = this.add.sprite(jugador.x * 32, jugador.y * 32, jugador.arma).setOrigin(0.5, 0.9).setScale(0.5, 0.5).setFrame('abajo_0');
     if(id == this.game.datos.socket.id) {
       jugador.texto_nivel.visible = false;
       this.game.datos.jugador = jugador;
