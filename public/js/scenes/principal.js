@@ -47,7 +47,7 @@ scenePrincipal.create = function() {
     self.game.datos.jugadores[jugador.id] = jugador;
 
     jugador.texto_nivel = self.add.container(0, 0).setScale(0.3, 0.3);
-    jugador.texto_nivel.add(this.add.text(0, 0, 'Lvl ' + jugador.nivel));
+    jugador.texto_nivel.add(self.add.text(0, 0, 'Lvl ' + jugador.nivel));
   });
   this.game.datos.socket.on('nuevoMob', function(mob) {
     if(mob.tipo == 'murcielago') {
@@ -89,6 +89,7 @@ scenePrincipal.create = function() {
       self.scene.launch('final');
     } else {
       self.game.datos.jugadores[id].sprite.destroy();
+      self.game.datos.jugadores[id].texto_nivel.destroy();
       delete self.game.datos.jugadores[id];
     }
   });
@@ -97,6 +98,7 @@ scenePrincipal.create = function() {
     self.game.datos.mobs[id].ticksMuerto = 0;
     self.game.datos.mobs[id].vida = 0;
     self.game.datos.mobs[id].sprite.play('murcielago_morir', true);
+    self.game.datos.mobs[id].texto_nivel.destroy();
   });
 
   this.game.datos.socket.on('ataque_player', function(datos) {
