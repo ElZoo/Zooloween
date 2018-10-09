@@ -7,7 +7,7 @@ sceneHud.init = function() {
 sceneHud.create = function() {
   containerNivel = this.add.container(10, 10).setScale(1.5, 1.5);
   containerNivel.add(this.add.text(0, 0, "Nivel: " + this.game.datos.jugador.nivel));
-  containerNivel.add(this.add.text(0, 15, "Experiencia: " + this.game.datos.jugador.exp).setScale(0.8, 0.8));
+  containerNivel.add(this.add.text(0, 15, "Experiencia: " + this.game.datos.jugador.exp + "/" + calcularExpMaxNivel(this.game.datos.jugador.exp)).setScale(0.8, 0.8));
 
   var container = this.add.container(640, 650).setScale(4, 4);
 
@@ -59,6 +59,10 @@ sceneHud.update = function() {
   });
 
   this.game.datos.socket.on('subirExp', function(jugador) {
-    containerNivel.getAt(1).text = 'Experiencia: ' + jugador.exp;
+    containerNivel.getAt(1).text = 'Experiencia: ' + jugador.exp + "/" + calcularExpMaxNivel(jugador.nivel);
   });
+}
+
+function calcularExpMaxNivel(nivel) {
+  return Math.round(nivel + nivel*1.25 + 3);
 }

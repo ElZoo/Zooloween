@@ -98,7 +98,7 @@ scenePrincipal.create = function() {
     self.game.datos.mobs[id].ticksMuerto = 0;
     self.game.datos.mobs[id].vida = 0;
     self.game.datos.mobs[id].sprite.play('murcielago_morir', true);
-    self.game.datos.mobs[id].texto_nivel.destroy();
+    self.game.datos.mobs[id].barra_vida.destroy();
   });
 
   this.game.datos.socket.on('ataque_player', function(datos) {
@@ -184,7 +184,7 @@ scenePrincipal.update = function(time, delta) {
     mob.sprite.y = mob.y * 32;
     mob.sprite.depth = mob.sprite.y;
     var distancia = calcularDistancia(pj, mob);
-    if(distancia < 2) {
+    if(distancia < 2 && mob.vida > 0) {
       mob.barra_vida.visible = true;
       mob.barra_vida.x = mob.x * 32;
       mob.barra_vida.y = mob.y * 32 - 12;
@@ -233,7 +233,7 @@ scenePrincipal.pintarJugadores = function() {
     jugador.texto_nivel = this.add.container(0, 0).setScale(0.3, 0.3);
     jugador.texto_nivel.add(this.add.text(0, 0, 'Lvl ' + jugador.nivel));
     jugador.texto_nivel.x = jugador.x * 32 - 7;
-    jugador.texto_nivel.y = jugador.y * 32 - 18;
+    jugador.texto_nivel.y = jugador.y * 32 - 16;
 
     jugador.sprite = this.add.sprite(jugador.x * 32, jugador.y * 32, 'pj_base').setOrigin(0.5, 0.75).setFrame(jugador.lastDir);
     if(id == this.game.datos.socket.id) {
