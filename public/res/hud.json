@@ -18,8 +18,20 @@
     },
 
     {
+      "filename": "item_mano",
+      "frame": {"x": 32, "y": 36, "w": 32, "h": 32}
+    },
+    {
+      "filename": "item_daga",
+      "frame": {"x": 0, "y": 68, "w": 32, "h": 32}
+    },
+    {
       "filename": "item_espada",
       "frame": {"x": 0, "y": 36, "w": 32, "h": 32}
+    },
+    {
+      "filename": "item_espada_plus",
+      "frame": {"x": 0, "y": 68, "w": 32, "h": 32}
     }
   ]
 }

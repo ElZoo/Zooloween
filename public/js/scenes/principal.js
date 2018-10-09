@@ -26,6 +26,7 @@ scenePrincipal.create = function() {
       j.dirX = jugador.dirX;
       j.dirY = jugador.dirY;
       j.lastDir = jugador.lastDir;
+      j.arma = jugador.arma;
     }
 
     var mobs = datos[1];
@@ -42,7 +43,8 @@ scenePrincipal.create = function() {
     }
   });
   this.game.datos.socket.on('nuevoJugador', function(jugador) {
-    jugador.sprite = self.add.sprite(jugador.x * 32, jugador.y * 32, 'pj_base', 'abajo_0').setFrame('quieto_abajo');
+    jugador.sprite = self.add.sprite(jugador.x * 32, jugador.y * 32, 'pj_base', 'abajo_0').setScale(0.5, 0.5).setFrame('quieto_abajo');
+    jugador.spriteArma = self.add.sprite(jugador.x * 32, jugador.y * 32, jugador.arma, 'abajo_0').setScale(0.5, 0.5).setFrame('abajo_0');
     self.game.datos.jugadores[jugador.id] = jugador;
   });
   this.game.datos.socket.on('nuevoMob', function(mob) {
@@ -58,6 +60,7 @@ scenePrincipal.create = function() {
   });
   this.game.datos.socket.on('disconnect', function(id) {
     self.game.datos.jugadores[id].sprite.destroy();
+    self.game.datos.jugadores[id].spriteArma.destroy();
     delete self.game.datos.jugadores[id];
   });
 
@@ -73,9 +76,11 @@ scenePrincipal.create = function() {
       onUpdate: function (tween) {
           var value = Math.floor(tween.getValue());
           jugador.sprite.setTint(Phaser.Display.Color.GetColor(value, 0, 0));
+          jugador.spriteArma.setTint(Phaser.Display.Color.GetColor(value, 0, 0));
       },
       onComplete: function(tween) {
         jugador.sprite.setTint();
+        jugador.spriteArma.setTint();
       }
     });
   });
@@ -85,6 +90,7 @@ scenePrincipal.create = function() {
       self.scene.launch('final');
     } else {
       self.game.datos.jugadores[id].sprite.destroy();
+      self.game.datos.jugadores[id].spriteArma.destroy();
       delete self.game.datos.jugadores[id];
     }
   });
@@ -121,7 +127,7 @@ scenePrincipal.update = function(time, delta) {
 
   var pj = this.game.datos.jugador;
   pj.barra_vida.x = pj.x * 32;
-  pj.barra_vida.y = pj.y * 32 - 16;
+  pj.barra_vida.y = pj.y * 32 - 24;
   pj.barra_vida.getAt(1).width = Math.round(pj.vida / pj.vidaMax * 32);
   if(pj.vida < pj.vidaMax * 0.33) {
     pj.barra_vida.getAt(1).fillColor = 0xff0000;
@@ -139,6 +145,10 @@ scenePrincipal.update = function(time, delta) {
     jugador.sprite.y = jugador.y * 32;
     jugador.sprite.depth = jugador.sprite.y;
 
+    jugador.spriteArma.x = jugador.x * 32;
+    jugador.spriteArma.y = jugador.y * 32;
+    jugador.spriteArma.depth = jugador.spriteArma.y;
+
     var currentAnim = jugador.sprite.anims.currentAnim
     if(currentAnim && currentAnim.key.includes('pj_atacar') && jugador.sprite.anims.isPlaying) {
       continue;
@@ -146,21 +156,27 @@ scenePrincipal.update = function(time, delta) {
     switch (jugador.dirX) {
       case 'izquierda':
         jugador.sprite.anims.play('pj_izquierda', true);
+        jugador.spriteArma.anims.play(jugador.arma+'_izquierda', true);
         break;
       case 'derecha':
         jugador.sprite.anims.play('pj_derecha', true);
+        jugador.spriteArma.anims.play(jugador.arma+'_derecha', true);
         break;
       default:
         switch(jugador.dirY) {
           case 'arriba':
             jugador.sprite.anims.play('pj_arriba', true);
+            jugador.spriteArma.anims.play(jugador.arma+'_arriba', true);
             break;
           case 'abajo':
             jugador.sprite.anims.play('pj_abajo', true);
+            jugador.spriteArma.anims.play(jugador.arma+'_abajo', true);
             break;
           default:
             jugador.sprite.anims.stop();
             jugador.sprite.setFrame(jugador.lastDir);
+            jugador.spriteArma.anims.stop();
+            jugador.spriteArma.setFrame(jugador.lastDir);
             break;
         }
     }
@@ -220,7 +236,8 @@ scenePrincipal.pintarJugadores = function() {
   for(var id in jugadores) {
     var jugador = jugadores[id];
 
-    jugador.sprite = this.add.sprite(jugador.x * 32, jugador.y * 32, 'pj_base').setOrigin(0.5, 0.75).setFrame(jugador.lastDir);
+    jugador.sprite = this.add.sprite(jugador.x * 32, jugador.y * 32, 'pj_base').setOrigin(0.5, 0.9).setScale(0.5, 0.5).setFrame(jugador.lastDir);
+    jugador.spriteArma = this.add.sprite(jugador.x * 32, jugador.y * 32, jugador.arma).setOrigin(0.5, 0.9).setScale(0.5, 0.5).setFrame('abajo_0');
     if(id == this.game.datos.socket.id) {
       this.game.datos.jugador = jugador;
       this.cameras.main.setBounds(-32, -32, 544, 544).setZoom(3);
@@ -359,15 +376,19 @@ scenePrincipal.ataque_player = function(player_id, mob_ids) {
   switch (jugador.lastDir) {
     case 'quieto_abajo':
       jugador.sprite.play('pj_atacar_abajo');
+      jugador.spriteArma.play(jugador.arma+'_ataque_abajo');
       break;
     case 'quieto_arriba':
       jugador.sprite.play('pj_atacar_arriba');
+      jugador.spriteArma.play(jugador.arma+'_ataque_arriba');
       break;
     case 'quieto_derecha':
       jugador.sprite.play('pj_atacar_derecha');
+      jugador.spriteArma.play(jugador.arma+'_ataque_derecha');
       break;
     case 'quieto_izquierda':
       jugador.sprite.play('pj_atacar_izquierda');
+      jugador.spriteArma.play(jugador.arma+'_ataque_izquierda');
       break;
   }
 

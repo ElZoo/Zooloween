@@ -42,10 +42,9 @@ function crearJugador(socket) {
     dirY: 'quieto_abajo',
     lastDir: 'quieto_abajo',
     vel: 0.02,
-    tickAtaque: 0,
-    delayAtaque: 50,
-    fuerzaAtaque: 5
+    tickAtaque: 0
   }
+  ponerArma(socket.id, "item_mano");
 
   socket.emit('datosMapa', [jugadores, mobs, tiles_mundo, items_mundo]);
   socket.broadcast.emit('nuevoJugador', jugadores[socket.id]);
@@ -352,7 +351,7 @@ function player_atacar(id) {
     }
 
     var distancia = calcularDistancia(jugador, mob);
-    if(distancia > 0.3) {
+    if(distancia > jugador.rangoAtaque) {
       continue;
     }
     mob.vida -= jugador.fuerzaAtaque;
@@ -365,6 +364,16 @@ function player_atacar(id) {
   io.emit('ataque_player', [id, mobs_afectados]);
 }
 
+function ponerArma(id, arma_id) {
+  var jugador = jugadores[id];
+  var arma = armas[arma_id];
+  
+  jugador.arma = arma.nombre;
+  jugador.delayAtaque = arma.delayAtaque;
+  jugador.fuerzaAtaque = arma.fuerzaAtaque;
+  jugador.rangoAtaque = arma.rangoAtaque;
+}
+
 server.listen(8081, function() {
   console.log(`Escuchando en ${server.address().port}`);
 });
@@ -372,6 +381,33 @@ server.listen(8081, function() {
 function calcularDistancia(ent1, ent2) {
   return Math.sqrt(Math.pow(ent1.x - ent2.x, 2) + Math.pow(ent1.y - ent2.y, 2));
 }
+
+var armas = {
+  item_mano: {
+    nombre: "item_mano",
+    delayAtaque: 50,
+    fuerzaAtaque: 5,
+    rangoAtaque: 0.3,
+  },
+  item_daga: {
+    nombre: "item_daga",
+    delayAtaque: 20,
+    fuerzaAtaque: 2,
+    rangoAtaque: 0.3,
+  },
+  item_espada: {
+    nombre: "item_espada",
+    delayAtaque: 50,
+    fuerzaAtaque: 10,
+    rangoAtaque: 0.7,
+  },
+  item_espada_plus: {
+    nombre: "item_espada_plus",
+    delayAtaque: 50,
+    fuerzaAtaque: 20,
+    rangoAtaque: 0.7,
+  }
+};
 
 var tiles_barrera = [0, 10, 11, 12, 13, 14, 15];
 

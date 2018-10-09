@@ -10,7 +10,7 @@ sceneHud.create = function() {
   container.add(this.add.image(8+1, 0, 'hud', 'boton'));
   container.add(this.add.image(-8-1, 0, 'hud', 'boton'));
 
-  var ataque_principal = this.add.image(-8-1, 0, 'hud', 'item_espada').setScale(0.25, 0.25);
+  var ataque_principal = this.add.image(-8-1, 0, 'hud', this.game.datos.jugador.arma).setScale(0.25, 0.25);
   container.add(ataque_principal);
   container.add(this.add.text(-16-1, 8+1, "Clic Izq.",  {align: 'center'}).setScale(0.2, 0.2));
 
@@ -22,7 +22,7 @@ sceneHud.create = function() {
       from: 0.25,
       to: 0.2,
       yoyo: true,
-      duration: 50,
+      duration: self.game.datos.jugador.delayAtaque * 5,
       onUpdate: function(tween) {
         ataque_principal.setScale(tween.getValue(), tween.getValue());
       },
@@ -34,7 +34,7 @@ sceneHud.create = function() {
     this.tweens.addCounter({
       from: 0,
       to: 360,
-      duration: 250,
+      duration: self.game.datos.jugador.delayAtaque * 10,
       onUpdate: function(tween) {
         var t = tween.getValue();
         self.circulo_principal.clear();
