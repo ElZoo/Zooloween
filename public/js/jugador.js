@@ -81,7 +81,7 @@ scenePrincipal.updateSpritesJugadores = function() {
     jugador.spriteArma.depth = jugador.spriteArma.y;
 
     jugador.texto_nivel.x = jugador.x * 32 - 7;
-    jugador.texto_nivel.y = jugador.y * 32 - 18;
+    jugador.texto_nivel.y = jugador.y * 32 - 28;
     jugador.texto_nivel.getAt(0).text = 'Lvl ' + jugador.nivel;
 
     var currentAnim = jugador.sprite.anims.currentAnim
