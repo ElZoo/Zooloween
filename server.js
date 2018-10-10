@@ -395,6 +395,7 @@ function subirLvl(jugador, exp) {
   jugador.exp -= calcularExpMaxNivel(jugador.nivel);
   jugador.nivel++;
   recompensa(jugador);
+  curarPlayer(jugador, 100);
   io.emit('subirLvl', jugador);
 }
 
@@ -408,6 +409,10 @@ function calcularDistancia(ent1, ent2) {
 
 function calcularExpMaxNivel(nivel) {
   return Math.round(nivel + nivel*1.25 + 3);
+}
+
+function curarPlayer(jugador, cantidad){
+  jugador.vida = cantidad;
 }
 
 function recompensa(jugador){
