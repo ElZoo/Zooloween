@@ -121,7 +121,9 @@ function moverJugador(socket, teclas) {
 }
 
 setInterval(function() {
-  crearMob();
+  for(var i=0, len=Object.keys(jugadores).length; i<len; i++) {
+    crearMob();
+  }
 }, 10000);
 
 function crearMob() {
