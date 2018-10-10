@@ -32,6 +32,10 @@ scenePrincipal.crearJugador = function(jugador) {
 
 //eliminar los sprites y el texto y borrarlo del array de jugadores
 scenePrincipal.onDisconnectJugador = function(id) {
+  if(!this.game.datos.jugadores[id]) {
+    return;
+  }
+  
   this.game.datos.jugadores[id].sprite.destroy();
   this.game.datos.jugadores[id].spriteArma.destroy();
   this.game.datos.jugadores[id].texto_nivel.destroy();
