@@ -121,8 +121,10 @@ function moverJugador(socket, teclas) {
 }
 
 setInterval(function() {
-  crearMob();
-}, 10000);
+  for(var i=0, len=Math.floor(Object.keys(jugadores).length/2.0); i<len; i++) {
+    crearMob();
+  }
+}, 5000);
 
 function crearMob() {
   var num_mobs = Object.keys(mobs).length;
@@ -334,7 +336,7 @@ function matarMob(mob) {
 
 function player_atacar(id) {
   var jugador = jugadores[id];
-  if(jugador.tickAtaque < jugador.delayAtaque || jugador.vida <= 0) {
+  if(!jugador || jugador.tickAtaque < jugador.delayAtaque || jugador.vida <= 0) {
     return;
   }
   jugador.tickAtaque = 0;
@@ -367,6 +369,7 @@ function player_atacar(id) {
       matarMob(mob);
       subirExp(jugador, 5);
     }
+    mob.target = jugador.id;
     mobs_afectados.push(idMob);
   }
 
@@ -436,15 +439,15 @@ function recompensa(jugador){
 var armas = {
   item_mano: {
     nombre: "item_mano",
-    delayAtaque: 50,
+    delayAtaque: 60,
     fuerzaAtaque: 5,
     rangoAtaque: 0.3,
     probCrit: 0.05
   },
   item_daga: {
     nombre: "item_daga",
-    delayAtaque: 20,
-    fuerzaAtaque: 2,
+    delayAtaque: 25,
+    fuerzaAtaque: 4,
     rangoAtaque: 0.3,
     probCrit: 0.2
   },
