@@ -47,7 +47,7 @@ function crearJugador(socket) {
     tickAtaque: 0,
     probCrit: 0.05
   }
-  ponerArma(socket.id, "item_espada");
+  ponerArma(socket.id, "item_mano");
 
   socket.emit('datosMapa', [jugadores, mobs, tiles_mundo, items_mundo]);
   socket.broadcast.emit('nuevoJugador', jugadores[socket.id]);
@@ -394,7 +394,7 @@ function subirExp(jugador, exp) {
 function subirLvl(jugador, exp) {
   jugador.exp -= calcularExpMaxNivel(jugador.nivel);
   jugador.nivel++;
-
+  recompensa(jugador);
   io.emit('subirLvl', jugador);
 }
 
@@ -408,6 +408,21 @@ function calcularDistancia(ent1, ent2) {
 
 function calcularExpMaxNivel(nivel) {
   return Math.round(nivel + nivel*1.25 + 3);
+}
+
+function recompensa(jugador){
+  switch(jugador.nivel){
+    case 5:
+      ponerArma(jugador.id, "item_daga");
+      break;
+    case 15:
+      ponerArma(jugador.id, "item_espada");
+      break;
+    case 30:
+      ponerArma(jugador.id, "item_espada_plus");
+      break;
+    default:
+  }
 }
 
 var armas = {
