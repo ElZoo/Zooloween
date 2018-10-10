@@ -192,5 +192,23 @@ scenePrincipal.ataque_player = function(player_id, mob_ids) {
         mob.sprite.setTint();
       }
     });
+
+    self.tweens.addCounter({
+      from: 0,
+      to: 1,
+      duration: 750,
+      onStart: function (tween) {
+        if(!mob) {
+          return;
+        }
+        mob.barra_vida.visible = true;
+      },
+      onComplete: function(tween) {
+        if(!mob) {
+          return;
+        }
+        mob.barra_vida.visible = false;
+      }
+    });
   });
 }
