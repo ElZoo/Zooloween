@@ -367,6 +367,7 @@ function player_atacar(id) {
       matarMob(mob);
       subirExp(jugador, 5);
     }
+    mob.target = jugador.id;
     mobs_afectados.push(idMob);
   }
 
