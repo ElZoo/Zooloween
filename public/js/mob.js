@@ -23,6 +23,7 @@ scenePrincipal.onNuevoMob = function(mob) {
   var vida_color = this.add.rectangle(-15, 2, 1, 5, 0xffffff).setOrigin(0.5, 1);
   mob.barra_vida = this.add.container(0, 0, [vida_fondo, vida_color, vida_borde]).setScale(0.4, 0.4);
   mob.barra_vida.depth = 999989;
+  mob.barra_vida.visible = false;
 
   this.game.datos.mobs[mob.id] = mob;
 }
@@ -70,7 +71,7 @@ scenePrincipal.updateSpritesMobs = function() {
     mob.sprite.y = mob.y * 32;
     mob.sprite.depth = mob.sprite.y;
 
-    if(mob.barra_vida.visible) {
+    if(mob.barra_vida.visible && mob.barra_vida.getAt(1)) {
       mob.barra_vida.x = mob.x * 32;
       mob.barra_vida.y = mob.y * 32 - 12;
       mob.barra_vida.getAt(1).width = Math.round(mob.vida / mob.vidaMax * 32);
@@ -81,7 +82,7 @@ scenePrincipal.updateSpritesMobs = function() {
       } else {
         mob.barra_vida.getAt(1).fillColor = 0x00ff00;
       }
-    }    
+    }
 
     mob.sprite.flipX = (mob.dir == 'izquierda');
     if(mob.vida <= 0) {
