@@ -1,15 +1,19 @@
 var sceneHud = new Phaser.Scene('hud');
 
 sceneHud.init = function() {
-  this.containerNivel;
+  this.containerArribaIzq;
+  this.containerArribaDer;
 }
 
 sceneHud.create = function() {
   var self = this;
 
-  this.containerNivel = this.add.container(10, 10).setScale(1.5, 1.5);
-  this.containerNivel.add(this.add.text(0, 0, "Nivel: " + this.game.datos.jugador.nivel));
-  this.containerNivel.add(this.add.text(0, 15, "Experiencia: " + this.game.datos.jugador.exp + "/" + calcularExpMaxNivel(this.game.datos.jugador.exp)).setScale(0.8, 0.8));
+  this.containerArribaIzq = this.add.container(10, 10).setScale(1.5, 1.5);
+  this.containerArribaIzq.add(this.add.text(0, 0, "Nivel: " + this.game.datos.jugador.nivel));
+  this.containerArribaIzq.add(this.add.text(0, 15, "Experiencia: " + this.game.datos.jugador.exp + "/" + calcularExpMaxNivel(this.game.datos.jugador.exp)).setScale(0.8, 0.8));
+  
+  this.containerArribaDer = this.add.container(this.game.config.width-220, 10).setScale(1.5, 1.5);
+  this.containerArribaDer.add(this.add.text(0, 0, "Jugadores: " + Object.keys(this.game.datos.jugadores).length));
 
   var container = this.add.container(640, 650).setScale(4, 4);
 
@@ -60,11 +64,19 @@ sceneHud.create = function() {
   }, this);
 
   this.game.datos.socket.on('subirLvl', function(lvl) {
-    self.containerNivel.getAt(0).text = 'Nivel: ' + lvl;
+    self.containerArribaIzq.getAt(0).text = 'Nivel: ' + lvl;
   });
 
   this.game.datos.socket.on('subirExp', function(exp) {
-    self.containerNivel.getAt(1).text = 'Experiencia: ' + exp + "/" + calcularExpMaxNivel(self.game.datos.jugador.nivel);
+    self.containerArribaIzq.getAt(1).text = 'Experiencia: ' + exp + "/" + calcularExpMaxNivel(self.game.datos.jugador.nivel);
+  });
+
+  this.scene.get('principal').events.on('nuevoJugador', function() {   
+    self.containerArribaDer.getAt(0).text = 'Jugadores: ' + Object.keys(self.game.datos.jugadores).length;
+  });
+
+  this.scene.get('principal').events.on('matarJugador', function() {
+    self.containerArribaDer.getAt(0).text = 'Jugadores: ' + Object.keys(self.game.datos.jugadores).length;
   });
 }
 

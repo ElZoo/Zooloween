@@ -28,6 +28,8 @@ scenePrincipal.crearJugador = function(jugador) {
 
   jugador.texto_nivel = this.add.container(0, 0).setScale(0.3, 0.3);
   jugador.texto_nivel.add(this.add.text(0, 0, 'Lvl ' + jugador.nivel));
+  
+  this.events.emit('nuevoJugador') ;
 }
 
 //eliminar los sprites y el texto y borrarlo del array de jugadores
@@ -40,6 +42,9 @@ scenePrincipal.onDisconnectJugador = function(id) {
   this.game.datos.jugadores[id].spriteArma.destroy();
   this.game.datos.jugadores[id].texto_nivel.destroy();
   delete this.game.datos.jugadores[id];
+
+  this.events.emit('matarJugador') ;
+
 }
 
 //si es el pj principal, ver la pantalla final, si no, borrar sus datos
