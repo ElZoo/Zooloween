@@ -44,7 +44,8 @@ function crearJugador(socket) {
     dirY: 'quieto_abajo',
     lastDir: 'quieto_abajo',
     vel: 0.02,
-    tickAtaque: 0
+    tickAtaque: 0,
+    probCrit: 0.05
   }
   ponerArma(socket.id, "item_espada");
 
@@ -356,7 +357,8 @@ function player_atacar(id) {
     if(distancia > jugador.rangoAtaque) {
       continue;
     }
-    mob.vida -= jugador.fuerzaAtaque;
+    var random1 = Math.random();
+    jugador.probCrit>=random1?mob.vida-=(jugador.fuerzaAtaque*2):mob.vida-=jugador.fuerzaAtaque;
     if(mob.vida <= 0) {
       matarMob(mob);
       subirExp(jugador, 5);
@@ -375,6 +377,7 @@ function ponerArma(id, arma_id) {
   jugador.delayAtaque = arma.delayAtaque;
   jugador.fuerzaAtaque = arma.fuerzaAtaque;
   jugador.rangoAtaque = arma.rangoAtaque;
+  jugador.probCrit = arma.probCrit;
 }
 
 function subirExp(jugador, exp) {
@@ -412,24 +415,28 @@ var armas = {
     delayAtaque: 50,
     fuerzaAtaque: 5,
     rangoAtaque: 0.3,
+    probCrit: 0.05
   },
   item_daga: {
     nombre: "item_daga",
     delayAtaque: 20,
     fuerzaAtaque: 2,
     rangoAtaque: 0.3,
+    probCrit: 0.2
   },
   item_espada: {
     nombre: "item_espada",
     delayAtaque: 50,
     fuerzaAtaque: 10,
     rangoAtaque: 0.7,
+    probCrit: 0.1
   },
   item_espada_plus: {
     nombre: "item_espada_plus",
     delayAtaque: 50,
     fuerzaAtaque: 20,
     rangoAtaque: 0.7,
+    probCrit: 0.15
   }
 };
 
