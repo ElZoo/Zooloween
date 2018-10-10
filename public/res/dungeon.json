@@ -88,6 +88,22 @@
     {
       "filename": "cadena",
       "frame": {"x": 96, "y": 204, "w": 32, "h": 32}
+    },
+    {
+      "filename": "puerta_barras",
+      "frame": {"x": 0, "y": 448, "w": 64, "h": 64}
+    },
+    {
+      "filename": "puerta_madera",
+      "frame": {"x": 64, "y": 448, "w": 64, "h": 64}
+    },
+    {
+      "filename": "decor_espadas",
+      "frame": {"x": 64, "y": 768, "w": 32, "h": 64}
+    },
+    {
+      "filename": "decor_lanzas",
+      "frame": {"x": 96, "y": 768, "w": 32, "h": 64}
     }
   ]
 }
