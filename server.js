@@ -437,15 +437,15 @@ function recompensa(jugador){
 var armas = {
   item_mano: {
     nombre: "item_mano",
-    delayAtaque: 50,
+    delayAtaque: 60,
     fuerzaAtaque: 5,
     rangoAtaque: 0.3,
     probCrit: 0.05
   },
   item_daga: {
     nombre: "item_daga",
-    delayAtaque: 20,
-    fuerzaAtaque: 2,
+    delayAtaque: 25,
+    fuerzaAtaque: 4,
     rangoAtaque: 0.3,
     probCrit: 0.2
   },
