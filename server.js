@@ -391,7 +391,7 @@ function subirExp(jugador, exp) {
       subirLvl(jugador, exp);
     }
 
-    io.to(jugador.id).emit('subirExp', jugador);
+    io.to(jugador.id).emit('subirExp', jugador.exp);
 }
 
 function subirLvl(jugador, exp) {
@@ -399,7 +399,7 @@ function subirLvl(jugador, exp) {
   jugador.nivel++;
   recompensa(jugador);
   curarPlayer(jugador, 100);
-  io.emit('subirLvl', jugador);
+  io.to(jugador.id).emit('subirLvl', jugador.nivel);
 }
 
 server.listen(8081, function() {

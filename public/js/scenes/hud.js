@@ -1,13 +1,15 @@
 var sceneHud = new Phaser.Scene('hud');
 
 sceneHud.init = function() {
-  var containerNivel;
+  this.containerNivel;
 }
 
 sceneHud.create = function() {
-  containerNivel = this.add.container(10, 10).setScale(1.5, 1.5);
-  containerNivel.add(this.add.text(0, 0, "Nivel: " + this.game.datos.jugador.nivel));
-  containerNivel.add(this.add.text(0, 15, "Experiencia: " + this.game.datos.jugador.exp + "/" + calcularExpMaxNivel(this.game.datos.jugador.exp)).setScale(0.8, 0.8));
+  var self = this;
+
+  this.containerNivel = this.add.container(10, 10).setScale(1.5, 1.5);
+  this.containerNivel.add(this.add.text(0, 0, "Nivel: " + this.game.datos.jugador.nivel));
+  this.containerNivel.add(this.add.text(0, 15, "Experiencia: " + this.game.datos.jugador.exp + "/" + calcularExpMaxNivel(this.game.datos.jugador.exp)).setScale(0.8, 0.8));
 
   var container = this.add.container(640, 650).setScale(4, 4);
 
@@ -56,15 +58,13 @@ sceneHud.create = function() {
   this.scene.get('principal').events.on('cambio_de_arma', function(arma) {
     this.ataque_principal.setFrame(arma);
   }, this);
-}
 
-sceneHud.update = function() {
-  this.game.datos.socket.on('subirLvl', function(jugador) {
-    containerNivel.getAt(0).text = 'Nivel: ' + jugador.nivel;
+  this.game.datos.socket.on('subirLvl', function(lvl) {
+    self.containerNivel.getAt(0).text = 'Nivel: ' + lvl;
   });
 
-  this.game.datos.socket.on('subirExp', function(jugador) {
-    containerNivel.getAt(1).text = 'Experiencia: ' + jugador.exp + "/" + calcularExpMaxNivel(jugador.nivel);
+  this.game.datos.socket.on('subirExp', function(exp) {
+    self.containerNivel.getAt(1).text = 'Experiencia: ' + exp + "/" + calcularExpMaxNivel(jugador.nivel);
   });
 }
 
