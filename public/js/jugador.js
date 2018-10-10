@@ -1,5 +1,10 @@
 //actualizar atributos de cada jugador
 scenePrincipal.onUpdateJugador = function(jugadores) {
+  var pj = jugadores[this.game.datos.jugador.id];
+  if(pj && pj.arma != this.game.datos.jugador.arma) {
+    this.events.emit('cambio_de_arma', jugadores[this.game.datos.jugador.id].arma);
+  }
+
   for(var id in jugadores) {
     var jugador = jugadores[id];
     var j = this.game.datos.jugadores[id];
@@ -10,6 +15,7 @@ scenePrincipal.onUpdateJugador = function(jugadores) {
     j.dirY = jugador.dirY;
     j.lastDir = jugador.lastDir;
     j.arma = jugador.arma;
+    j.delayAtaque = jugador.delayAtaque;
     j.nivel = jugador.nivel;
   }
 }

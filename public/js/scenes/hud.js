@@ -14,21 +14,22 @@ sceneHud.create = function() {
   container.add(this.add.image(8+1, 0, 'hud', 'boton'));
   container.add(this.add.image(-8-1, 0, 'hud', 'boton'));
 
-  var ataque_principal = this.add.image(-8-1, 0, 'hud', this.game.datos.jugador.arma).setScale(0.25, 0.25);
-  container.add(ataque_principal);
+  this.ataque_principal = this.add.sprite(-8-1, 0, 'hud', this.game.datos.jugador.arma).setScale(0.25, 0.25);
+  container.add(this.ataque_principal);
   container.add(this.add.text(-16-1, 8+1, "Clic Izq.",  {align: 'center'}).setScale(0.2, 0.2));
 
   this.circulo_principal = this.add.graphics();
   container.add(this.circulo_principal);
 
   this.scene.get('principal').events.on('click_principal', function() {
+    var self = this;
     this.tweens.addCounter({
       from: 0.25,
       to: 0.2,
       yoyo: true,
       duration: self.game.datos.jugador.delayAtaque * 5,
       onUpdate: function(tween) {
-        ataque_principal.setScale(tween.getValue(), tween.getValue());
+        self.ataque_principal.setScale(tween.getValue(), tween.getValue());
       },
     });
   }, this);
@@ -50,6 +51,10 @@ sceneHud.create = function() {
         self.circulo_principal.clear();
       }
     });
+  }, this);
+
+  this.scene.get('principal').events.on('cambio_de_arma', function(arma) {
+    this.ataque_principal.setFrame(arma);
   }, this);
 }
 

@@ -31,7 +31,7 @@
     },
     {
       "filename": "item_espada_plus",
-      "frame": {"x": 0, "y": 68, "w": 32, "h": 32}
+      "frame": {"x": 32, "y": 68, "w": 32, "h": 32}
     }
   ]
 }
