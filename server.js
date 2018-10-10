@@ -121,10 +121,10 @@ function moverJugador(socket, teclas) {
 }
 
 setInterval(function() {
-  for(var i=0, len=Object.keys(jugadores).length; i<len; i++) {
+  for(var i=0, len=Math.floor(Object.keys(jugadores).length/2.0); i<len; i++) {
     crearMob();
   }
-}, 10000);
+}, 5000);
 
 function crearMob() {
   var num_mobs = Object.keys(mobs).length;
