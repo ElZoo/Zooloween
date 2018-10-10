@@ -186,5 +186,41 @@ scenePrincipal.ataque_player = function(player_id, mob_ids) {
         mob.sprite.setTint();
       }
     });
+
+    self.tweens.addCounter({
+      from: 0,
+      to: 1,
+      duration: 2000,
+      onStart: function (tween) {
+        if(!mob) {
+          return;
+        }
+        mob.barra_vida.visible = true;
+      },
+      onComplete: function(tween) {
+        if(!mob) {
+          return;
+        }
+        mob.barra_vida.visible = false;
+      }
+    });
   });
 }
+
+
+//    var distancia = calcularDistancia(pj, mob);
+//    if(distancia < 2 && mob.vida > 0) {
+  //    mob.barra_vida.visible = true;
+//      mob.barra_vida.x = mob.x * 32;
+  //    mob.barra_vida.y = mob.y * 32 - 12;
+    //  mob.barra_vida.getAt(1).width = Math.round(mob.vida / mob.vidaMax * 32);
+      //if(mob.vida < mob.vidaMax * 0.33) {
+        //mob.barra_vida.getAt(1).fillColor = 0xff0000;
+      //} else if(mob.vida < mob.vidaMax * 0.66) {
+        //mob.barra_vida.getAt(1).fillColor = 0xffff00;
+    //  } else {
+        //mob.barra_vida.getAt(1).fillColor = 0x00ff00;
+      //}
+    //} else {
+  //    mob.barra_vida.visible = false;
+//    }

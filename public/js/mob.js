@@ -69,9 +69,8 @@ scenePrincipal.updateSpritesMobs = function() {
     mob.sprite.x = mob.x * 32;
     mob.sprite.y = mob.y * 32;
     mob.sprite.depth = mob.sprite.y;
-    var distancia = calcularDistancia(pj, mob);
-    if(distancia < 2 && mob.vida > 0) {
-      mob.barra_vida.visible = true;
+
+    if(mob.barra_vida.visible) {
       mob.barra_vida.x = mob.x * 32;
       mob.barra_vida.y = mob.y * 32 - 12;
       mob.barra_vida.getAt(1).width = Math.round(mob.vida / mob.vidaMax * 32);
@@ -82,9 +81,7 @@ scenePrincipal.updateSpritesMobs = function() {
       } else {
         mob.barra_vida.getAt(1).fillColor = 0x00ff00;
       }
-    } else {
-      mob.barra_vida.visible = false;
-    }
+    }    
 
     mob.sprite.flipX = (mob.dir == 'izquierda');
     if(mob.vida <= 0) {
