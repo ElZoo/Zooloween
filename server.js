@@ -358,6 +358,7 @@ function player_atacar(id) {
       continue;
     }
     var random1 = Math.random();
+    console.log(random1)
     jugador.probCrit>=random1?mob.vida-=(jugador.fuerzaAtaque*2):mob.vida-=jugador.fuerzaAtaque;
     if(mob.vida <= 0) {
       matarMob(mob);
