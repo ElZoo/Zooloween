@@ -358,8 +358,8 @@ function player_atacar(id) {
       continue;
     }
     var random1 = Math.random();
-    console.log(random1)
-    jugador.probCrit>=random1?mob.vida-=(jugador.fuerzaAtaque*2):mob.vida-=jugador.fuerzaAtaque;
+    var danyo = jugador.probCrit>=random1?(jugador.fuerzaAtaque*2):jugador.fuerzaAtaque;
+    mob.vida -= danyo;
     if(mob.vida <= 0) {
       matarMob(mob);
       subirExp(jugador, 5);
