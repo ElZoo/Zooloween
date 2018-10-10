@@ -64,7 +64,7 @@ sceneHud.create = function() {
   });
 
   this.game.datos.socket.on('subirExp', function(exp) {
-    self.containerNivel.getAt(1).text = 'Experiencia: ' + exp + "/" + calcularExpMaxNivel(jugador.nivel);
+    self.containerNivel.getAt(1).text = 'Experiencia: ' + exp + "/" + calcularExpMaxNivel(self.game.datos.jugador.nivel);
   });
 }
 
