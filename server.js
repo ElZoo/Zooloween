@@ -198,6 +198,8 @@ function updateJugadores() {
 }
 
 function updateMobs() {
+  var mobs_ignorados = [];
+
   for(var id in mobs) {
     var mob = mobs[id];
     buscarTarget(mob);
@@ -221,7 +223,8 @@ function updateMobs() {
       mob.y -= mob.vel;
     }
 
-    if(check_colision_mob(mob)) {
+    if(check_colision_mob(mob, mobs_ignorados)) {
+      mobs_ignorados.push(mob.id);
       mob.x = old_coords[0];
       mob.y = old_coords[1];
     }
@@ -268,10 +271,10 @@ function check_colision(x, y) {
   return false;
 }
 
-function check_colision_mob(mob) {
+function check_colision_mob(mob, mobs_ignorados) {
   for(var id in mobs) {
     var target = mobs[id];
-    if(target.id == mob.id) {
+    if(target.id == mob.id || mobs_ignorados.indexOf(target.id) > -1) {
       continue;
     }
 
