@@ -9,8 +9,6 @@ scenePrincipal.init = function() {
 scenePrincipal.create = function() {
   var self = this;
 
-  this.scene.stop('final');
-
   this.pintarMundo();
   this.pintarJugadores();
   this.pintarMobs();
