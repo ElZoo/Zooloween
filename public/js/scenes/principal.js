@@ -370,6 +370,20 @@ scenePrincipal.pintarMundo = function() {
           textura = "cadena";
           or = [0.5, 0.75];
           break;
+        case 3:
+          textura = "puerta_barras";
+          break;
+        case 4:
+          textura = "puerta_madera";
+          break
+        case 5:
+          textura = "decor_espadas";
+          or = [0.5, 0.75];
+          break;
+        case 6:
+          textura = "decor_lanzas";
+          or = [0.5, 0.75];
+          break;
       }
 
       if(textura != "aire") {
