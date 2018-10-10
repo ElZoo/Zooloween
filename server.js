@@ -336,7 +336,7 @@ function matarMob(mob) {
 
 function player_atacar(id) {
   var jugador = jugadores[id];
-  if(jugador.tickAtaque < jugador.delayAtaque || jugador.vida <= 0) {
+  if(!jugador || jugador.tickAtaque < jugador.delayAtaque || jugador.vida <= 0) {
     return;
   }
   jugador.tickAtaque = 0;
