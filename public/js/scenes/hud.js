@@ -11,7 +11,7 @@ sceneHud.create = function() {
   this.containerArribaIzq = this.add.container(10, 10).setScale(1.5, 1.5);
   this.containerArribaIzq.add(this.add.text(0, 0, "Nivel: " + this.game.datos.jugador.nivel));
   this.containerArribaIzq.add(this.add.text(0, 15, "Experiencia: " + this.game.datos.jugador.exp + "/" + calcularExpMaxNivel(this.game.datos.jugador.exp)).setScale(0.8, 0.8));
-  
+
   this.containerArribaDer = this.add.container(this.game.config.width-220, 10).setScale(1.5, 1.5);
   this.containerArribaDer.add(this.add.text(0, 0, "Jugadores: " + Object.keys(this.game.datos.jugadores).length));
 
@@ -63,21 +63,21 @@ sceneHud.create = function() {
     this.ataque_principal.setFrame(arma);
   }, this);
 
-  this.game.datos.socket.on('subirLvl', function(lvl) {
-    self.containerArribaIzq.getAt(0).text = 'Nivel: ' + lvl;
-  });
+  this.scene.get('principal').events.on('subirLvl', function(lvl) {
+    this.containerArribaIzq.getAt(0).text = 'Nivel: ' + lvl;
+  }, this);
 
-  this.game.datos.socket.on('subirExp', function(exp) {
-    self.containerArribaIzq.getAt(1).text = 'Experiencia: ' + exp + "/" + calcularExpMaxNivel(self.game.datos.jugador.nivel);
-  });
+  this.scene.get('principal').events.on('subirExp', function(exp) {
+    this.containerArribaIzq.getAt(1).text = 'Experiencia: ' + exp + "/" + calcularExpMaxNivel(this.game.datos.jugador.nivel);
+  }, this);
 
-  this.scene.get('principal').events.on('nuevoJugador', function() {   
-    self.containerArribaDer.getAt(0).text = 'Jugadores: ' + Object.keys(self.game.datos.jugadores).length;
-  });
+  this.scene.get('principal').events.on('nuevoJugador', function() {
+    this.containerArribaDer.getAt(0).text = 'Jugadores: ' + Object.keys(this.game.datos.jugadores).length;
+  }, this);
 
   this.scene.get('principal').events.on('matarJugador', function() {
-    self.containerArribaDer.getAt(0).text = 'Jugadores: ' + Object.keys(self.game.datos.jugadores).length;
-  });
+    this.containerArribaDer.getAt(0).text = 'Jugadores: ' + Object.keys(this.game.datos.jugadores).length;
+  }, this);
 }
 
 function calcularExpMaxNivel(nivel) {

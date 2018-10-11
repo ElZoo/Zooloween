@@ -56,6 +56,16 @@ scenePrincipal.create = function() {
     self.ataque_player(datos[0], datos[1]);
   });
 
+  //evento para cuando el jugador sube de nivel
+  this.game.datos.socket.on('subirLvl', function(datos) {
+    self.onSubirLvl(datos[0], datos[1]);
+  });
+
+  //evento para cuando el jugador aumenta su experiencia
+  this.game.datos.socket.on('subirExp', function(exp) {
+    self.onSubirExp(exp);
+  });
+
   //listener del click del ratón
   this.input.on('pointerdown', function(pointer) {
     self.game.datos.socket.emit('player_atacar');

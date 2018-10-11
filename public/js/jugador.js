@@ -28,7 +28,7 @@ scenePrincipal.crearJugador = function(jugador) {
 
   jugador.texto_nivel = this.add.container(0, 0).setScale(0.3, 0.3);
   jugador.texto_nivel.add(this.add.text(0, 0, 'Lvl ' + jugador.nivel));
-  
+
   this.events.emit('nuevoJugador') ;
 }
 
@@ -37,7 +37,7 @@ scenePrincipal.onDisconnectJugador = function(id) {
   if(!this.game.datos.jugadores[id]) {
     return;
   }
-  
+
   this.game.datos.jugadores[id].sprite.destroy();
   this.game.datos.jugadores[id].spriteArma.destroy();
   this.game.datos.jugadores[id].texto_nivel.destroy();
@@ -88,6 +88,11 @@ scenePrincipal.updateSpritesJugadores = function() {
     jugador.texto_nivel.x = jugador.x * 32 - 7;
     jugador.texto_nivel.y = jugador.y * 32 - 28;
     jugador.texto_nivel.getAt(0).text = 'Lvl ' + jugador.nivel;
+
+    if(jugador.efecto_subir) {
+      jugador.efecto_subir.x = jugador.x * 32 + 1;
+      jugador.efecto_subir.y = jugador.y * 32;
+    }
 
     var currentAnim = jugador.sprite.anims.currentAnim
     if(currentAnim && currentAnim.key.includes('pj_atacar') && jugador.sprite.anims.isPlaying) {
@@ -220,4 +225,23 @@ scenePrincipal.ataque_player = function(player_id, mob_ids) {
       }
     });
   });
+}
+
+//evento de subir el nivel al jugador
+scenePrincipal.onSubirLvl = function(id, lvl) {
+  if(id == this.game.datos.jugador.id) {
+    this.events.emit('subirLvl', lvl);
+  }
+
+  var pj = this.game.datos.jugadores[id];
+  pj.efecto_subir = this.add.sprite(0, 0, 'efecto_subir_lvl').setOrigin(0.5, 0.75);
+  pj.efecto_subir.depth = 99999;
+  pj.efecto_subir.on('animationcomplete', function() {
+    pj.efecto_subir.destroy();
+  }, this);
+  pj.efecto_subir.play('efecto_subir_lvl');
+}
+
+scenePrincipal.onSubirExp = function(exp) {
+  this.events.emit('subirExp', exp);
 }

@@ -244,7 +244,7 @@ module.exports.subirLvl = function(jugador, exp) {
   jugador.nivel++;
   this.recompensa(jugador);
   this.curarPlayer(jugador, 100);
-  this.io.to(jugador.id).emit('subirLvl', jugador.nivel);
+  this.io.emit('subirLvl', [jugador.id, jugador.nivel]);
 }
 
 module.exports.recompensa = function(jugador) {

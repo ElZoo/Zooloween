@@ -15,6 +15,9 @@ scenePrecarga.preload = function() {
 
   //precargar las imágenes de los mobs
   this.load.atlas('murcielago', 'res/murcielago.png', 'res/murcielago.json');
+
+  //precargar efectos
+  this.load.atlas('efecto_subir_lvl', 'res/efecto_subir_lvl.png', 'res/efecto_subir_lvl.json');
 }
 
 scenePrecarga.create = function() {
@@ -39,6 +42,7 @@ scenePrecarga.create = function() {
   this.crearPj();
   this.crearItems();
   this.crearMobs();
+  this.crearEfectos();
 }
 
 scenePrecarga.crearPj = function() {
@@ -102,4 +106,9 @@ scenePrecarga.crearMobs = function() {
   //animaciones del murciélago
   this.anims.create({key: 'murcielago_volar', frames: this.anims.generateFrameNames('murcielago', {prefix: 'volar_', end: 4}), repeat: -1, frameRate: 8});
   this.anims.create({key: 'murcielago_morir', frames: this.anims.generateFrameNames('murcielago', {prefix: 'morir_', end: 4}), repeat: 0, frameRate: 8});
+}
+
+scenePrecarga.crearEfectos = function() {
+  //animaciones de efectos
+  this.anims.create({key: 'efecto_subir_lvl', frames: this.anims.generateFrameNames('efecto_subir_lvl', {prefix: 'efecto_subir_lvl_', end: 48}), repeat: 0, frameRate: 60});
 }
