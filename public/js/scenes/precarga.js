@@ -5,13 +5,20 @@ scenePrecarga.preload = function() {
   //precargar las imágenes generales
   this.load.atlas('hud', 'res/hud.png', 'res/hud.json');
   this.load.atlas('dungeon', 'res/dungeon.png', 'res/dungeon.json');
-  this.load.atlas('pj_base', 'res/pj_base.png', 'res/pj_base.json');
+
+  //precargar las imágenes de las armaduras
+  this.load.atlas('pj_tela', 'res/pj/pj_tela.png', 'res/pj/pj_base.json');
+  this.load.atlas('pj_cuero', 'res/pj/pj_cuero.png', 'res/pj/pj_base.json');
+  this.load.atlas('pj_chain', 'res/pj/pj_chain.png', 'res/pj/pj_base.json');
+  this.load.atlas('pj_hierro', 'res/pj/pj_hierro.png', 'res/pj/pj_base.json');
+  this.load.atlas('pj_oro', 'res/pj/pj_oro.png', 'res/pj/pj_base.json');
 
   //precargar las imágenes de los items
-  this.load.atlas('item_mano', 'res/item_mano.png', 'res/item_mano.json');
-  this.load.atlas('item_daga', 'res/item_daga.png', 'res/item_daga.json');
-  this.load.atlas('item_espada', 'res/item_espada.png', 'res/item_espada.json');
-  this.load.atlas('item_espada_plus', 'res/item_espada_plus.png', 'res/item_espada_plus.json');
+  this.load.atlas('item_mano', 'res/items/item_mano.png', 'res/pj/pj_base.json');
+  this.load.atlas('item_daga', 'res/items/item_daga.png', 'res/pj/pj_base.json');
+  this.load.atlas('item_lanza', 'res/items/item_lanza.png', 'res/pj/pj_base.json');
+  this.load.atlas('item_hacha', 'res/items/item_hacha.png', 'res/pj/pj_base.json');
+  this.load.atlas('item_martillo', 'res/items/item_martillo.png', 'res/pj/pj_base.json');
 
   //precargar las imágenes de los mobs
   this.load.atlas('murcielago', 'res/murcielago.png', 'res/murcielago.json');
@@ -46,30 +53,73 @@ scenePrecarga.create = function() {
 }
 
 scenePrecarga.crearPj = function() {
-  //animaciones del jugador
-  this.anims.create({key: 'pj_quieto', frames: [0], repeat: -1});
-  this.anims.create({key: 'pj_arriba', frames: this.anims.generateFrameNames('pj_base', {prefix: 'arriba_', end: 7}), repeat: -1, frameRate: 8});
-  this.anims.create({key: 'pj_abajo', frames: this.anims.generateFrameNames('pj_base', {prefix: 'abajo_', end: 7}), repeat: -1, frameRate: 8});
-  this.anims.create({key: 'pj_izquierda', frames: this.anims.generateFrameNames('pj_base', {prefix: 'izquierda_', end: 7}), repeat: -1, frameRate: 8});
-  this.anims.create({key: 'pj_derecha', frames: this.anims.generateFrameNames('pj_base', {prefix: 'derecha_', end: 7}), repeat: -1, frameRate: 8});
-  this.anims.create({key: 'pj_atacar_arriba', frames: this.anims.generateFrameNames('pj_base', {prefix: 'atacar_arriba_', end: 5}), repeat: 0, frameRate: 16});
-  this.anims.create({key: 'pj_atacar_abajo', frames: this.anims.generateFrameNames('pj_base', {prefix: 'atacar_abajo_', end: 5}), repeat: 0, frameRate: 16});
-  this.anims.create({key: 'pj_atacar_izquierda', frames: this.anims.generateFrameNames('pj_base', {prefix: 'atacar_izquierda_', end: 5}), repeat: 0, frameRate: 16});
-  this.anims.create({key: 'pj_atacar_derecha', frames: this.anims.generateFrameNames('pj_base', {prefix: 'atacar_derecha_', end: 5}), repeat: 0, frameRate: 16});
+  var self = this;
+
+  //armaduras y direcciones de las animaciones
+  var armaduras = ['pj_tela', 'pj_cuero', 'pj_chain', 'pj_hierro', 'pj_oro'];
+  var anims = ['arriba', 'abajo', 'izquierda', 'derecha'];
+
+  //configuración para las animaciones de correr
+  var configAnim = {
+    end: 8,
+    repeat: -1,
+    frameRate: 12
+  };
+
+  //configuración para las animaciones de atacar
+  var configAtaque = {
+    end: 5,
+    repeat: 0,
+    frameRate: 16
+  }
+
+  //crear animaciones para cada armadura
+  armaduras.forEach(function(armadura) {
+    //crear animaciones misc
+    self.anims.create({key: `${armadura}_quieto`, frames: [0], repeat: -1});
+    self.anims.create({key: `${armadura}_morir`, frames: self.anims.generateFrameNames(armadura, {prefix: 'morir_', end: 5}), repeat: -1, frameRate: 16});
+
+    //crear animaciones para cada dirección
+    anims.forEach(function(anim) {
+      //animaciones de correr
+      self.anims.create({
+        key: `${armadura}_${anim}`,
+        frames: self.anims.generateFrameNames(armadura, {prefix: `${anim}_`, end: configAnim.end}),
+        repeat: configAnim.repeat,
+        frameRate: configAnim.frameRate
+      });
+
+      //animaciones de atacar
+      self.anims.create({
+        key: `${armadura}_atacar_${anim}`,
+        frames: self.anims.generateFrameNames(armadura, {prefix: `atacar_${anim}_`, end: configAtaque.end}),
+        repeat: configAtaque.repeat,
+        frameRate: configAtaque.frameRate
+      });
+
+      //animaciones de lanzas
+      self.anims.create({
+        key: `${armadura}_lanza_${anim}`,
+        frames: self.anims.generateFrameNames(armadura, {prefix: `lanza_${anim}_`, end: 7}),
+        repeat: configAtaque.repeat,
+        frameRate: configAtaque.frameRate
+      });
+    });
+  });
 }
 
 scenePrecarga.crearItems = function() {
   var self = this;
 
   //items y direcciones de las animaciones
-  var items = ['item_mano', 'item_daga', 'item_espada', 'item_espada_plus'];
+  var items = ['item_mano', 'item_daga', 'item_lanza', 'item_hacha', 'item_martillo'];
   var anims = ['abajo', 'arriba', 'izquierda', 'derecha'];
 
   //configuración para las animaciones de correr
   var configAnim = {
-    end: 7,
+    end: 8,
     repeat: -1,
-    frameRate: 8
+    frameRate: 12
   };
 
   //configuración para las animaciones de atacar
@@ -94,8 +144,16 @@ scenePrecarga.crearItems = function() {
       //animaciones de atacar
       self.anims.create({
         key: `${item}_ataque_${anim}`,
-        frames: self.anims.generateFrameNames(item, {prefix: `ataque_${anim}_`, end: configAtaque.end}),
+        frames: self.anims.generateFrameNames(item, {prefix: `atacar_${anim}_`, end: configAtaque.end}),
         repeat: configAtaque.end,
+        frameRate: configAtaque.frameRate
+      });
+
+      //animaciones de lanzas
+      self.anims.create({
+        key: `${item}_lanza_${anim}`,
+        frames: self.anims.generateFrameNames(item, {prefix: `lanza_${anim}_`, end: 7}),
+        repeat: configAtaque.repeat,
         frameRate: configAtaque.frameRate
       });
     });

@@ -17,21 +17,56 @@ module.exports.armas = {
     delayAtaque: 25,
     fuerzaAtaque: 4,
     rangoAtaque: 0.3,
-    probCrit: 0.2
+    probCrit: 0.1
   },
-  item_espada: {
-    nombre: "item_espada",
+  item_lanza: {
+    nombre: "item_lanza",
+    delayAtaque: 50,
+    fuerzaAtaque: 8,
+    rangoAtaque: 0.5,
+    probCrit: 0.05
+  },
+  item_hacha: {
+    nombre: "item_hacha",
     delayAtaque: 50,
     fuerzaAtaque: 15,
     rangoAtaque: 0.7,
     probCrit: 0.075
   },
-  item_espada_plus: {
-    nombre: "item_espada_plus",
-    delayAtaque: 50,
-    fuerzaAtaque: 30,
+  item_martillo: {
+    nombre: "item_martillo",
+    delayAtaque: 75,
+    fuerzaAtaque: 50,
     rangoAtaque: 0.7,
     probCrit: 0.15
+  }
+}
+
+module.exports.armaduras = {
+  pj_tela: {
+    nombre: "pj_tela",
+    defensa: 0,
+    vidaMax: 50
+  },
+  pj_cuero: {
+    nombre: "pj_cuero",
+    defensa: 0.1,
+    vidaMax: 60
+  },
+  pj_chain: {
+    nombre: "pj_chain",
+    defensa: 0.2,
+    vidaMax: 70
+  },
+  pj_hierro: {
+    nombre: "pj_hierro",
+    defensa: 0.3,
+    vidaMax: 80
+  },
+  pj_oro: {
+    nombre: "pj_oro",
+    defensa: 0.5,
+    vidaMax: 100
   }
 }
 
@@ -49,18 +84,17 @@ module.exports.crearJugador = function(socket) {
     id: socket.id,
     x: 2,
     y: 2,
-    vidaMax : 100,
-    vida: 100,
     nivel: 1,
+    vida: 50,
     exp: 0,
     dirX: 'quieto_abajo',
     dirY: 'quieto_abajo',
     lastDir: 'quieto_abajo',
     vel: 0.02,
     tickAtaque: 0,
-    probCrit: 0.05
   }
   this.ponerArma(socket.id, "item_mano");
+  this.ponerArmadura(socket.id, "pj_tela");
 }
 
 module.exports.borrarJugador = function(socket) {
@@ -229,6 +263,18 @@ module.exports.ponerArma = function(id, arma_id) {
   jugador.probCrit = arma.probCrit;
 }
 
+module.exports.ponerArmadura = function(id, armadura_id) {
+  var jugador = this.jugadores[id];
+  var armadura = this.armaduras[armadura_id];
+
+  jugador.armadura = armadura.nombre;
+  jugador.defensa = armadura.defensa;
+  if(jugador.vida == jugador.vidaMax) {
+    jugador.vida = armadura.vidaMax;
+  }
+  jugador.vidaMax = armadura.vidaMax;
+}
+
 module.exports.subirExp = function(jugador, exp) {
     jugador.exp += exp;
 
@@ -252,18 +298,32 @@ module.exports.recompensa = function(jugador) {
     case 5:
       this.ponerArma(jugador.id, "item_daga");
       break;
+    case 10:
+      this.ponerArmadura(jugador.id, "pj_cuero");
+      break;
     case 15:
-      this.ponerArma(jugador.id, "item_espada");
+      this.ponerArma(jugador.id, "item_lanza");
+      break;
+    case 20:
+      this.ponerArmadura(jugador.id, "pj_chain");
       break;
     case 30:
-      this.ponerArma(jugador.id, "item_espada_plus");
+      this.ponerArma(jugador.id, "item_hacha");
       break;
-    default:
+    case 50:
+      this.ponerArmadura(jugador.id, "pj_hierro");
+      break;
+    case 75:
+      this.ponerArma(jugador.id, "item_martillo");
+      break;
+    case 100:
+      this.ponerArmadura(jugador.id, "pj_oro");
+      break;
   }
 }
 
 module.exports.curarPlayer = function(jugador, cantidad) {
-  jugador.vida = cantidad;
+  jugador.vida = Math.min(cantidad, jugador.vidaMax);
 }
 
 module.exports.check_colision = function(x, y) {
