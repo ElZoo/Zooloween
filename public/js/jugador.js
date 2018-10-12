@@ -4,6 +4,9 @@ scenePrincipal.onUpdateJugador = function(jugadores) {
   if(pj && pj.arma != this.game.datos.jugador.arma) {
     this.events.emit('cambio_de_arma', jugadores[this.game.datos.jugador.id].arma);
   }
+  if(pj && pj.armadura != this.game.datos.jugador.armadura) {
+    this.events.emit('cambio_de_armadura', jugadores[this.game.datos.jugador.id].armadura);
+  }
 
   for(var id in jugadores) {
     var jugador = jugadores[id];

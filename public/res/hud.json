@@ -36,6 +36,27 @@
     {
       "filename": "item_martillo",
       "frame": {"x": 32, "y": 100, "w": 32, "h": 32}
+    },
+
+    {
+      "filename": "pj_tela",
+      "frame": {"x": 0, "y": 132, "w": 32, "h": 32}
+    },
+    {
+      "filename": "pj_cuero",
+      "frame": {"x": 32, "y": 132, "w": 32, "h": 32}
+    },
+    {
+      "filename": "pj_chain",
+      "frame": {"x": 0, "y": 100, "w": 32, "h": 32}
+    },
+    {
+      "filename": "pj_hierro",
+      "frame": {"x": 0, "y": 164, "w": 32, "h": 32}
+    },
+    {
+      "filename": "pj_oro",
+      "frame": {"x": 32, "y": 164, "w": 32, "h": 32}
     }
   ]
 }
