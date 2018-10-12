@@ -108,7 +108,6 @@ scenePrincipal.create = function() {
   this.scene.get('principal').events.on('subirExp', function(datos) {
     var numero = self.add.container(0, 0).setScale(0.5, 0.5);
     var jugador = self.game.datos.jugador;
-    console.log(datos);
     self.tweens.addCounter({
       from: 0,
       to: 200,
