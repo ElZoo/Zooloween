@@ -221,18 +221,23 @@ scenePrincipal.ataque_player = function(player_id, mob_ids) {
     self.tweens.addCounter({
       from: 0,
       to: 1,
-      duration: 750,
+      duration: 1000,
       onStart: function (tween) {
         if(!mob) {
           return;
         }
+        mob.tweensBarra++;
         mob.barra_vida.visible = true;
       },
       onComplete: function(tween) {
         if(!mob) {
           return;
         }
-        mob.barra_vida.visible = false;
+        mob.tweensBarra--;
+        if(mob.tweensBarra <= 0) {
+          mob.tweensBarra = 0;
+          mob.barra_vida.visible = false;
+        }
       }
     });
   });

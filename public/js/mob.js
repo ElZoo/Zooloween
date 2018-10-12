@@ -25,6 +25,7 @@ scenePrincipal.onNuevoMob = function(mob) {
   mob.barra_vida = this.add.container(0, 0, [vida_fondo, vida_color, vida_borde]).setScale(0.4, 0.4);
   mob.barra_vida.depth = 999989;
   mob.barra_vida.visible = false;
+  mob.tweensBarra = 0;
 
   this.game.datos.mobs[mob.id] = mob;
 }
