@@ -202,8 +202,8 @@ scenePrincipal.pintarMundo = function() {
     {textura: "cadena", or: [0.5, 0.75]},
     {textura: "puerta_barras"},
     {textura: "puerta_madera"},
-    {textura: "decor_espadas", or: [0.5, 0.75]},
-    {textura: "decor_lanzas", or: [0.5, 0.75]}
+    {textura: "decor_espadas", or: [0.5, 0.75], size:[0.5,0.5]},
+    {textura: "decor_lanzas", or: [0.5, 0.75], size:[0.5,0.5]}
   ];
 
   for(var x=0; x<this.size_mundo; x++) {
@@ -211,6 +211,7 @@ scenePrincipal.pintarMundo = function() {
       var coordX = x*32;
       var coordY = y*32;
       var or = [0.5, 0.5];
+      var size = [1, 1];
 
       var item = this.items_mundo[y][x];
       var dato_item = datos_items[item];
@@ -218,9 +219,12 @@ scenePrincipal.pintarMundo = function() {
       if(dato_item.or) {
         or = dato_item.or;
       }
+      if (dato_item.size){
+        size = dato_item.size;
+      }
 
       if(textura != "aire") {
-        this.add.image(coordX, coordY, 'dungeon', textura).setOrigin(or[0], or[1]);
+        this.add.image(coordX, coordY, 'dungeon', textura).setOrigin(or[0], or[1]).setScale(size[0], size[1]);
       }
     }
   }
