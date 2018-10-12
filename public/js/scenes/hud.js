@@ -71,10 +71,11 @@ sceneHud.create = function() {
 
   this.scene.get('principal').events.on('subirLvl', function(lvl) {
     this.containerArribaIzq.getAt(0).text = 'Nivel: ' + lvl;
+    this.containerArribaIzq.getAt(1).text = 'Experiencia: ' + this.game.datos.jugador.exp + "/" + calcularExpMaxNivel(this.game.datos.jugador.nivel);
   }, this);
 
   this.scene.get('principal').events.on('subirExp', function(exp) {
-    this.containerArribaIzq.getAt(1).text = 'Experiencia: ' + exp + "/" + calcularExpMaxNivel(this.game.datos.jugador.nivel);
+    this.containerArribaIzq.getAt(1).text = 'Experiencia: ' + this.game.datos.jugador.exp + "/" + calcularExpMaxNivel(this.game.datos.jugador.nivel);
   }, this);
 
   this.scene.get('principal').events.on('nuevoJugador', function() {
