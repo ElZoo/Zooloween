@@ -215,7 +215,7 @@ module.exports.player_atacar = function(id) {
     mobs_afectados.push(idMob);
   }
 
-  this.io.emit('ataque_player', [id, mobs_afectados]);
+  this.io.emit('ataque_player', [id, mobs_afectados, danyo, jugador.probCrit > random1]);
 }
 
 module.exports.ponerArma = function(id, arma_id) {
@@ -230,13 +230,14 @@ module.exports.ponerArma = function(id, arma_id) {
 }
 
 module.exports.subirExp = function(jugador, exp) {
+    var exp = exp;
     jugador.exp += exp;
 
     if(calcularExpMaxNivel(jugador.nivel) <= jugador.exp) {
       this.subirLvl(jugador, exp);
     }
 
-    this.io.to(jugador.id).emit('subirExp', jugador.exp);
+    this.io.to(jugador.id).emit('subirExp', [jugador.exp, exp]);
 },
 
 module.exports.subirLvl = function(jugador, exp) {

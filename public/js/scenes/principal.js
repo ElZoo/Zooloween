@@ -53,6 +53,7 @@ scenePrincipal.create = function() {
 
   //evento para cuando un jugador realiza un ataque
   this.game.datos.socket.on('ataque_player', function(datos) {
+    self.events.emit('ataque_player', datos);
     self.ataque_player(datos[0], datos[1]);
   });
 
@@ -62,8 +63,9 @@ scenePrincipal.create = function() {
   });
 
   //evento para cuando el jugador aumenta su experiencia
-  this.game.datos.socket.on('subirExp', function(exp) {
-    self.onSubirExp(exp);
+  this.game.datos.socket.on('subirExp', function(datos) {
+    self.events.emit('subirExp', datos);
+    self.onSubirExp(datos[0]);
   });
 
   //listener del click del ratón
@@ -71,6 +73,66 @@ scenePrincipal.create = function() {
     self.game.datos.socket.emit('player_atacar');
     self.events.emit('click_principal');
   });
+
+  this.scene.get('principal').events.on('ataque_player', function(datos) {
+    datos[1].forEach(function(mob_id) {
+      var numero = self.add.container(0, 0).setScale(0.5, 0.5);
+      var mob = self.game.datos.mobs[mob_id];
+      self.tweens.addCounter({
+        from: 0,
+        to: 200,
+        duration: 2000,
+        onStart: function() {
+          numero.x = Math.random() > 0.5 ? mob.x * 32 + 8 : mob.x * 32 - 13;
+          numero.y = Math.random() > 0.5 ? mob.y * 32 + 2 : mob.y * 32 - 10;
+          numero.add(self.add.text(0, 0, datos[2]));
+          numero.getAt(0).setColor('#FFD600');
+          if(datos[3]) {
+            numero.getAt(0).setColor('#B82323');
+          }
+        },
+        onUpdate: function() {
+          if(this.getValue() > 25) {
+            numero.y += 0.07;
+          }
+          if(this.getValue() > 100) {
+            numero.alpha -= 0.05;
+          }
+        },
+        onComplete: function(){
+          numero.destroy();
+        }
+      });
+    });
+  }, this);
+
+  this.scene.get('principal').events.on('subirExp', function(datos) {
+    var numero = self.add.container(0, 0).setScale(0.5, 0.5);
+    var jugador = self.game.datos.jugador;
+    console.log(datos);
+    self.tweens.addCounter({
+      from: 0,
+      to: 200,
+      duration: 2000,
+      onStart: function() {
+        numero.x = jugador.x * 32 - 10;
+        numero.y = jugador.y * 32 - 35;
+        numero.add(self.add.text(0, 0, '+' + datos[1] + 'xp'));
+        numero.getAt(0).setColor('#1AFF00');
+      },
+      onUpdate: function() {
+        if(this.getValue() > 25) {
+          numero.y -= 0.07;
+        }
+        if(this.getValue() > 100) {
+          numero.alpha -= 0.05;
+        }
+      },
+      onComplete: function() {
+        numero.destroy();
+      }
+    });
+  }, this);
 
   //enviar al servidor que teclas se están pulsando
   setInterval(function() {
