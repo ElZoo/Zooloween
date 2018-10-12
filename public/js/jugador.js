@@ -11,10 +11,12 @@ scenePrincipal.onUpdateJugador = function(jugadores) {
     j.x = jugador.x;
     j.y = jugador.y;
     j.vida = jugador.vida;
+    j.vidaMax = jugador.vidaMax;
     j.dirX = jugador.dirX;
     j.dirY = jugador.dirY;
     j.lastDir = jugador.lastDir;
     j.arma = jugador.arma;
+    j.armadura = jugador.armadura;
     j.delayAtaque = jugador.delayAtaque;
     j.nivel = jugador.nivel;
   }
@@ -22,7 +24,7 @@ scenePrincipal.onUpdateJugador = function(jugadores) {
 
 //crear sprites del jugador y el texto con el nivel
 scenePrincipal.crearJugador = function(jugador) {
-  jugador.sprite = this.add.sprite(jugador.x * 32, jugador.y * 32, 'pj_base', 'abajo_0').setOrigin(0.5, 0.9).setScale(0.5, 0.5).setFrame('quieto_abajo');
+  jugador.sprite = this.add.sprite(jugador.x * 32, jugador.y * 32, jugador.armadura, 'abajo_0').setOrigin(0.5, 0.9).setScale(0.5, 0.5).setFrame('quieto_abajo');
   jugador.spriteArma = this.add.sprite(jugador.x * 32, jugador.y * 32, jugador.arma, 'abajo_0').setOrigin(0.5, 0.9).setScale(0.5, 0.5).setFrame('abajo_0');
   this.game.datos.jugadores[jugador.id] = jugador;
 
@@ -95,26 +97,26 @@ scenePrincipal.updateSpritesJugadores = function() {
     }
 
     var currentAnim = jugador.sprite.anims.currentAnim
-    if(currentAnim && currentAnim.key.includes('pj_atacar') && jugador.sprite.anims.isPlaying) {
+    if(currentAnim && (currentAnim.key.includes(jugador.armadura+'_atacar') || currentAnim.key.includes(jugador.armadura+'_lanza')) && jugador.sprite.anims.isPlaying) {
       continue;
     }
     switch (jugador.dirX) {
       case 'izquierda':
-        jugador.sprite.anims.play('pj_izquierda', true);
+        jugador.sprite.anims.play(jugador.armadura+'_izquierda', true);
         jugador.spriteArma.anims.play(jugador.arma+'_izquierda', true);
         break;
       case 'derecha':
-        jugador.sprite.anims.play('pj_derecha', true);
+        jugador.sprite.anims.play(jugador.armadura+'_derecha', true);
         jugador.spriteArma.anims.play(jugador.arma+'_derecha', true);
         break;
       default:
         switch(jugador.dirY) {
           case 'arriba':
-            jugador.sprite.anims.play('pj_arriba', true);
+            jugador.sprite.anims.play(jugador.armadura+'_arriba', true);
             jugador.spriteArma.anims.play(jugador.arma+'_arriba', true);
             break;
           case 'abajo':
-            jugador.sprite.anims.play('pj_abajo', true);
+            jugador.sprite.anims.play(jugador.armadura+'_abajo', true);
             jugador.spriteArma.anims.play(jugador.arma+'_abajo', true);
             break;
           default:
@@ -165,22 +167,28 @@ scenePrincipal.ataque_player = function(player_id, mob_ids) {
   }
 
   var jugador = this.game.datos.jugadores[player_id];
+  var spr_arm = "atacar";
+  var spr_atc = "ataque";
+  if(jugador.arma == "item_lanza") {
+    spr_arm = "lanza";
+    spr_atc = "lanza";
+  }
   switch (jugador.lastDir) {
     case 'quieto_abajo':
-      jugador.sprite.play('pj_atacar_abajo');
-      jugador.spriteArma.play(jugador.arma+'_ataque_abajo');
+      jugador.sprite.play(jugador.armadura+'_'+spr_arm+'_abajo');
+      jugador.spriteArma.play(jugador.arma+'_'+spr_atc+'_abajo');
       break;
     case 'quieto_arriba':
-      jugador.sprite.play('pj_atacar_arriba');
-      jugador.spriteArma.play(jugador.arma+'_ataque_arriba');
+      jugador.sprite.play(jugador.armadura+'_'+spr_arm+'_arriba');
+      jugador.spriteArma.play(jugador.arma+'_'+spr_atc+'_arriba');
       break;
     case 'quieto_derecha':
-      jugador.sprite.play('pj_atacar_derecha');
-      jugador.spriteArma.play(jugador.arma+'_ataque_derecha');
+      jugador.sprite.play(jugador.armadura+'_'+spr_arm+'_derecha');
+      jugador.spriteArma.play(jugador.arma+'_'+spr_atc+'_derecha');
       break;
     case 'quieto_izquierda':
-      jugador.sprite.play('pj_atacar_izquierda');
-      jugador.spriteArma.play(jugador.arma+'_ataque_izquierda');
+      jugador.sprite.play(jugador.armadura+'_'+spr_arm+'_izquierda');
+      jugador.spriteArma.play(jugador.arma+'_'+spr_atc+'_izquierda');
       break;
   }
 

@@ -1,0 +1,425 @@
+{
+  "frames": [
+    {
+      "filename": "quieto_abajo",
+      "frame": {"x": 0, "y": 640, "w": 64, "h": 64}
+    },
+    {
+      "filename": "quieto_arriba",
+      "frame": {"x": 0, "y": 512, "w": 64, "h": 64}
+    },
+    {
+      "filename": "quieto_derecha",
+      "frame": {"x": 0, "y": 704, "w": 64, "h": 64}
+    },
+    {
+      "filename": "quieto_izquierda",
+      "frame": {"x": 0, "y": 576, "w": 64, "h": 64}
+    },
+
+    {
+      "filename": "abajo_0",
+      "frame": {"x": 0, "y": 640, "w": 64, "h": 64}
+    },
+    {
+      "filename": "abajo_1",
+      "frame": {"x": 64, "y": 640, "w": 64, "h": 64}
+    },
+    {
+      "filename": "abajo_2",
+      "frame": {"x": 128, "y": 640, "w": 64, "h": 64}
+    },
+    {
+      "filename": "abajo_3",
+      "frame": {"x": 192, "y": 640, "w": 64, "h": 64}
+    },
+    {
+      "filename": "abajo_4",
+      "frame": {"x": 256, "y": 640, "w": 64, "h": 64}
+    },
+    {
+      "filename": "abajo_5",
+      "frame": {"x": 320, "y": 640, "w": 64, "h": 64}
+    },
+    {
+      "filename": "abajo_6",
+      "frame": {"x": 384, "y": 640, "w": 64, "h": 64}
+    },
+    {
+      "filename": "abajo_7",
+      "frame": {"x": 448, "y": 640, "w": 64, "h": 64}
+    },
+    {
+      "filename": "abajo_8",
+      "frame": {"x": 512, "y": 640, "w": 64, "h": 64}
+    },
+
+    {
+      "filename": "arriba_0",
+      "frame": {"x": 0, "y": 512, "w": 64, "h": 64}
+    },
+    {
+      "filename": "arriba_1",
+      "frame": {"x": 64, "y": 512, "w": 64, "h": 64}
+    },
+    {
+      "filename": "arriba_2",
+      "frame": {"x": 128, "y": 512, "w": 64, "h": 64}
+    },
+    {
+      "filename": "arriba_3",
+      "frame": {"x": 192, "y": 512, "w": 64, "h": 64}
+    },
+    {
+      "filename": "arriba_4",
+      "frame": {"x": 256, "y": 512, "w": 64, "h": 64}
+    },
+    {
+      "filename": "arriba_5",
+      "frame": {"x": 320, "y": 512, "w": 64, "h": 64}
+    },
+    {
+      "filename": "arriba_6",
+      "frame": {"x": 384, "y": 512, "w": 64, "h": 64}
+    },
+    {
+      "filename": "arriba_7",
+      "frame": {"x": 448, "y": 512, "w": 64, "h": 64}
+    },
+    {
+      "filename": "arriba_8",
+      "frame": {"x": 512, "y": 512, "w": 64, "h": 64}
+    },
+
+    {
+      "filename": "derecha_0",
+      "frame": {"x": 0, "y": 704, "w": 64, "h": 64}
+    },
+    {
+      "filename": "derecha_1",
+      "frame": {"x": 64, "y": 704, "w": 64, "h": 64}
+    },
+    {
+      "filename": "derecha_2",
+      "frame": {"x": 128, "y": 704, "w": 64, "h": 64}
+    },
+    {
+      "filename": "derecha_3",
+      "frame": {"x": 192, "y": 704, "w": 64, "h": 64}
+    },
+    {
+      "filename": "derecha_4",
+      "frame": {"x": 256, "y": 704, "w": 64, "h": 64}
+    },
+    {
+      "filename": "derecha_5",
+      "frame": {"x": 320, "y": 704, "w": 64, "h": 64}
+    },
+    {
+      "filename": "derecha_6",
+      "frame": {"x": 384, "y": 704, "w": 64, "h": 64}
+    },
+    {
+      "filename": "derecha_7",
+      "frame": {"x": 448, "y": 704, "w": 64, "h": 64}
+    },
+    {
+      "filename": "derecha_8",
+      "frame": {"x": 512, "y": 704, "w": 64, "h": 64}
+    },
+
+    {
+      "filename": "izquierda_0",
+      "frame": {"x": 0, "y": 576, "w": 64, "h": 64}
+    },
+    {
+      "filename": "izquierda_1",
+      "frame": {"x": 64, "y": 576, "w": 64, "h": 64}
+    },
+    {
+      "filename": "izquierda_2",
+      "frame": {"x": 128, "y": 576, "w": 64, "h": 64}
+    },
+    {
+      "filename": "izquierda_3",
+      "frame": {"x": 192, "y": 576, "w": 64, "h": 64}
+    },
+    {
+      "filename": "izquierda_4",
+      "frame": {"x": 256, "y": 576, "w": 64, "h": 64}
+    },
+    {
+      "filename": "izquierda_5",
+      "frame": {"x": 320, "y": 576, "w": 64, "h": 64}
+    },
+    {
+      "filename": "izquierda_6",
+      "frame": {"x": 384, "y": 576, "w": 64, "h": 64}
+    },
+    {
+      "filename": "izquierda_7",
+      "frame": {"x": 448, "y": 576, "w": 64, "h": 64}
+    },
+    {
+      "filename": "izquierda_8",
+      "frame": {"x": 512, "y": 576, "w": 64, "h": 64}
+    },
+
+    {
+      "filename": "atacar_abajo_0",
+      "frame": {"x": 0, "y": 896, "w": 64, "h": 64}
+    },
+    {
+      "filename": "atacar_abajo_1",
+      "frame": {"x": 64, "y": 896, "w": 64, "h": 64}
+    },
+    {
+      "filename": "atacar_abajo_2",
+      "frame": {"x": 128, "y": 896, "w": 64, "h": 64}
+    },
+    {
+      "filename": "atacar_abajo_3",
+      "frame": {"x": 192, "y": 896, "w": 64, "h": 64}
+    },
+    {
+      "filename": "atacar_abajo_4",
+      "frame": {"x": 256, "y": 896, "w": 64, "h": 64}
+    },
+    {
+      "filename": "atacar_abajo_5",
+      "frame": {"x": 320, "y": 896, "w": 64, "h": 64}
+    },
+
+    {
+      "filename": "atacar_arriba_0",
+      "frame": {"x": 0, "y": 768, "w": 64, "h": 64}
+    },
+    {
+      "filename": "atacar_arriba_1",
+      "frame": {"x": 64, "y": 768, "w": 64, "h": 64}
+    },
+    {
+      "filename": "atacar_arriba_2",
+      "frame": {"x": 128, "y": 768, "w": 64, "h": 64}
+    },
+    {
+      "filename": "atacar_arriba_3",
+      "frame": {"x": 192, "y": 768, "w": 64, "h": 64}
+    },
+    {
+      "filename": "atacar_arriba_4",
+      "frame": {"x": 256, "y": 768, "w": 64, "h": 64}
+    },
+    {
+      "filename": "atacar_arriba_5",
+      "frame": {"x": 320, "y": 768, "w": 64, "h": 64}
+    },
+
+    {
+      "filename": "atacar_izquierda_0",
+      "frame": {"x": 0, "y": 832, "w": 64, "h": 64}
+    },
+    {
+      "filename": "atacar_izquierda_1",
+      "frame": {"x": 64, "y": 832, "w": 64, "h": 64}
+    },
+    {
+      "filename": "atacar_izquierda_2",
+      "frame": {"x": 128, "y": 832, "w": 64, "h": 64}
+    },
+    {
+      "filename": "atacar_izquierda_3",
+      "frame": {"x": 192, "y": 832, "w": 64, "h": 64}
+    },
+    {
+      "filename": "atacar_izquierda_4",
+      "frame": {"x": 256, "y": 832, "w": 64, "h": 64}
+    },
+    {
+      "filename": "atacar_izquierda_5",
+      "frame": {"x": 320, "y": 832, "w": 64, "h": 64}
+    },
+
+    {
+      "filename": "atacar_derecha_0",
+      "frame": {"x": 0, "y": 960, "w": 64, "h": 64}
+    },
+    {
+      "filename": "atacar_derecha_1",
+      "frame": {"x": 64, "y": 960, "w": 64, "h": 64}
+    },
+    {
+      "filename": "atacar_derecha_2",
+      "frame": {"x": 128, "y": 960, "w": 64, "h": 64}
+    },
+    {
+      "filename": "atacar_derecha_3",
+      "frame": {"x": 192, "y": 960, "w": 64, "h": 64}
+    },
+    {
+      "filename": "atacar_derecha_4",
+      "frame": {"x": 256, "y": 960, "w": 64, "h": 64}
+    },
+    {
+      "filename": "atacar_derecha_5",
+      "frame": {"x": 320, "y": 960, "w": 64, "h": 64}
+    },
+
+    {
+      "filename": "morir_0",
+      "frame": {"x": 0, "y": 1280, "w": 64, "h": 64}
+    },
+    {
+      "filename": "morir_1",
+      "frame": {"x": 64, "y": 1280, "w": 64, "h": 64}
+    },
+    {
+      "filename": "morir_2",
+      "frame": {"x": 128, "y": 1280, "w": 64, "h": 64}
+    },
+    {
+      "filename": "morir_3",
+      "frame": {"x": 192, "y": 1280, "w": 64, "h": 64}
+    },
+    {
+      "filename": "morir_4",
+      "frame": {"x": 256, "y": 1280, "w": 64, "h": 64}
+    },
+    {
+      "filename": "morir_5",
+      "frame": {"x": 320, "y": 1280, "w": 64, "h": 64}
+    },
+
+    {
+      "filename": "lanza_abajo_0",
+      "frame": {"x": 0, "y": 384, "w": 64, "h": 64}
+    },
+    {
+      "filename": "lanza_abajo_1",
+      "frame": {"x": 64, "y": 384, "w": 64, "h": 64}
+    },
+    {
+      "filename": "lanza_abajo_2",
+      "frame": {"x": 128, "y": 384, "w": 64, "h": 64}
+    },
+    {
+      "filename": "lanza_abajo_3",
+      "frame": {"x": 192, "y": 384, "w": 64, "h": 64}
+    },
+    {
+      "filename": "lanza_abajo_4",
+      "frame": {"x": 256, "y": 384, "w": 64, "h": 64}
+    },
+    {
+      "filename": "lanza_abajo_5",
+      "frame": {"x": 320, "y": 384, "w": 64, "h": 64}
+    },
+    {
+      "filename": "lanza_abajo_6",
+      "frame": {"x": 384, "y": 384, "w": 64, "h": 64}
+    },
+    {
+      "filename": "lanza_abajo_7",
+      "frame": {"x": 448, "y": 384, "w": 64, "h": 64}
+    },
+
+    {
+      "filename": "lanza_arriba_0",
+      "frame": {"x": 0, "y": 256, "w": 64, "h": 64}
+    },
+    {
+      "filename": "lanza_arriba_1",
+      "frame": {"x": 64, "y": 256, "w": 64, "h": 64}
+    },
+    {
+      "filename": "lanza_arriba_2",
+      "frame": {"x": 128, "y": 256, "w": 64, "h": 64}
+    },
+    {
+      "filename": "lanza_arriba_3",
+      "frame": {"x": 192, "y": 256, "w": 64, "h": 64}
+    },
+    {
+      "filename": "lanza_arriba_4",
+      "frame": {"x": 256, "y": 256, "w": 64, "h": 64}
+    },
+    {
+      "filename": "lanza_arriba_5",
+      "frame": {"x": 320, "y": 256, "w": 64, "h": 64}
+    },
+    {
+      "filename": "lanza_arriba_6",
+      "frame": {"x": 384, "y": 256, "w": 64, "h": 64}
+    },
+    {
+      "filename": "lanza_arriba_7",
+      "frame": {"x": 448, "y": 256, "w": 64, "h": 64}
+    },
+
+    {
+      "filename": "lanza_izquierda_0",
+      "frame": {"x": 0, "y": 320, "w": 64, "h": 64}
+    },
+    {
+      "filename": "lanza_izquierda_1",
+      "frame": {"x": 64, "y": 320, "w": 64, "h": 64}
+    },
+    {
+      "filename": "lanza_izquierda_2",
+      "frame": {"x": 128, "y": 320, "w": 64, "h": 64}
+    },
+    {
+      "filename": "lanza_izquierda_3",
+      "frame": {"x": 192, "y": 320, "w": 64, "h": 64}
+    },
+    {
+      "filename": "lanza_izquierda_4",
+      "frame": {"x": 256, "y": 320, "w": 64, "h": 64}
+    },
+    {
+      "filename": "lanza_izquierda_5",
+      "frame": {"x": 320, "y": 320, "w": 64, "h": 64}
+    },
+    {
+      "filename": "lanza_izquierda_6",
+      "frame": {"x": 384, "y": 320, "w": 64, "h": 64}
+    },
+    {
+      "filename": "lanza_izquierda_7",
+      "frame": {"x": 448, "y": 320, "w": 64, "h": 64}
+    },
+
+    {
+      "filename": "lanza_derecha_0",
+      "frame": {"x": 0, "y": 448, "w": 64, "h": 64}
+    },
+    {
+      "filename": "lanza_derecha_1",
+      "frame": {"x": 64, "y": 448, "w": 64, "h": 64}
+    },
+    {
+      "filename": "lanza_derecha_2",
+      "frame": {"x": 128, "y": 448, "w": 64, "h": 64}
+    },
+    {
+      "filename": "lanza_derecha_3",
+      "frame": {"x": 192, "y": 448, "w": 64, "h": 64}
+    },
+    {
+      "filename": "lanza_derecha_4",
+      "frame": {"x": 256, "y": 448, "w": 64, "h": 64}
+    },
+    {
+      "filename": "lanza_derecha_5",
+      "frame": {"x": 320, "y": 448, "w": 64, "h": 64}
+    },
+    {
+      "filename": "lanza_derecha_6",
+      "frame": {"x": 384, "y": 448, "w": 64, "h": 64}
+    },
+    {
+      "filename": "lanza_derecha_7",
+      "frame": {"x": 448, "y": 448, "w": 64, "h": 64}
+    }
+  ]
+}

@@ -26,12 +26,16 @@
       "frame": {"x": 0, "y": 68, "w": 32, "h": 32}
     },
     {
-      "filename": "item_espada",
+      "filename": "item_lanza",
       "frame": {"x": 0, "y": 36, "w": 32, "h": 32}
     },
     {
-      "filename": "item_espada_plus",
+      "filename": "item_hacha",
       "frame": {"x": 32, "y": 68, "w": 32, "h": 32}
+    },
+    {
+      "filename": "item_martillo",
+      "frame": {"x": 32, "y": 100, "w": 32, "h": 32}
     }
   ]
 }

@@ -122,7 +122,9 @@ module.exports.mob_atacar = function(mob, target) {
     return;
   }
   mob.tickAtaque = 0;
-  target.vida -= mob.fuerzaAtaque;
+  var daño = mob.fuerzaAtaque
+  daño -= daño * target.defensa;
+  target.vida -= daño;
 
   this.io.emit('mob_atacar', [mob.id, target.id]);
 

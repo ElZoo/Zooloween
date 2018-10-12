@@ -14,7 +14,6 @@ scenePrincipal.create = function() {
   this.pintarMundo();
   this.pintarJugadores();
   this.pintarMobs();
-
   //evento para cuando el server manda datos nuevos sobre los jugadores y los mobs
   this.game.datos.socket.on('update', function(datos) {
     self.onUpdateJugador(datos[0]);
