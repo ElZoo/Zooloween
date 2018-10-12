@@ -10,6 +10,7 @@ scenePrincipal.onUpdateMob = function(mobs) {
     m.y = mob.y;
     m.vida = mob.vida;
     m.dir = mob.dir;
+    m.fase = mob.fase;
   }
 }
 
@@ -32,6 +33,8 @@ scenePrincipal.onNuevoMob = function(mob) {
 scenePrincipal.onMobAtacar = function(mob_id, jugador_id) {
   var mob = this.game.datos.mobs[mob_id];
   var jugador = this.game.datos.jugadores[jugador_id];
+
+  mob.sprite.play('murcielago_atacar');
 
   this.tweens.addCounter({
     from: 0,
@@ -85,7 +88,19 @@ scenePrincipal.updateSpritesMobs = function() {
     }
 
     mob.sprite.flipX = (mob.dir == 'izquierda');
-    if(mob.vida <= 0) {
+
+    var currentAnim = mob.sprite.anims.currentAnim;
+    if(currentAnim && currentAnim.key.includes('_atacar') && mob.sprite.anims.isPlaying) {
+      return;
+    }
+
+    if(mob.vida > 0) {
+      if(mob.fase == 'volar') {
+        mob.sprite.play('murcielago_volar', true);
+      } else if(mob.fase == 'cargar') {
+        mob.sprite.play('murcielago_cargar', true);
+      }
+    } else {
       mob.ticksMuerto++;
       if(mob.ticksMuerto == 75) {
         self.tweens.addCounter({

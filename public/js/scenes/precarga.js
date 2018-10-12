@@ -164,6 +164,8 @@ scenePrecarga.crearMobs = function() {
   //animaciones del murciélago
   this.anims.create({key: 'murcielago_volar', frames: this.anims.generateFrameNames('murcielago', {prefix: 'volar_', end: 4}), repeat: -1, frameRate: 8});
   this.anims.create({key: 'murcielago_morir', frames: this.anims.generateFrameNames('murcielago', {prefix: 'morir_', end: 4}), repeat: 0, frameRate: 8});
+  this.anims.create({key: 'murcielago_cargar', frames: this.anims.generateFrameNames('murcielago', {prefix: 'cargar_', end: 4}), repeat: 0, frameRate: 8});
+  this.anims.create({key: 'murcielago_atacar', frames: this.anims.generateFrameNames('murcielago', {prefix: 'atacar_', end: 4}), reverse: true, repeat: 0, frameRate: 8});
 }
 
 scenePrecarga.crearEfectos = function() {

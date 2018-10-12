@@ -25,15 +25,16 @@ module.exports.crearMob = function() {
   var mob = {
     id: id,
     tipo: 'murcielago',
+    fase: 'volar',
     x: Math.random() * 16,
     y: Math.random() * 16,
-    vidaMax: 15,
-    vida: 15,
+    vidaMax: 30,
+    vida: 30,
     dir: 'derecha',
     vel: 0.01,
     tickAtaque: 0,
-    delayAtaque: 10,
-    fuerzaAtaque: 5,
+    delayAtaque: 30,
+    fuerzaAtaque: 10,
     exp: 5
   }
   this.mobs[id] = mob;
@@ -120,6 +121,10 @@ module.exports.check_colision_mob = function(mob, mobs_ignorados) {
 
 module.exports.mob_atacar = function(mob, target) {
   if(mob.tickAtaque < mob.delayAtaque || target.vida <= 0) {
+    mob.fase = 'volar';
+    if(mob.tickAtaque > mob.delayAtaque/2) {
+      mob.fase = 'cargar';
+    }
     return;
   }
   mob.tickAtaque = 0;
@@ -144,17 +149,19 @@ module.exports.tickMobs = function() {
   for(var id in this.mobs) {
     var mob = this.mobs[id];
     if(!mob.target || !this.server_jugador.jugadores[mob.target]) {
-      mob.tickAtaque = 0;
       continue;
     }
-    mob.tickAtaque++;
+
 
     var target = this.server_jugador.jugadores[mob.target];
     var distancia = calcularDistancia(mob, target);
-    if(distancia > 0.3) {
+    if(distancia > 0.5) {
+      mob.tickAtaque = 0;
+      mob.fase = 'volar';
       continue;
     }
 
+    mob.tickAtaque++;
     this.mob_atacar(mob, target);
   }
 }
