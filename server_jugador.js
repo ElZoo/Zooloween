@@ -241,12 +241,13 @@ module.exports.player_atacar = function(id) {
     var random1 = Math.random();
     var danyo = jugador.probCrit>=random1?(jugador.fuerzaAtaque*2):jugador.fuerzaAtaque;
     mob.vida -= danyo;
-    if(mob.vida <= 0) {
-      this.server_mob.matarMob(mob);
-      this.subirExp(jugador, 5);
-    }
     mob.target = jugador.id;
     mobs_afectados.push(idMob);
+
+    if(mob.vida <= 0) {
+      this.server_mob.matarMob(mob);
+      this.subirExp(jugador, mob.exp);
+    }
   }
 
   this.io.emit('ataque_player', [id, mobs_afectados, danyo, jugador.probCrit > random1]);
@@ -276,14 +277,13 @@ module.exports.ponerArmadura = function(id, armadura_id) {
 }
 
 module.exports.subirExp = function(jugador, exp) {
-    var exp = exp;
-    jugador.exp += exp;
+  jugador.exp += exp;
 
-    if(calcularExpMaxNivel(jugador.nivel) <= jugador.exp) {
-      this.subirLvl(jugador, exp);
-    }
+  if(calcularExpMaxNivel(jugador.nivel) <= jugador.exp) {
+    this.subirLvl(jugador, exp);
+  }
 
-    this.io.to(jugador.id).emit('subirExp', [jugador.exp, exp]);
+  this.io.to(jugador.id).emit('subirExp', [exp]);
 },
 
 module.exports.subirLvl = function(jugador, exp) {

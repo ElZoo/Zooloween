@@ -62,9 +62,8 @@ scenePrincipal.create = function() {
   });
 
   //evento para cuando el jugador aumenta su experiencia
-  this.game.datos.socket.on('subirExp', function(datos) {
-    self.events.emit('subirExp', datos);
-    self.onSubirExp(datos[0]);
+  this.game.datos.socket.on('subirExp', function(exp) {
+    self.onSubirExp(exp);
   });
 
   //listener del click del ratón
@@ -105,10 +104,10 @@ scenePrincipal.create = function() {
     });
   }, this);
 
-  this.scene.get('principal').events.on('subirExp', function(datos) {
+  this.scene.get('principal').events.on('subirExp', function(exp) {
     var numero = self.add.container(0, 0).setScale(0.5, 0.5);
     var jugador = self.game.datos.jugador;
-    console.log(datos);
+
     self.tweens.addCounter({
       from: 0,
       to: 200,
@@ -116,7 +115,7 @@ scenePrincipal.create = function() {
       onStart: function() {
         numero.x = jugador.x * 32 - 10;
         numero.y = jugador.y * 32 - 35;
-        numero.add(self.add.text(0, 0, '+' + datos[1] + 'xp'));
+        numero.add(self.add.text(0, 0, '+' + exp + 'xp'));
         numero.getAt(0).setColor('#1AFF00');
       },
       onUpdate: function() {

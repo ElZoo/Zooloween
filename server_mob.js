@@ -33,7 +33,8 @@ module.exports.crearMob = function() {
     vel: 0.01,
     tickAtaque: 0,
     delayAtaque: 10,
-    fuerzaAtaque: 5
+    fuerzaAtaque: 5,
+    exp: 5
   }
   this.mobs[id] = mob;
 
