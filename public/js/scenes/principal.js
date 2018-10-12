@@ -58,7 +58,7 @@ scenePrincipal.create = function() {
 
   //evento para cuando el jugador sube de nivel
   this.game.datos.socket.on('subirLvl', function(datos) {
-    self.onSubirLvl(datos[0], datos[1]);
+    self.onSubirLvl(datos[0], datos[1], datos[2]);
   });
 
   //evento para cuando el jugador aumenta su experiencia

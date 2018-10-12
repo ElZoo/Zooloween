@@ -4,6 +4,9 @@ scenePrincipal.onUpdateJugador = function(jugadores) {
   if(pj && pj.arma != this.game.datos.jugador.arma) {
     this.events.emit('cambio_de_arma', jugadores[this.game.datos.jugador.id].arma);
   }
+  if(pj && pj.armadura != this.game.datos.jugador.armadura) {
+    this.events.emit('cambio_de_armadura', jugadores[this.game.datos.jugador.id].armadura);
+  }
 
   for(var id in jugadores) {
     var jugador = jugadores[id];
@@ -236,20 +239,23 @@ scenePrincipal.ataque_player = function(player_id, mob_ids) {
 }
 
 //evento de subir el nivel al jugador
-scenePrincipal.onSubirLvl = function(id, lvl) {
-  if(id == this.game.datos.jugador.id) {
-    this.events.emit('subirLvl', lvl);
-  }
-
+scenePrincipal.onSubirLvl = function(id, lvl, exp) {
   var pj = this.game.datos.jugadores[id];
+  pj.nivel = lvl;
+  pj.exp = exp;
   pj.efecto_subir = this.add.sprite(0, 0, 'efecto_subir_lvl').setOrigin(0.5, 0.75);
   pj.efecto_subir.depth = 99999;
   pj.efecto_subir.on('animationcomplete', function() {
     pj.efecto_subir.destroy();
   }, this);
   pj.efecto_subir.play('efecto_subir_lvl');
+
+  if(id == this.game.datos.jugador.id) {
+    this.events.emit('subirLvl', lvl);
+  }
 }
 
 scenePrincipal.onSubirExp = function(exp) {
+  this.game.datos.jugador.exp += exp;
   this.events.emit('subirExp', exp);
 }

@@ -278,20 +278,20 @@ module.exports.ponerArmadura = function(id, armadura_id) {
 
 module.exports.subirExp = function(jugador, exp) {
   jugador.exp += exp;
+  this.io.to(jugador.id).emit('subirExp', exp);
 
   if(calcularExpMaxNivel(jugador.nivel) <= jugador.exp) {
-    this.subirLvl(jugador, exp);
+    this.subirLvl(jugador);
   }
-
-  this.io.to(jugador.id).emit('subirExp', [exp]);
 },
 
-module.exports.subirLvl = function(jugador, exp) {
+module.exports.subirLvl = function(jugador) {
   jugador.exp -= calcularExpMaxNivel(jugador.nivel);
   jugador.nivel++;
+  this.io.emit('subirLvl', [jugador.id, jugador.nivel, jugador.exp]);
   this.recompensa(jugador);
   this.curarPlayer(jugador, 100);
-  this.io.emit('subirLvl', [jugador.id, jugador.nivel]);
+  nivelMedio(this.jugadores);
 }
 
 module.exports.recompensa = function(jugador) {
@@ -351,4 +351,11 @@ function calcularDistancia(ent1, ent2) {
 
 function calcularExpMaxNivel(nivel) {
   return Math.round(nivel + nivel*1.25 + 3);
+}
+
+function nivelMedio(jugadores) {
+  var sum = 0;
+  for(var id in jugadores) {
+    sum += jugadores[id].nivel;
+  }
 }

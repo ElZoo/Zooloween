@@ -27,6 +27,9 @@ sceneHud.create = function() {
   this.circulo_principal = this.add.graphics();
   container.add(this.circulo_principal);
 
+  this.armadura = this.add.sprite(8+1, 0, 'hud', this.game.datos.jugador.armadura).setScale(0.25, 0.25);
+  container.add(this.armadura);
+
   this.scene.get('principal').events.on('click_principal', function() {
     var self = this;
     this.tweens.addCounter({
@@ -62,13 +65,17 @@ sceneHud.create = function() {
   this.scene.get('principal').events.on('cambio_de_arma', function(arma) {
     this.ataque_principal.setFrame(arma);
   }, this);
+  this.scene.get('principal').events.on('cambio_de_armadura', function(armadura) {
+    this.armadura.setFrame(armadura);
+  }, this);
 
   this.scene.get('principal').events.on('subirLvl', function(lvl) {
     this.containerArribaIzq.getAt(0).text = 'Nivel: ' + lvl;
+    this.containerArribaIzq.getAt(1).text = 'Experiencia: ' + this.game.datos.jugador.exp + "/" + calcularExpMaxNivel(this.game.datos.jugador.nivel);
   }, this);
 
   this.scene.get('principal').events.on('subirExp', function(exp) {
-    this.containerArribaIzq.getAt(1).text = 'Experiencia: ' + exp + "/" + calcularExpMaxNivel(this.game.datos.jugador.nivel);
+    this.containerArribaIzq.getAt(1).text = 'Experiencia: ' + this.game.datos.jugador.exp + "/" + calcularExpMaxNivel(this.game.datos.jugador.nivel);
   }, this);
 
   this.scene.get('principal').events.on('nuevoJugador', function() {
