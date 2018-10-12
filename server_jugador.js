@@ -291,6 +291,7 @@ module.exports.subirLvl = function(jugador, exp) {
   jugador.nivel++;
   this.recompensa(jugador);
   this.curarPlayer(jugador, 100);
+  nivelMedio(this.jugadores);
   this.io.emit('subirLvl', [jugador.id, jugador.nivel]);
 }
 
@@ -351,4 +352,14 @@ function calcularDistancia(ent1, ent2) {
 
 function calcularExpMaxNivel(nivel) {
   return Math.round(nivel + nivel*1.25 + 3);
+}
+
+
+/* */
+function nivelMedio(jugadores) {
+  var sum = 0;
+  for(var id in jugadores) {
+    sum += jugadores[id].nivel;
+  }
+  console.log(sum);
 }
