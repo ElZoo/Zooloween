@@ -85,6 +85,7 @@ scenePrincipal.create = function() {
           numero.y = Math.random() > 0.5 ? mob.y * 32 + 2 : mob.y * 32 - 10;
           numero.add(self.add.text(0, 0, datos[2]));
           numero.getAt(0).setColor('#FFD600');
+          numero.depth = 99996;
           if(datos[3]) {
             numero.getAt(0).setColor('#B82323');
           }
@@ -116,6 +117,7 @@ scenePrincipal.create = function() {
         numero.y = jugador.y * 32 - 35;
         numero.add(self.add.text(0, 0, '+' + exp + 'xp'));
         numero.getAt(0).setColor('#1AFF00');
+        numero.depth = 99996;
       },
       onUpdate: function() {
         if(this.getValue() > 25) {
