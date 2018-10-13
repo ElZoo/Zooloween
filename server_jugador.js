@@ -91,7 +91,7 @@ module.exports.crearJugador = function(socket) {
     dirY: 'quieto_abajo',
     lastDir: 'quieto_abajo',
     vel: 0.02,
-    tickAtaque: 0,
+    tickAtaque: 100,
     pociones: 0
   }
   this.ponerArma(socket.id, "item_mano");
@@ -175,6 +175,10 @@ module.exports.updateJugadores = function() {
       continue;
     }
     jugador.tickAtaque++;
+
+    if(jugador.tickAtaque < jugador.delayAtaque*0.75) {
+      continue;
+    }
 
     var old_coords = [jugador.x, jugador.y];
     switch(jugador.dirY) {
