@@ -17,12 +17,16 @@ scenePrincipal.onUpdateMob = function(mobs) {
 //crear los sprites del mob
 scenePrincipal.onNuevoMob = function(mob) {
   if(mob.tipo == 'murcielago') {
-    mob.sprite = this.add.sprite(mob.x * 32, mob.y * 32, 'murcielago', 'volar_0').play('murcielago_volar');
+    mob.sprite = this.add.sprite(mob.x * 32, mob.y * 32, 'murcielago', 'volar_0').play('murcielago_volar')
+    mob.sprite.setScale(mob.escala, mob.escala);
+    if(mob.tinte) {
+      mob.sprite.setTint(mob.tinte);
+    }
   }
   var vida_borde = this.add.image(0, 0, 'hud', 'vida_borde');
   var vida_fondo = this.add.image(0, 0, 'hud', 'vida_fondo');
   var vida_color = this.add.rectangle(-15, 2, 1, 5, 0xffffff).setOrigin(0.5, 1);
-  mob.barra_vida = this.add.container(0, 0, [vida_fondo, vida_color, vida_borde]).setScale(0.4, 0.4);
+  mob.barra_vida = this.add.container(0, 0, [vida_fondo, vida_color, vida_borde]).setScale(0.4*mob.escala, 0.4*mob.escala);
   mob.barra_vida.depth = 999989;
   mob.barra_vida.visible = false;
   mob.tweensBarra = 0;
@@ -77,7 +81,7 @@ scenePrincipal.updateSpritesMobs = function() {
 
     if(mob.barra_vida.visible && mob.barra_vida.getAt(1)) {
       mob.barra_vida.x = mob.x * 32;
-      mob.barra_vida.y = mob.y * 32 - 12;
+      mob.barra_vida.y = mob.y * 32 - 12*mob.escala;
       mob.barra_vida.getAt(1).width = Math.round(mob.vida / mob.vidaMax * 32);
       if(mob.vida < mob.vidaMax * 0.33) {
         mob.barra_vida.getAt(1).fillColor = 0xff0000;

@@ -234,8 +234,7 @@ module.exports.player_atacar = function(id) {
       continue;
     }
 
-    var distancia = calcularDistancia(jugador, mob);
-    if(distancia > jugador.rangoAtaque) {
+    if(!enRango(jugador, mob)) {
       continue;
     }
     var random1 = Math.random();
@@ -291,7 +290,6 @@ module.exports.subirLvl = function(jugador) {
   this.io.emit('subirLvl', [jugador.id, jugador.nivel, jugador.exp]);
   this.recompensa(jugador);
   this.curarPlayer(jugador, 100);
-  nivelMedio(this.jugadores);
 }
 
 module.exports.recompensa = function(jugador) {
@@ -349,13 +347,10 @@ function calcularDistancia(ent1, ent2) {
   return Math.sqrt(Math.pow(ent1.x - ent2.x, 2) + Math.pow(ent1.y - ent2.y, 2));
 }
 
-function calcularExpMaxNivel(nivel) {
-  return Math.round(nivel + nivel*1.25 + 3);
+function enRango(jugador, mob) {
+  return Math.hypot(jugador.x - mob.x, jugador.y - mob.y) <= (jugador.rangoAtaque + mob.rango);
 }
 
-function nivelMedio(jugadores) {
-  var sum = 0;
-  for(var id in jugadores) {
-    sum += jugadores[id].nivel;
-  }
+function calcularExpMaxNivel(nivel) {
+  return Math.round(nivel + nivel*1.25 + 3);
 }

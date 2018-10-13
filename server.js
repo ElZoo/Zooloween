@@ -77,8 +77,9 @@ io.sockets.on('connection', function(socket) {
 });
 
 setInterval(function() {
+  var nivel = nivelMedio(jugadores);
   for(var i=0, len=Math.ceil(Object.keys(jugadores).length/2.0); i<len; i++) {
-    server_mob.crearMob();
+    server_mob.crearMob(nivel);
   }
 }, 5000);
 
@@ -99,4 +100,12 @@ server.listen(8081, function() {
 
 function calcularDistancia(ent1, ent2) {
   return Math.sqrt(Math.pow(ent1.x - ent2.x, 2) + Math.pow(ent1.y - ent2.y, 2));
+}
+
+function nivelMedio(jugadores) {
+  var sum = 0;
+  for(var id in jugadores) {
+    sum += jugadores[id].nivel;
+  }
+  return sum;
 }

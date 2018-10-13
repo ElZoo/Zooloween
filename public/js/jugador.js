@@ -215,6 +215,9 @@ scenePrincipal.ataque_player = function(player_id, mob_ids) {
           return;
         }
         mob.sprite.setTint();
+        if(mob.tinte) {
+          mob.sprite.setTint(mob.tinte);
+        }
       }
     });
 

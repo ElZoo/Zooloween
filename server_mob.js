@@ -12,7 +12,7 @@ module.exports.setInfo = function(io, tiles_mundo, items_mundo, server_jugador) 
   this.server_jugador = server_jugador;
 }
 
-module.exports.crearMob = function() {
+module.exports.crearMob = function(nivel) {
   var num_mobs = Object.keys(this.mobs).length;
   var num_players = Object.keys(this.server_jugador.jugadores).length;
   if(num_mobs >= num_players * 3) {
@@ -21,22 +21,7 @@ module.exports.crearMob = function() {
 
   var id = this.id_mob;
   this.id_mob++;
-
-  var mob = {
-    id: id,
-    tipo: 'murcielago',
-    fase: 'volar',
-    x: Math.random() * 16,
-    y: Math.random() * 16,
-    vidaMax: 30,
-    vida: 30,
-    dir: 'derecha',
-    vel: 0.01,
-    tickAtaque: 0,
-    delayAtaque: 10,
-    fuerzaAtaque: 3,
-    exp: 5
-  }
+  var mob = getMobRandom(nivel, id);
   this.mobs[id] = mob;
 
   console.log(`Nuevo mob: ${mob.tipo} (${id})`);
@@ -56,16 +41,16 @@ module.exports.updateMobs = function() {
 
     var target = this.server_jugador.jugadores[mob.target];
     var old_coords = [mob.x, mob.y];
-    if(mob.x < target.x - 0.2) {
+    if(mob.x < target.x - mob.rango*0.5) {
       mob.x += mob.vel;
       mob.dir = 'derecha';
-    } else if(mob.x > target.x + 0.2) {
+    } else if(mob.x > target.x + mob.rango*0.5) {
       mob.x -= mob.vel;
       mob.dir = 'izquierda';
     }
-    if(mob.y < target.y - 0.2) {
+    if(mob.y < target.y - mob.rango*0.5) {
       mob.y += mob.vel;
-    } else if(mob.y > target.y + 0.2) {
+    } else if(mob.y > target.y + mob.rango*0.5) {
       mob.y -= mob.vel;
     }
 
@@ -111,7 +96,7 @@ module.exports.check_colision_mob = function(mob, mobs_ignorados) {
     }
 
     var distancia = calcularDistancia(mob, target);
-    if(distancia <= 0.2) {
+    if(distancia <= mob.rango) {
       return true;
     }
   }
@@ -155,7 +140,7 @@ module.exports.tickMobs = function() {
 
     var target = this.server_jugador.jugadores[mob.target];
     var distancia = calcularDistancia(mob, target);
-    if(distancia > 0.5) {
+    if(distancia > mob.rango) {
       mob.tickAtaque = 0;
       mob.fase = 'volar';
       continue;
@@ -169,3 +154,57 @@ module.exports.tickMobs = function() {
 function calcularDistancia(ent1, ent2) {
   return Math.sqrt(Math.pow(ent1.x - ent2.x, 2) + Math.pow(ent1.y - ent2.y, 2));
 }
+
+function getMobRandom(nivel_max, id) {
+  var rnd = Math.random() * 100;
+  var mobs = ["murcielago_boss"];
+  if(nivel_max >= 5 && rnd < 5) {
+    mobs.push("murcielago_boss");
+  }
+
+  return getMob(mobs[Math.floor(Math.random() * mobs.length)], id);
+}
+
+function getMob(mob_id, id) {
+  var mob = { ... lista_mobs[mob_id]};
+  mob.id = id;
+  mob.vida = mob.vidaMax;
+  mob.x = Math.random() * 16;
+  mob.y = Math.random() * 16;
+  mob.dir = 'derecha';
+  mob.tickAtaque = 0;
+
+  if(!mob.escala) {
+    mob.escala = 1;
+  }
+  if(!mob.tinte) {
+    mob.tinte = false;
+  }
+
+  return mob;
+}
+
+var lista_mobs = {
+  "murcielago": {
+    fase: 'volar',
+    tipo: "murcielago",
+    vidaMax: 30,
+    vel: 0.01,
+    delayAtaque: 10,
+    fuerzaAtaque: 3,
+    rango: 0.5,
+    exp: 5
+  },
+  "murcielago_boss": {
+    fase: 'volar',
+    tipo: "murcielago",
+    vidaMax: 100,
+    vel: 0.015,
+    delayAtaque: 30,
+    fuerzaAtaque: 15,
+    rango: 1,
+    exp: 15,
+    escala: 2,
+    tinte: 0x673ab7
+  }
+};
