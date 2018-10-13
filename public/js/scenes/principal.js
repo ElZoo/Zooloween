@@ -85,6 +85,7 @@ scenePrincipal.create = function() {
           numero.y = Math.random() > 0.5 ? mob.y * 32 + 2 : mob.y * 32 - 10;
           numero.add(self.add.text(0, 0, datos[2]));
           numero.getAt(0).setColor('#FFD600');
+          numero.depth = 99996;
           if(datos[3]) {
             numero.getAt(0).setColor('#B82323');
           }
@@ -116,6 +117,7 @@ scenePrincipal.create = function() {
         numero.y = jugador.y * 32 - 35;
         numero.add(self.add.text(0, 0, '+' + exp + 'xp'));
         numero.getAt(0).setColor('#1AFF00');
+        numero.depth = 99996;
       },
       onUpdate: function() {
         if(this.getValue() > 25) {
@@ -200,8 +202,8 @@ scenePrincipal.pintarMundo = function() {
     {textura: "cadena", or: [0.5, 0.75]},
     {textura: "puerta_barras"},
     {textura: "puerta_madera"},
-    {textura: "decor_espadas", or: [0.5, 0.75]},
-    {textura: "decor_lanzas", or: [0.5, 0.75]}
+    {textura: "decor_espadas", or: [0.5, 0.75], size:[0.5,0.5]},
+    {textura: "decor_lanzas", or: [0.5, 0.75], size:[0.5,0.5]}
   ];
 
   for(var x=0; x<this.size_mundo; x++) {
@@ -209,6 +211,7 @@ scenePrincipal.pintarMundo = function() {
       var coordX = x*32;
       var coordY = y*32;
       var or = [0.5, 0.5];
+      var size = [1, 1];
 
       var item = this.items_mundo[y][x];
       var dato_item = datos_items[item];
@@ -216,9 +219,12 @@ scenePrincipal.pintarMundo = function() {
       if(dato_item.or) {
         or = dato_item.or;
       }
+      if (dato_item.size){
+        size = dato_item.size;
+      }
 
       if(textura != "aire") {
-        this.add.image(coordX, coordY, 'dungeon', textura).setOrigin(or[0], or[1]);
+        this.add.image(coordX, coordY, 'dungeon', textura).setOrigin(or[0], or[1]).setScale(size[0], size[1]);
       }
     }
   }

@@ -33,7 +33,7 @@ scenePrincipal.crearJugador = function(jugador) {
 
   jugador.texto_nivel = this.add.container(0, 0).setScale(0.3, 0.3);
   jugador.texto_nivel.add(this.add.text(0, 0, 'Lvl ' + jugador.nivel));
-
+  jugador.texto_nivel.depth = 99996;
   this.events.emit('nuevoJugador') ;
 }
 
