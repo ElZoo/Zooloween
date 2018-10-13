@@ -24,7 +24,8 @@ scenePrecarga.preload = function() {
   this.load.atlas('murcielago', 'res/murcielago.png', 'res/murcielago.json');
 
   //precargar efectos
-  this.load.atlas('efecto_subir_lvl', 'res/efecto_subir_lvl.png', 'res/efecto_subir_lvl.json');
+  this.load.atlas('efecto_subir_lvl', 'res/efectos/efecto_subir_lvl.png', 'res/efectos/efecto_subir_lvl.json');
+  this.load.atlas('efecto_curar', 'res/efectos/efecto_curar.png', 'res/efectos/efecto_curar.json');
 
   //precargar sonidos
   this.load.audio('cancion', 'res/sonidos/cancion.ogg');
@@ -181,4 +182,5 @@ scenePrecarga.crearMobs = function() {
 scenePrecarga.crearEfectos = function() {
   //animaciones de efectos
   this.anims.create({key: 'efecto_subir_lvl', frames: this.anims.generateFrameNames('efecto_subir_lvl', {prefix: 'efecto_subir_lvl_', end: 48}), repeat: 0, frameRate: 60});
+  this.anims.create({key: 'efecto_curar', frames: this.anims.generateFrameNames('efecto_curar', {prefix: 'curar_', end: 3}), repeat: 0, frameRate: 8});
 }

@@ -79,8 +79,8 @@ scenePrincipal.create = function() {
   });
 
   //evento para cuando el pj toma una poción
-  this.game.datos.socket.on('beber_pocion', function() {
-    self.onBeberPocion();
+  this.game.datos.socket.on('curarPlayer', function(player_id) {
+    self.onCurarPlayer(player_id);
   });
 
   //listener del click del ratón

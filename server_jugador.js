@@ -91,8 +91,7 @@ module.exports.crearJugador = function(socket) {
     dirY: 'quieto_abajo',
     lastDir: 'quieto_abajo',
     vel: 0.02,
-    tickAtaque: 100,
-    pociones: 0
+    tickAtaque: 100
   }
   this.ponerArma(socket.id, "item_mano");
   this.ponerArmadura(socket.id, "pj_tela");
@@ -220,7 +219,8 @@ module.exports.check_drops = function(jugador) {
     }
 
     if(drop.item == 'pocion') {
-      jugador.pociones++;
+      this.curarPlayer(jugador, 20);
+      this.io.emit('curarPlayer', jugador.id);
     }
 
     this.server_mob.borrarDrop(drop_id);
@@ -312,7 +312,7 @@ module.exports.subirLvl = function(jugador) {
   jugador.nivel++;
   this.io.emit('subirLvl', [jugador.id, jugador.nivel, jugador.exp]);
   this.recompensa(jugador);
-  this.curarPlayer(jugador, 100);
+  this.curarPlayer(jugador, jugador.vidaMax);
 }
 
 module.exports.recompensa = function(jugador) {
@@ -345,7 +345,8 @@ module.exports.recompensa = function(jugador) {
 }
 
 module.exports.curarPlayer = function(jugador, cantidad) {
-  jugador.vida = Math.min(cantidad, jugador.vidaMax);
+  jugador.vida += cantidad;
+  jugador.vida = Math.min(jugador.vida, jugador.vidaMax);
 }
 
 module.exports.check_colision = function(x, y) {

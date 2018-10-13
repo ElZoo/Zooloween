@@ -132,7 +132,7 @@ module.exports.matarMob = function(mob) {
   this.io.emit('matarMob', mob.id);
 
   if(mob.drop) {
-    var rnd = Math.random();
+    var rnd = 0//Math.random();
     if(rnd < mob.dropRate) {
       this.crearDrop(mob.x, mob.y, mob.drop);
     }
@@ -180,7 +180,7 @@ module.exports.crearDrop = function(x, y, item) {
     y: y,
     ticks: 0,
     vidaMax: 5,
-    rango: 0.01
+    rango: 0.02
   };
 
   this.drops[drop.id] = drop;

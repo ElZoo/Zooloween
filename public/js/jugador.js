@@ -22,7 +22,6 @@ scenePrincipal.onUpdateJugador = function(jugadores) {
     j.armadura = jugador.armadura;
     j.delayAtaque = jugador.delayAtaque;
     j.nivel = jugador.nivel;
-    j.pociones = jugador.pociones;
   }
 }
 
@@ -99,6 +98,10 @@ scenePrincipal.updateSpritesJugadores = function() {
     if(jugador.efecto_subir) {
       jugador.efecto_subir.x = jugador.x * 32 + 1;
       jugador.efecto_subir.y = jugador.y * 32;
+    }
+    if(jugador.spriteCurar) {
+      jugador.spriteCurar.x = jugador.x * 32;
+      jugador.spriteCurar.y = jugador.y * 32;
     }
 
     var currentAnim = jugador.sprite.anims.currentAnim
@@ -272,6 +275,16 @@ scenePrincipal.onSubirExp = function(exp) {
   this.events.emit('subirExp', exp);
 }
 
-scenePrincipal.onBeberPocion = function() {
-  this.sonido('beber_pocion', this.game.datos.jugador.x, this.game.datos.jugador.y);
+scenePrincipal.onCurarPlayer = function(player_id) {
+  var jugador = this.game.datos.jugadores[player_id];
+
+  jugador.spriteCurar = this.add.sprite(0, 0, 'efecto_curar').setOrigin(0.5, 0.75);
+  jugador.spriteCurar.depth = 99999;
+  jugador.spriteCurar.on('animationcomplete', function() {
+    jugador.spriteCurar.destroy();
+    delete jugador.spriteCurar;
+  }, this);
+  jugador.spriteCurar.play('efecto_curar');
+
+  this.sonido('beber_pocion', jugador.x, jugador.y);
 }
