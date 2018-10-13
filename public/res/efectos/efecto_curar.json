@@ -15,6 +15,57 @@
     {
       "filename": "curar_3",
       "frame": {"x": 48, "y": 0, "w": 16, "h": 24}
+    },
+
+    {
+      "filename": "boost_velocidad_0",
+      "frame": {"x": 0, "y": 24, "w": 16, "h": 24}
+    },
+    {
+      "filename": "boost_velocidad_1",
+      "frame": {"x": 16, "y": 24, "w": 16, "h": 24}
+    },
+    {
+      "filename": "boost_velocidad_2",
+      "frame": {"x": 32, "y": 24, "w": 16, "h": 24}
+    },
+    {
+      "filename": "boost_velocidad_3",
+      "frame": {"x": 48, "y": 24, "w": 16, "h": 24}
+    },
+
+    {
+      "filename": "boost_fuerza_0",
+      "frame": {"x": 0, "y": 48, "w": 16, "h": 24}
+    },
+    {
+      "filename": "boost_fuerza_1",
+      "frame": {"x": 16, "y": 48, "w": 16, "h": 24}
+    },
+    {
+      "filename": "boost_fuerza_2",
+      "frame": {"x": 32, "y": 48, "w": 16, "h": 24}
+    },
+    {
+      "filename": "boost_fuerza_3",
+      "frame": {"x": 48, "y": 48, "w": 16, "h": 24}
+    },
+
+    {
+      "filename": "boost_defensa_0",
+      "frame": {"x": 0, "y": 72, "w": 16, "h": 24}
+    },
+    {
+      "filename": "boost_defensa_1",
+      "frame": {"x": 16, "y": 72, "w": 16, "h": 24}
+    },
+    {
+      "filename": "boost_defensa_2",
+      "frame": {"x": 32, "y": 72, "w": 16, "h": 24}
+    },
+    {
+      "filename": "boost_defensa_3",
+      "frame": {"x": 48, "y": 72, "w": 16, "h": 24}
     }
   ]
 }

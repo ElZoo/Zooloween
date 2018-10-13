@@ -117,6 +117,9 @@ module.exports.mob_atacar = function(mob, target) {
   mob.tickAtaque = 0;
   var daño = mob.fuerzaAtaque
   daño -= daño * target.defensa;
+  if(target.boost && target.boost == 'boost_defensa') {
+    daño -= daño * 0.25;
+  }
   target.vida -= daño;
 
   this.io.emit('mob_atacar', [mob.id, target.id]);
@@ -131,10 +134,11 @@ module.exports.matarMob = function(mob) {
   delete this.mobs[mob.id];
   this.io.emit('matarMob', mob.id);
 
-  if(mob.drop) {
+  if(mob.drops) {
     var rnd = Math.random();
     if(rnd < mob.dropRate) {
-      this.crearDrop(mob.x, mob.y, mob.drop);
+      var item = mob.drops[Math.floor(Math.random() * mob.drops.length)];
+      this.crearDrop(mob.x, mob.y, item);
     }
   }
 }
@@ -240,7 +244,7 @@ var lista_mobs = {
     fuerzaAtaque: 3,
     rango: 0.5,
     exp: 5,
-    drop: 'pocion',
+    drops: ['pocion'],
     dropRate: 0.2
   },
   "murcielago_boss": {
@@ -252,7 +256,7 @@ var lista_mobs = {
     fuerzaAtaque: 40,
     rango: 1,
     exp: 25,
-    drop: 'pocion',
+    drops: ['boost_fuerza', 'boost_defensa', 'boost_velocidad'],
     dropRate: 1,
     escala: 2,
     tinte: 0x673ab7

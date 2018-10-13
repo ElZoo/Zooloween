@@ -275,16 +275,20 @@ scenePrincipal.onSubirExp = function(exp) {
   this.events.emit('subirExp', exp);
 }
 
-scenePrincipal.onCurarPlayer = function(player_id) {
+scenePrincipal.onBoost = function(player_id, item) {
   var jugador = this.game.datos.jugadores[player_id];
+  var ef = 'efecto_curar';
+  if(item != 'pocion') {
+    ef = item;
+  }
 
-  jugador.spriteCurar = this.add.sprite(0, 0, 'efecto_curar').setOrigin(0.5, 0.75);
+  jugador.spriteCurar = this.add.sprite(0, 0, ef).setOrigin(0.5, 0.75);
   jugador.spriteCurar.depth = 99999;
   jugador.spriteCurar.on('animationcomplete', function() {
     jugador.spriteCurar.destroy();
     delete jugador.spriteCurar;
   }, this);
-  jugador.spriteCurar.play('efecto_curar');
+  jugador.spriteCurar.play(ef);
 
   this.sonido('beber_pocion', jugador.x, jugador.y);
 }
