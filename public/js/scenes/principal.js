@@ -167,7 +167,7 @@ scenePrincipal.create = function() {
   }, 50);
 
   //comenzar música
-  this.musica_fondo = this.sound.add('cancion', {loop: true, volume: 0.5});
+  this.musica_fondo = this.sound.add('cancion', {loop: true, volume: 0.15});
   this.musica_fondo.play();
 }
 
@@ -279,6 +279,6 @@ scenePrincipal.sonido = function(sonido, x1, y1) {
   var y2 = this.game.datos.jugador.y;
   var distancia = calcularDistancia({x: x1, y: y1}, {x: x2, y: y2});
 
-  var volumen = Math.max(0, (0.5 - distancia*0.1));
+  var volumen = Math.max(0, (0.2 - distancia*0.1));
   this.sound.play(sonido, {volume: volumen});
 }
