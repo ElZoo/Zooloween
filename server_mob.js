@@ -132,7 +132,7 @@ module.exports.matarMob = function(mob) {
   this.io.emit('matarMob', mob.id);
 
   if(mob.drop) {
-    var rnd = 0//Math.random();
+    var rnd = Math.random();
     if(rnd < mob.dropRate) {
       this.crearDrop(mob.x, mob.y, mob.drop);
     }

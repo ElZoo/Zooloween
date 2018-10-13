@@ -121,11 +121,11 @@ scenePrincipal.updateSpritesMobs = function() {
       if(mob.ticksMuerto == 75) {
         self.tweens.addCounter({
           from: 0,
-          to: 50,
+          to: 100,
           duration: 500,
           onUpdate: function(tween) {
             var val = Math.round(tween.getValue());
-            if(val % 10 == 0) {
+            if(val % 20 == 0) {
               mobs[id].sprite.setVisible(mobs[id].sprite.visible != true);
             }
           },
