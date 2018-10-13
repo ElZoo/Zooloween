@@ -16,6 +16,10 @@
       "filename": "boton",
       "frame": {"x": 0, "y": 20, "w": 16, "h": 16}
     },
+    {
+      "filename": "boton_grande",
+      "frame": {"x": 34, "y": 0, "w": 30, "h": 36}
+    },
 
     {
       "filename": "item_mano",
@@ -62,6 +66,18 @@
     {
       "filename": "pocion",
       "frame": {"x": 0, "y": 196, "w": 32, "h": 32}
+    },
+    {
+      "filename": "boost_velocidad",
+      "frame": {"x": 32, "y": 196, "w": 32, "h": 32}
+    },
+    {
+      "filename": "boost_fuerza",
+      "frame": {"x": 0, "y": 228, "w": 32, "h": 32}
+    },
+    {
+      "filename": "boost_defensa",
+      "frame": {"x": 32, "y": 228, "w": 32, "h": 32}
     }
   ]
 }
