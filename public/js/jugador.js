@@ -22,6 +22,7 @@ scenePrincipal.onUpdateJugador = function(jugadores) {
     j.armadura = jugador.armadura;
     j.delayAtaque = jugador.delayAtaque;
     j.nivel = jugador.nivel;
+    j.pociones = jugador.pociones;
   }
 }
 

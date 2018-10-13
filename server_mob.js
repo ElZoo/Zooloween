@@ -4,6 +4,8 @@ module.exports.tiles_mundo = [];
 module.exports.mobs = {};
 module.exports.server_jugador = false;
 module.exports.id_mob = 0;
+module.exports.drops = {};
+module.exports.id_drop = 0;
 
 module.exports.setInfo = function(io, tiles_mundo, items_mundo, server_jugador) {
   this.io = io;
@@ -128,6 +130,13 @@ module.exports.matarMob = function(mob) {
   mob.vida = 0;
   delete this.mobs[mob.id];
   this.io.emit('matarMob', mob.id);
+
+  if(mob.drop) {
+    var rnd = Math.random();
+    if(rnd < mob.dropRate) {
+      this.crearDrop(mob.x, mob.y, mob.drop);
+    }
+  }
 }
 
 module.exports.tickMobs = function() {
@@ -148,6 +157,38 @@ module.exports.tickMobs = function() {
 
     mob.tickAtaque++;
     this.mob_atacar(mob, target);
+  }
+}
+
+module.exports.borrarDrop = function(drop_id) {
+  this.io.emit('borrar_drop', drop_id);
+  delete this.drops[drop_id];
+}
+
+module.exports.crearDrop = function(x, y, item) {
+  var id = this.id_drop;
+  this.id_drop++;
+  var drop = {
+    id: id,
+    item: item,
+    x: x,
+    y: y,
+    ticks: 0,
+    vidaMax: 5,
+    rango: 0.01
+  };
+
+  this.drops[drop.id] = drop;
+  this.io.emit('nuevo_drop', drop);
+}
+
+module.exports.tickDrops = function() {
+  for(var drop_id in this.drops) {
+    var drop = this.drops[drop_id];
+    drop.ticks++;
+    if(drop.ticks >= drop.vidaMax) {
+      this.borrarDrop(drop.id);
+    }
   }
 }
 
@@ -193,7 +234,9 @@ var lista_mobs = {
     delayAtaque: 10,
     fuerzaAtaque: 3,
     rango: 0.5,
-    exp: 5
+    exp: 5,
+    drop: 'pocion',
+    dropRate: 0.2
   },
   "murcielago_boss": {
     fase: 'volar',
@@ -204,6 +247,8 @@ var lista_mobs = {
     fuerzaAtaque: 15,
     rango: 1,
     exp: 15,
+    drop: 'pocion',
+    dropRate: 1,
     escala: 2,
     tinte: 0x673ab7
   }

@@ -40,6 +40,7 @@ scenePrecarga.create = function() {
     self.game.datos.mobs = datos[1];
     self.game.datos.tiles_mundo = datos[2];
     self.game.datos.items_mundo = datos[3];
+    self.game.datos.drops = datos[4];
 
     self.scene.launch('principal');
     self.scene.launch('hud');

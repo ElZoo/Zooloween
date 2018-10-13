@@ -7,6 +7,7 @@ var server_jugador = require('./server_jugador.js');
 
 var jugadores = server_jugador.jugadores;
 var mobs = server_mob.mobs;
+var drops = server_mob.drops;
 
 var tiles_mundo = [
   [0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0],
@@ -60,7 +61,7 @@ app.get('/', function(req, res) {
 io.sockets.on('connection', function(socket) {
   server_jugador.crearJugador(socket);
 
-  socket.emit('datosMapa', [jugadores, mobs, tiles_mundo, items_mundo]);
+  socket.emit('datosMapa', [jugadores, mobs, tiles_mundo, items_mundo, drops]);
   socket.broadcast.emit('nuevoJugador', jugadores[socket.id]);
 
   socket.on('disconnect', function() {
@@ -82,6 +83,11 @@ setInterval(function() {
     server_mob.crearMob(nivel);
   }
 }, 5000);
+
+
+setInterval(function() {
+  server_mob.tickDrops();
+}, 1000);
 
 setInterval(function() {
   server_jugador.updateJugadores();

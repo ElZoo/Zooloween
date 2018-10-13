@@ -4,6 +4,7 @@ scenePrincipal.init = function() {
   //referencias para usarlas de forma más cómoda luego
   this.tiles_mundo = this.game.datos.tiles_mundo;
   this.items_mundo = this.game.datos.items_mundo;
+  this.drops = this.game.datos.drops;
   this.size_mundo = this.items_mundo.length;
 }
 
@@ -12,6 +13,7 @@ scenePrincipal.create = function() {
 
   //pintar el mundo, los jugadores y los mobs usando los datos del servidor
   this.pintarMundo();
+  this.pintarDrops();
   this.pintarJugadores();
   this.pintarMobs();
   //evento para cuando el server manda datos nuevos sobre los jugadores y los mobs
@@ -64,6 +66,16 @@ scenePrincipal.create = function() {
   //evento para cuando el jugador aumenta su experiencia
   this.game.datos.socket.on('subirExp', function(exp) {
     self.onSubirExp(exp);
+  });
+
+  //evento para cuando se crea un nuevo drop
+  this.game.datos.socket.on('nuevo_drop', function(drop) {
+    self.crearDrop(drop);
+  });
+
+  //evento para cuando se elimina un drop
+  this.game.datos.socket.on('borrar_drop', function(drop_id) {
+    self.borrarDrop(drop_id);
   });
 
   //listener del click del ratón
@@ -228,4 +240,22 @@ scenePrincipal.pintarMundo = function() {
       }
     }
   }
+}
+
+scenePrincipal.pintarDrops = function() {
+  for(var drop_id in this.drops) {
+    var drop = this.drops[drop_id];
+    this.crearDrop(drop);
+  }
+}
+
+scenePrincipal.crearDrop = function(drop) {
+  drop.sprite = this.add.image(drop.x*32, drop.y*32, 'hud', drop.item).setScale(0.25, 0.25);
+  this.drops[drop.id] = drop;
+}
+
+scenePrincipal.borrarDrop = function(drop_id) {
+  var drop = this.drops[drop_id];
+  drop.sprite.destroy();
+  delete this.drops[drop_id];
 }

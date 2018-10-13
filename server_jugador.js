@@ -92,6 +92,7 @@ module.exports.crearJugador = function(socket) {
     lastDir: 'quieto_abajo',
     vel: 0.02,
     tickAtaque: 0,
+    pociones: 0
   }
   this.ponerArma(socket.id, "item_mano");
   this.ponerArmadura(socket.id, "pj_tela");
@@ -201,6 +202,24 @@ module.exports.updateJugadores = function() {
         jugador.y = old_coords[1];
       }
     }
+
+    this.check_drops(jugador);
+  }
+}
+
+module.exports.check_drops = function(jugador) {
+  for(var drop_id in this.server_mob.drops) {
+    var drop = this.server_mob.drops[drop_id];
+
+    if(!enRango(jugador, drop)) {
+      continue;
+    }
+
+    if(drop.item == 'pocion') {
+      jugador.pociones++;
+    }
+
+    this.server_mob.borrarDrop(drop_id);
   }
 }
 
