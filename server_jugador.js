@@ -298,7 +298,7 @@ module.exports.subirExp = function(jugador, exp) {
   jugador.exp += exp;
   this.io.to(jugador.id).emit('subirExp', exp);
 
-  if(calcularExpMaxNivel(jugador.nivel) <= jugador.exp) {
+  while(calcularExpMaxNivel(jugador.nivel) <= jugador.exp) {
     this.subirLvl(jugador);
   }
 },
