@@ -199,7 +199,7 @@ var lista_mobs = {
     fase: 'volar',
     tipo: "murcielago",
     vidaMax: 100,
-    vel: 0.015,
+    vel: 0.0075,
     delayAtaque: 30,
     fuerzaAtaque: 15,
     rango: 1,

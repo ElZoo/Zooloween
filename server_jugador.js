@@ -9,35 +9,35 @@ module.exports.armas = {
     nombre: "item_mano",
     delayAtaque: 60,
     fuerzaAtaque: 5,
-    rangoAtaque: 0.3,
+    rangoAtaque: 0.1,
     probCrit: 0.05
   },
   item_daga: {
     nombre: "item_daga",
     delayAtaque: 25,
     fuerzaAtaque: 4,
-    rangoAtaque: 0.3,
+    rangoAtaque: 0.1,
     probCrit: 0.1
   },
   item_lanza: {
     nombre: "item_lanza",
     delayAtaque: 50,
     fuerzaAtaque: 8,
-    rangoAtaque: 0.5,
+    rangoAtaque: 0.2,
     probCrit: 0.05
   },
   item_hacha: {
     nombre: "item_hacha",
     delayAtaque: 50,
     fuerzaAtaque: 15,
-    rangoAtaque: 0.7,
+    rangoAtaque: 0.3,
     probCrit: 0.075
   },
   item_martillo: {
     nombre: "item_martillo",
     delayAtaque: 75,
     fuerzaAtaque: 50,
-    rangoAtaque: 0.7,
+    rangoAtaque: 0.3,
     probCrit: 0.15
   }
 }
