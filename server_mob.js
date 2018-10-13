@@ -157,7 +157,7 @@ function calcularDistancia(ent1, ent2) {
 
 function getMobRandom(nivel_max, id) {
   var rnd = Math.random() * 100;
-  var mobs = ["murcielago_boss"];
+  var mobs = ["murcielago"];
   if(nivel_max >= 5 && rnd < 5) {
     mobs.push("murcielago_boss");
   }
