@@ -56,6 +56,7 @@ scenePrincipal.onDisconnectJugador = function(id) {
 //si es el pj principal, ver la pantalla final, si no, borrar sus datos
 scenePrincipal.onMatarJugador = function(id) {
   if(id == this.game.datos.jugador.id) {
+    this.musica_fondo.stop();
     this.scene.launch('final');
   } else {
     this.onDisconnectJugador(id);

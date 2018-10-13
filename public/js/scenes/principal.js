@@ -91,7 +91,7 @@ scenePrincipal.create = function() {
       if(!mob) {
         return;
       }
-      
+
       self.tweens.addCounter({
         from: 0,
         to: 200,
@@ -160,6 +160,10 @@ scenePrincipal.create = function() {
 
     self.game.datos.socket.emit('moverJugador', datos_teclas);
   }, 50);
+
+  //comenzar música
+  this.musica_fondo = this.sound.add('cancion', {loop: true, volume: 0.5});
+  this.musica_fondo.play();
 }
 
 //actualizar la barra de vida y las sprites de los jugadores y mobs

@@ -25,6 +25,9 @@ scenePrecarga.preload = function() {
 
   //precargar efectos
   this.load.atlas('efecto_subir_lvl', 'res/efecto_subir_lvl.png', 'res/efecto_subir_lvl.json');
+
+  //precargar sonidos
+  this.load.audio('cancion', 'res/sonidos/cancion.ogg');
 }
 
 scenePrecarga.create = function() {
