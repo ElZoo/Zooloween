@@ -166,6 +166,11 @@ module.exports.borrarDrop = function(drop_id) {
 }
 
 module.exports.crearDrop = function(x, y, item) {
+  var tile = this.tiles_mundo[Math.round(y)][Math.round(x)];
+  if(tiles_barrera.indexOf(tile) > -1) {
+    return;
+  }
+
   var id = this.id_drop;
   this.id_drop++;
   var drop = {
@@ -253,3 +258,5 @@ var lista_mobs = {
     tinte: 0x673ab7
   }
 };
+
+var tiles_barrera = [0, 10, 11, 12, 13, 14, 15];

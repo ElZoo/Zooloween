@@ -60,10 +60,19 @@ scenePrincipal.onMobAtacar = function(mob_id, jugador_id) {
 
 //eliminar sprites cuando muere un mob
 scenePrincipal.onMatarMob = function(id) {
-  this.game.datos.mobs[id].ticksMuerto = 0;
-  this.game.datos.mobs[id].vida = 0;
-  this.game.datos.mobs[id].sprite.play('murcielago_morir', true);
-  this.game.datos.mobs[id].barra_vida.destroy();
+  var mob = this.game.datos.mobs[id];
+
+  mob.ticksMuerto = 0;
+  mob.vida = 0;
+  mob.barra_vida.destroy();
+
+  var tile = this.tiles_mundo[Math.round(mob.y)][Math.round(mob.x)];
+  if(tiles_barrera.indexOf(tile) > -1) {
+    mob.sprite.destroy();
+    delete self.game.datos.mobs[id];
+  } else {
+    mob.sprite.play('murcielago_morir', true);
+  }
 }
 
 //actualizar sprites de los mobs
@@ -137,3 +146,5 @@ scenePrincipal.pintarMobs = function() {
     this.onNuevoMob(mob);
   }
 }
+
+var tiles_barrera = [0, 10, 11, 12, 13, 14, 15];

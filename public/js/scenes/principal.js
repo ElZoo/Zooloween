@@ -88,6 +88,10 @@ scenePrincipal.create = function() {
     datos[1].forEach(function(mob_id) {
       var numero = self.add.container(0, 0).setScale(0.5, 0.5);
       var mob = self.game.datos.mobs[mob_id];
+      if(!mob) {
+        return;
+      }
+      
       self.tweens.addCounter({
         from: 0,
         to: 200,
