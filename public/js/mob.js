@@ -40,6 +40,7 @@ scenePrincipal.onMobAtacar = function(mob_id, jugador_id) {
   var jugador = this.game.datos.jugadores[jugador_id];
 
   mob.sprite.play('murcielago_atacar');
+  this.sonido('pj_dano', jugador.x, jugador.y);
 
   this.tweens.addCounter({
     from: 0,
@@ -65,6 +66,7 @@ scenePrincipal.onMatarMob = function(id) {
   mob.ticksMuerto = 0;
   mob.vida = 0;
   mob.barra_vida.destroy();
+  this.sonido('mob_muere', mob.x, mob.y);
 
   var tile = this.tiles_mundo[Math.round(mob.y)][Math.round(mob.x)];
   if(tiles_barrera.indexOf(tile) > -1) {

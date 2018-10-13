@@ -199,6 +199,7 @@ scenePrincipal.ataque_player = function(player_id, mob_ids) {
 
   mob_ids.forEach(function(mob_id) {
     var mob = this.game.datos.mobs[mob_id];
+    self.sonido('mob_dano', mob.x, mob.y);
 
     self.tweens.addCounter({
       from: 0,
@@ -259,6 +260,7 @@ scenePrincipal.onSubirLvl = function(id, lvl, exp) {
     pj.efecto_subir.destroy();
   }, this);
   pj.efecto_subir.play('efecto_subir_lvl');
+  this.sonido('subir_lvl', pj.x, pj.y);
 
   if(id == this.game.datos.jugador.id) {
     this.events.emit('subirLvl', lvl);
@@ -268,4 +270,8 @@ scenePrincipal.onSubirLvl = function(id, lvl, exp) {
 scenePrincipal.onSubirExp = function(exp) {
   this.game.datos.jugador.exp += exp;
   this.events.emit('subirExp', exp);
+}
+
+scenePrincipal.onBeberPocion = function() {
+  this.sonido('beber_pocion', this.game.datos.jugador.x, this.game.datos.jugador.y);
 }

@@ -78,6 +78,11 @@ scenePrincipal.create = function() {
     self.borrarDrop(drop_id);
   });
 
+  //evento para cuando el pj toma una poción
+  this.game.datos.socket.on('beber_pocion', function() {
+    self.onBeberPocion();
+  });
+
   //listener del click del ratón
   this.input.on('pointerdown', function(pointer) {
     self.game.datos.socket.emit('player_atacar');
@@ -266,4 +271,14 @@ scenePrincipal.borrarDrop = function(drop_id) {
   var drop = this.drops[drop_id];
   drop.sprite.destroy();
   delete this.drops[drop_id];
+  this.sonido('coger_item', drop.x, drop.y);
+}
+
+scenePrincipal.sonido = function(sonido, x1, y1) {
+  var x2 = this.game.datos.jugador.x;
+  var y2 = this.game.datos.jugador.y;
+  var distancia = calcularDistancia({x: x1, y: y1}, {x: x2, y: y2});
+
+  var volumen = Math.max(0, (0.5 - distancia*0.1));
+  this.sound.play(sonido, {volume: volumen});
 }

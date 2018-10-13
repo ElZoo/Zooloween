@@ -28,6 +28,12 @@ scenePrecarga.preload = function() {
 
   //precargar sonidos
   this.load.audio('cancion', 'res/sonidos/cancion.ogg');
+  this.load.audio('beber_pocion', 'res/sonidos/beber_pocion.ogg');
+  this.load.audio('coger_item', 'res/sonidos/coger_item.ogg');
+  this.load.audio('mob_dano', 'res/sonidos/mob_dano.ogg');
+  this.load.audio('mob_muere', 'res/sonidos/mob_muere.ogg');
+  this.load.audio('subir_lvl', 'res/sonidos/subir_lvl.ogg');
+  this.load.audio('pj_dano', 'res/sonidos/pj_dano.ogg');
 }
 
 scenePrecarga.create = function() {
