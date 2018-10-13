@@ -279,6 +279,6 @@ scenePrincipal.sonido = function(sonido, x1, y1) {
   var y2 = this.game.datos.jugador.y;
   var distancia = calcularDistancia({x: x1, y: y1}, {x: x2, y: y2});
 
-  var volumen = Math.max(0, (0.2 - distancia*0.1));
+  var volumen = Math.max(0, (0.2 - distancia*0.025));
   this.sound.play(sonido, {volume: volumen});
 }

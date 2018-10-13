@@ -88,7 +88,7 @@ scenePrecarga.crearPj = function() {
   armaduras.forEach(function(armadura) {
     //crear animaciones misc
     self.anims.create({key: `${armadura}_quieto`, frames: [0], repeat: -1});
-    self.anims.create({key: `${armadura}_morir`, frames: self.anims.generateFrameNames(armadura, {prefix: 'morir_', end: 5}), repeat: -1, frameRate: 16});
+    self.anims.create({key: `${armadura}_morir`, frames: self.anims.generateFrameNames(armadura, {prefix: 'morir_', end: 5}), repeat: 0, frameRate: 16});
 
     //crear animaciones para cada dirección
     anims.forEach(function(anim) {

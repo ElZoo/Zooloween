@@ -39,16 +39,39 @@ scenePrincipal.crearJugador = function(jugador) {
 
 //eliminar los sprites y el texto y borrarlo del array de jugadores
 scenePrincipal.onDisconnectJugador = function(id) {
-  if(!this.game.datos.jugadores[id]) {
+  var self = this;
+
+  var jugador = this.game.datos.jugadores[id];
+  if(!jugador) {
     return;
   }
 
-  this.game.datos.jugadores[id].sprite.destroy();
-  this.game.datos.jugadores[id].spriteArma.destroy();
-  this.game.datos.jugadores[id].texto_nivel.destroy();
+  var spriteMuerte = this.add.sprite(jugador.x * 32, jugador.y * 32, jugador.armadura).setOrigin(0.5, 0.9).setScale(0.5, 0.5);
+  spriteMuerte.depth = spriteMuerte.y;
+  spriteMuerte.on('animationcomplete', function() {
+    self.tweens.addCounter({
+      from: 0,
+      to: 100,
+      duration: 1000,
+      onUpdate: function(tween) {
+        var val = Math.round(tween.getValue());
+        if(val % 20 == 0) {
+          spriteMuerte.setVisible(spriteMuerte.visible != true);
+        }
+      },
+      onComplete: function(tween) {
+        spriteMuerte.destroy();
+      }
+    });
+  }, this);
+  spriteMuerte.play(jugador.armadura+"_morir");
+
+  jugador.sprite.destroy();
+  jugador.spriteArma.destroy();
+  jugador.texto_nivel.destroy();
   delete this.game.datos.jugadores[id];
 
-  this.events.emit('matarJugador') ;
+  this.events.emit('matarJugador');
 
 }
 
