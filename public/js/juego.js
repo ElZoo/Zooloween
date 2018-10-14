@@ -12,7 +12,8 @@ var config = {
     scenePrecarga,
     scenePrincipal,
     sceneHud,
-    sceneFinal
+    sceneFinal,
+    sceneNick
   ],
 }
 

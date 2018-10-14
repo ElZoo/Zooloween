@@ -38,29 +38,13 @@ scenePrecarga.preload = function() {
 }
 
 scenePrecarga.create = function() {
-  var self = this;
-
-  //crear conexión con el servidor
-  this.game.datos = {};
-  this.game.datos.socket = io();
-
-  //al recibir los datos del server (items, tiles, players y mobs), lanzar los scenes
-  this.game.datos.socket.on('datosMapa', function(datos) {
-    self.game.datos.jugadores = datos[0];
-    self.game.datos.mobs = datos[1];
-    self.game.datos.tiles_mundo = datos[2];
-    self.game.datos.items_mundo = datos[3];
-    self.game.datos.drops = datos[4];
-
-    self.scene.launch('principal');
-    self.scene.launch('hud');
-  });
-
   //crear las animaciones
   this.crearPj();
   this.crearItems();
   this.crearMobs();
   this.crearEfectos();
+
+  this.scene.launch('nick');
 }
 
 scenePrecarga.crearPj = function() {

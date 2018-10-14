@@ -9,16 +9,16 @@ sceneFinal.create = function() {
 
   this.add.text(640, 360, 'Has perdido :(', {align: 'center'}).setOrigin(0.5, 0.5);
 
-  var boton = this.add.sprite(640, 420, 'hud', 'boton').setScale(12, 4).setOrigin(0.5, 0.5).setInteractive();
+  var boton = this.add.sprite(640, 420, 'hud', 'boton_ancho').setScale(4, 4).setOrigin(0.5, 0.5).setInteractive();
   var texto = this.add.text(640, 420, '¿Reinciar?', {align: 'center'}).setOrigin(0.5, 0.5);
 
   boton.on('pointerdown', function(pointer) {
     location.reload();
   });
   boton.on('pointerin', function(pointer) {
-    this.setScale(12.5, 4.5);
+    this.setFrame('boton_ancho_sel');
   });
   boton.on('pointerout', function(pointer) {
-    this.setScale(12, 4);
-  })
+    this.setFrame('boton_ancho');
+  });
 }

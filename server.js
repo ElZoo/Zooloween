@@ -59,7 +59,13 @@ app.get('/', function(req, res) {
 });
 
 io.sockets.on('connection', function(socket) {
-  server_jugador.crearJugador(socket);
+  if(!comprobarNick(socket.request._query["nick"])) {
+    socket.emit('datosMapa', false);
+    socket.disconnect();
+    return;
+  }
+
+  server_jugador.crearJugador(socket, socket.request._query["nick"]);
 
   socket.emit('datosMapa', [jugadores, mobs, tiles_mundo, items_mundo, drops]);
   socket.broadcast.emit('nuevoJugador', jugadores[socket.id]);
@@ -114,4 +120,18 @@ function nivelMedio(jugadores) {
     sum += jugadores[id].nivel;
   }
   return sum;
+}
+
+function comprobarNick(nick) {
+  if(!nick || nick.length < 3 || nick.lengt > 16) {
+    return false;
+  }
+
+  for(var id in jugadores) {
+    if(jugadores[id].nick.toLowerCase() == nick.toLowerCase()) {
+      return false;
+    }
+  }
+
+  return true;
 }

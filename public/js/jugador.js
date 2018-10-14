@@ -32,9 +32,10 @@ scenePrincipal.crearJugador = function(jugador) {
   jugador.spriteArma = this.add.sprite(jugador.x * 32, jugador.y * 32, jugador.arma, 'abajo_0').setOrigin(0.5, 0.9).setScale(0.5, 0.5).setFrame('abajo_0');
   this.game.datos.jugadores[jugador.id] = jugador;
 
-  jugador.texto_nivel = this.add.container(0, 0).setScale(0.3, 0.3);
-  jugador.texto_nivel.add(this.add.text(0, 0, 'Lvl ' + jugador.nivel));
+  jugador.texto_nivel = this.add.text(0, 0, 'Lvl ' + jugador.nivel, {align: 'center'}).setScale(0.3, 0.3).setOrigin(0.5, 0.5);
+  jugador.texto_nick = this.add.text(0, 0, jugador.nick, {align: 'center'}).setScale(0.3, 0.3).setOrigin(0.5, 0.5);
   jugador.texto_nivel.depth = 99996;
+  jugador.texto_nick.depth = 99996;
   this.events.emit('nuevoJugador') ;
 }
 
@@ -70,6 +71,7 @@ scenePrincipal.onDisconnectJugador = function(id) {
   jugador.sprite.destroy();
   jugador.spriteArma.destroy();
   jugador.texto_nivel.destroy();
+  jugador.texto_nick.destroy();
   delete this.game.datos.jugadores[id];
 
   this.events.emit('matarJugador');
@@ -115,9 +117,12 @@ scenePrincipal.updateSpritesJugadores = function() {
     jugador.spriteArma.y = jugador.y * 32;
     jugador.spriteArma.depth = jugador.spriteArma.y;
 
-    jugador.texto_nivel.x = jugador.x * 32 - 7;
-    jugador.texto_nivel.y = jugador.y * 32 - 28;
-    jugador.texto_nivel.getAt(0).text = 'Lvl ' + jugador.nivel;
+    jugador.texto_nivel.x = Math.floor(jugador.x * 32);
+    jugador.texto_nivel.y = Math.floor(jugador.y * 32 - 28);
+    jugador.texto_nivel.text = 'Lvl ' + jugador.nivel;
+
+    jugador.texto_nick.x = Math.floor(jugador.x * 32);
+    jugador.texto_nick.y = Math.floor(jugador.y * 32 - 34);
 
     if(jugador.efecto_subir) {
       jugador.efecto_subir.x = jugador.x * 32 + 1;
@@ -172,6 +177,7 @@ scenePrincipal.pintarJugadores = function() {
     //si es el pj principal, crear la cámara, los controles y la barra de vida
     if(id == this.game.datos.socket.id) {
       jugador.texto_nivel.visible = false;
+      jugador.texto_nick.visible = false;
       this.game.datos.jugador = jugador;
       this.cameras.main.setBounds(-32, -32, 544, 544).setZoom(3);
       this.cameras.main.startFollow(jugador.sprite);
@@ -226,6 +232,9 @@ scenePrincipal.ataque_player = function(player_id, mob_ids) {
 
   mob_ids.forEach(function(mob_id) {
     var mob = this.game.datos.mobs[mob_id];
+    if(!mob) {
+      return;
+    }
     self.sonido('mob_dano', mob.x, mob.y);
 
     self.tweens.addCounter({

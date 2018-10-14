@@ -20,6 +20,18 @@
       "filename": "boton_grande",
       "frame": {"x": 34, "y": 0, "w": 30, "h": 36}
     },
+    {
+      "filename": "boton_ancho",
+      "frame": {"x": 64, "y": 0, "w": 48, "h": 16}
+    },
+    {
+      "filename": "boton_ancho_sel",
+      "frame": {"x": 64, "y": 16, "w": 48, "h": 16}
+    },
+    {
+      "filename": "caja_texto",
+      "frame": {"x": 64, "y": 32, "w": 48, "h": 8}
+    },
 
     {
       "filename": "item_mano",

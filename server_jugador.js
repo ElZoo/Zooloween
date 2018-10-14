@@ -77,11 +77,12 @@ module.exports.setInfo = function(io, tiles_mundo, items_mundo, server_mob) {
   this.server_mob = server_mob
 }
 
-module.exports.crearJugador = function(socket) {
-  console.log(`Se ha conectado un jugador (${socket.id})`);
+module.exports.crearJugador = function(socket, nick) {
+  console.log(`Se ha conectado un jugador (${nick})`);
 
   this.jugadores[socket.id] = {
     id: socket.id,
+    nick: nick,
     x: 2,
     y: 2,
     nivel: 1,
@@ -100,7 +101,11 @@ module.exports.crearJugador = function(socket) {
 }
 
 module.exports.borrarJugador = function(socket) {
-  console.log(`Se ha desconectado un jugador (${socket.id})`);
+  var nick = '';
+  if(this.jugadores[socket.id]) {
+    nick = this.jugadores[socket.id].nick;
+  }
+  console.log(`Se ha desconectado un jugador (${nick})`);
 
   delete this.jugadores[socket.id];
   this.io.emit('disconnect', socket.id);
