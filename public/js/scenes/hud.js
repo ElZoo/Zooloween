@@ -17,8 +17,10 @@ sceneHud.create = function() {
 
   var container = this.add.container(640, 650).setScale(4, 4);
 
-  container.add(this.add.image(8+1, 0, 'hud', 'boton'));
-  container.add(this.add.image(-8-1, 0, 'hud', 'boton'));
+  var boton2 = this.add.image(8+1, 0, 'hud', 'boton').setInteractive();
+  var boton1 = this.add.image(-8-1, 0, 'hud', 'boton').setInteractive();
+  container.add(boton2);
+  container.add(boton1);
 
   this.ataque_principal = this.add.sprite(-8-1, 0, 'hud', this.game.datos.jugador.arma).setScale(0.25, 0.25);
   container.add(this.ataque_principal);
@@ -29,6 +31,51 @@ sceneHud.create = function() {
 
   this.armadura = this.add.sprite(8+1, 0, 'hud', this.game.datos.jugador.armadura).setScale(0.25, 0.25);
   container.add(this.armadura);
+
+  var infoDano = this.add.container(0, 0).setScale(1.5, 1.5);
+
+  infoDano.add(this.add.sprite(0, 0, 'hud', 'boton_grande').setScale(6, 2));
+  infoDano.visible = false;
+  infoDano.getAt(0).alpha = 0.8;
+
+  var nombresArma = {
+    'item_mano': 'Puño',
+    'item_daga': 'Daga',
+    'item_lanza': 'Lanza',
+    'item_hacha': 'Hacha',
+    'item_martillo': 'Martillo'
+  };
+  var velocidades = {
+    'item_mano': 'normal',
+    'item_daga': 'muy rápida',
+    'item_lanza': 'rápida',
+    'item_hacha': 'rápida',
+    'item_martillo': 'lenta'
+  };
+
+  infoDano.add(this.add.text(-78, -28, nombresArma[self.game.datos.jugador.arma], {strokeThickness: 0.75}).setScale(0.8, 0.8));
+  infoDano.add(this.add.text(-78, -18, 'Velocidad: ' + velocidades[self.game.datos.jugador.arma]).setScale(0.8, 0.8));
+  infoDano.add(this.add.text(-78, -8, 'Daño: ' + self.game.datos.jugador.fuerzaAtaque).setScale(0.8, 0.8));
+  infoDano.add(this.add.text(-78, 2, 'Prob. crítico: ' + self.game.datos.jugador.probCrit * 100 + '%').setScale(0.8, 0.8));
+  infoDano.add(this.add.text(-78, 12, 'Rango: ' + self.game.datos.jugador.rangoAtaque).setScale(0.8, 0.8));
+
+  var infoArmadura = this.add.container(0, 0).setScale(1.5, 1.5);
+
+  infoArmadura.add(this.add.sprite(0, 0, 'hud', 'boton_grande').setScale(5, 2));
+  infoArmadura.visible = false;
+  infoArmadura.getAt(0).alpha = 0.8;
+
+  var nombresArmaduras = {
+    'pj_tela': 'Ropa protectora',
+    'pj_cuero': 'Jugón',
+    'pj_chain': 'Armadura de cota',
+    'pj_hierro': 'Armadura metálica',
+    'pj_oro': 'Armadura dorada'
+  };
+
+  infoArmadura.add(this.add.text(-64, -28, nombresArmaduras[self.game.datos.jugador.armadura], {strokeThickness: 0.75}).setScale(0.8, 0.8));
+  infoArmadura.add(this.add.text(-64, -16, 'Defensa: ' + self.game.datos.jugador.defensa * 100 + '%').setScale(0.8, 0.8));
+  infoArmadura.add(this.add.text(-64, -4, 'Vida máxima: ' + self.game.datos.jugador.vidaMax).setScale(0.8, 0.8));
 
   this.scene.get('principal').events.on('click_principal', function() {
     var self = this;
@@ -85,6 +132,39 @@ sceneHud.create = function() {
   this.scene.get('principal').events.on('matarJugador', function() {
     this.containerArribaDer.getAt(0).text = 'Jugadores: ' + Object.keys(this.game.datos.jugadores).length;
   }, this);
+
+  this.input.on('pointerover', function(event, objects) {
+    if(objects[0] == boton1) {
+      infoDano.x = this.input.mousePointer.x;
+      infoDano.y = this.input.mousePointer.y;
+
+      infoDano.getAt(1).text = nombresArma[self.game.datos.jugador.arma];
+      infoDano.getAt(2).text = 'Velocidad: ' + velocidades[self.game.datos.jugador.arma];
+      infoDano.getAt(3).text = 'Daño: ' + self.game.datos.jugador.fuerzaAtaque;
+      infoDano.getAt(4).text = 'Prob. crítico: ' + self.game.datos.jugador.probCrit * 100 + '%';
+      infoDano.getAt(5).text = 'Rango: ' + self.game.datos.jugador.rangoAtaque;
+
+      infoDano.visible = true;
+    } else {
+      infoArmadura.x = this.input.mousePointer.x;
+      infoArmadura.y = this.input.mousePointer.y;
+
+      infoArmadura.getAt(1).text = nombresArmaduras[self.game.datos.jugador.armadura];
+      infoArmadura.getAt(2).text = 'Defensa: ' + self.game.datos.jugador.defensa * 100 + '%';
+      infoArmadura.getAt(3).text = 'Vida máxima: ' + self.game.datos.jugador.vidaMax;
+
+      infoArmadura.visible = true;
+    }
+  }, this);
+
+  this.input.on('pointerout', function(event, objects) {
+    if(objects[0] == boton1) {
+      infoDano.visible = false;
+    } else {
+      infoArmadura.visible = false;
+    }
+  }, this)
+
 }
 
 function calcularExpMaxNivel(nivel) {
