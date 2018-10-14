@@ -79,8 +79,8 @@ scenePrincipal.create = function() {
   });
 
   //evento para cuando el pj toma una poción
-  this.game.datos.socket.on('curarPlayer', function(player_id) {
-    self.onCurarPlayer(player_id);
+  this.game.datos.socket.on('boost', function(datos) {
+    self.onBoost(datos[0], datos[1]);
   });
 
   //listener del click del ratón
@@ -279,6 +279,6 @@ scenePrincipal.sonido = function(sonido, x1, y1) {
   var y2 = this.game.datos.jugador.y;
   var distancia = calcularDistancia({x: x1, y: y1}, {x: x2, y: y2});
 
-  var volumen = Math.max(0, (0.2 - distancia*0.1));
+  var volumen = Math.max(0, (0.2 - distancia*0.025));
   this.sound.play(sonido, {volume: volumen});
 }

@@ -91,7 +91,9 @@ module.exports.crearJugador = function(socket) {
     dirY: 'quieto_abajo',
     lastDir: 'quieto_abajo',
     vel: 0.02,
-    tickAtaque: 100
+    tickAtaque: 100,
+    boost: false,
+    ticksBoost: 0
   }
   this.ponerArma(socket.id, "item_mano");
   this.ponerArmadura(socket.id, "pj_tela");
@@ -175,25 +177,37 @@ module.exports.updateJugadores = function() {
     }
     jugador.tickAtaque++;
 
+    if(jugador.boost) {
+      jugador.ticksBoost++;
+      if(jugador.ticksBoost >= 1000) {
+        jugador.boost = false;
+        jugador.ticksBoost = 0;
+      }
+    }
+
     if(jugador.tickAtaque < jugador.delayAtaque*0.75) {
       continue;
     }
 
     var old_coords = [jugador.x, jugador.y];
+    var vel = jugador.vel;
+    if(jugador.boost && jugador.boost == 'boost_velocidad') {
+      vel *= 1.25;
+    }
     switch(jugador.dirY) {
       case 'abajo':
-        jugador.y += jugador.vel;
+        jugador.y += vel;
         break;
       case 'arriba':
-        jugador.y -= jugador.vel;
+        jugador.y -= vel;
         break;
     }
     switch (jugador.dirX) {
       case 'izquierda':
-        jugador.x -= jugador.vel;
+        jugador.x -= vel;
         break;
       case 'derecha':
-        jugador.x += jugador.vel;
+        jugador.x += vel;
         break;
     }
 
@@ -219,9 +233,12 @@ module.exports.check_drops = function(jugador) {
     }
 
     if(drop.item == 'pocion') {
-      this.curarPlayer(jugador, 20);
-      this.io.emit('curarPlayer', jugador.id);
+      this.curarPlayer(jugador, jugador.vidaMax*0.25);
+    } else {
+      jugador.ticksBoost = 0;
+      jugador.boost = drop.item;
     }
+    this.io.emit('boost', [jugador.id, drop.item]);
 
     this.server_mob.borrarDrop(drop_id);
   }
@@ -262,6 +279,9 @@ module.exports.player_atacar = function(id) {
     }
     var random1 = Math.random();
     var danyo = jugador.probCrit>=random1?(jugador.fuerzaAtaque*2):jugador.fuerzaAtaque;
+    if(jugador.boost && jugador.boost == 'boost_fuerza') {
+      danyo *= 1.25;
+    }
     mob.vida -= danyo;
     mob.target = jugador.id;
     mobs_afectados.push(idMob);

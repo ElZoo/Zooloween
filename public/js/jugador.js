@@ -40,16 +40,39 @@ scenePrincipal.crearJugador = function(jugador) {
 
 //eliminar los sprites y el texto y borrarlo del array de jugadores
 scenePrincipal.onDisconnectJugador = function(id) {
-  if(!this.game.datos.jugadores[id]) {
+  var self = this;
+
+  var jugador = this.game.datos.jugadores[id];
+  if(!jugador) {
     return;
   }
 
-  this.game.datos.jugadores[id].sprite.destroy();
-  this.game.datos.jugadores[id].spriteArma.destroy();
-  this.game.datos.jugadores[id].texto_nivel.destroy();
+  var spriteMuerte = this.add.sprite(jugador.x * 32, jugador.y * 32, jugador.armadura).setOrigin(0.5, 0.9).setScale(0.5, 0.5);
+  spriteMuerte.depth = spriteMuerte.y;
+  spriteMuerte.on('animationcomplete', function() {
+    self.tweens.addCounter({
+      from: 0,
+      to: 100,
+      duration: 1000,
+      onUpdate: function(tween) {
+        var val = Math.round(tween.getValue());
+        if(val % 20 == 0) {
+          spriteMuerte.setVisible(spriteMuerte.visible != true);
+        }
+      },
+      onComplete: function(tween) {
+        spriteMuerte.destroy();
+      }
+    });
+  }, this);
+  spriteMuerte.play(jugador.armadura+"_morir");
+
+  jugador.sprite.destroy();
+  jugador.spriteArma.destroy();
+  jugador.texto_nivel.destroy();
   delete this.game.datos.jugadores[id];
 
-  this.events.emit('matarJugador') ;
+  this.events.emit('matarJugador');
 
 }
 
@@ -276,16 +299,20 @@ scenePrincipal.onSubirExp = function(exp) {
   this.events.emit('subirExp', exp);
 }
 
-scenePrincipal.onCurarPlayer = function(player_id) {
+scenePrincipal.onBoost = function(player_id, item) {
   var jugador = this.game.datos.jugadores[player_id];
+  var ef = 'efecto_curar';
+  if(item != 'pocion') {
+    ef = item;
+  }
 
-  jugador.spriteCurar = this.add.sprite(0, 0, 'efecto_curar').setOrigin(0.5, 0.75);
+  jugador.spriteCurar = this.add.sprite(0, 0, ef).setOrigin(0.5, 0.75);
   jugador.spriteCurar.depth = 99999;
   jugador.spriteCurar.on('animationcomplete', function() {
     jugador.spriteCurar.destroy();
     delete jugador.spriteCurar;
   }, this);
-  jugador.spriteCurar.play('efecto_curar');
+  jugador.spriteCurar.play(ef);
 
   this.sonido('beber_pocion', jugador.x, jugador.y);
 }
