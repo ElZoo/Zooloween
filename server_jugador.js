@@ -275,7 +275,18 @@ module.exports.matarJugador = function(jugador) {
   });
 
   delete this.jugadores[jugador.id];
-  this.io.emit('matarJugador', jugador.id);
+  this.io.emit('matarJugador', [jugador.id]);
+
+  this.mandarTopTen(jugador.id);
+}
+
+module.exports.mandarTopTen = function(socket_id) {
+  var self = this;
+  this.con.query("SELECT nick,nivel FROM jugador ORDER BY nivel DESC LIMIT 10", function(err, lineas) {
+    if(err) throw err;
+    console.log("Enviar datos a " + socket_id)
+    self.io.to(socket_id).emit('topTen', lineas);
+  });
 }
 
 module.exports.player_atacar = function(id) {

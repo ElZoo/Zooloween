@@ -89,6 +89,12 @@ scenePrincipal.create = function() {
     self.events.emit('click_principal');
   });
 
+  this.game.datos.socket.on('topTen', function(lineas) {
+    self.game.datos.topTen = lineas;
+    console.log("TOP TEN PRINCIPAL");
+    self.events.emit('topTen', lineas);
+  });
+
   this.scene.get('principal').events.on('ataque_player', function(datos) {
     datos[1].forEach(function(mob_id) {
       var numero = self.add.container(0, 0).setScale(0.5, 0.5);
