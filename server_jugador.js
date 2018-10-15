@@ -70,8 +70,9 @@ module.exports.armaduras = {
   }
 }
 
-module.exports.setInfo = function(io, tiles_mundo, items_mundo, server_mob) {
+module.exports.setInfo = function(io, con, tiles_mundo, items_mundo, server_mob) {
   this.io = io;
+  this.con = con;
   this.items_mundo = items_mundo;
   this.tiles_mundo = tiles_mundo;
   this.server_mob = server_mob
@@ -250,7 +251,29 @@ module.exports.check_drops = function(jugador) {
 }
 
 module.exports.matarJugador = function(jugador) {
+  var self = this;
+
   jugador.vida = 0;
+
+  var nick = jugador.nick.toLowerCase();
+  var nivel = jugador.nivel;
+  this.con.query("SELECT nivel FROM jugador WHERE nick = ?", [nick], function(err, filas) {
+    if(err) {
+      console.log("Error al leer datos de "+nick);
+    }
+    if(filas && filas[0] && filas[0].nivel >= nivel) {
+      return;
+    }
+    var sql = "INSERT INTO jugador (nick, nivel) VALUES(?, ?) ON DUPLICATE KEY UPDATE nick=?, nivel=?";
+    self.con.query(sql, [nick, nivel, nick, nivel], function(err, filas) {
+      if(err) {
+        console.log("Error al guardar datos de "+jugador.nick);
+      } else {
+        console.log("Datos de "+jugador.nick+" guardados!");
+      }
+    });
+  });
+
   delete this.jugadores[jugador.id];
   this.io.emit('matarJugador', jugador.id);
 }

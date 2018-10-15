@@ -7,8 +7,9 @@ module.exports.id_mob = 0;
 module.exports.drops = {};
 module.exports.id_drop = 0;
 
-module.exports.setInfo = function(io, tiles_mundo, items_mundo, server_jugador) {
+module.exports.setInfo = function(io, con, tiles_mundo, items_mundo, server_jugador) {
   this.io = io;
+  this.con = con;
   this.items_mundo = items_mundo;
   this.tiles_mundo = tiles_mundo;
   this.server_jugador = server_jugador;

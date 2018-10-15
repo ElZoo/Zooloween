@@ -30,6 +30,11 @@ sceneNick.create = function() {
     }
   });
 
+  var nombre_cookie = Cookies.get('nick_zooloween');
+  if(nombre_cookie) {
+    this.texto.text = nombre_cookie;
+  }
+
   boton.on('pointerdown', function(pointer) {
     self.comenzarJuego();
   });
@@ -72,6 +77,8 @@ sceneNick.comenzarJuego = function() {
       self.comenzando = false;
       return;
     }
+    Cookies.set('nick_zooloween', self.texto.text);
+
     self.game.datos.jugadores = datos[0];
     self.game.datos.mobs = datos[1];
     self.game.datos.tiles_mundo = datos[2];

@@ -1,9 +1,24 @@
 var express = require('express');
 var app = express();
 var server = require('http').Server(app);
+var mysql = require('mysql');
+var fs = require('fs');
 var io = require('socket.io').listen(server);
 var server_mob = require('./server_mob.js');
 var server_jugador = require('./server_jugador.js');
+
+var configMysql = JSON.parse(fs.readFileSync("conexion.json"));
+var con = mysql.createConnection({
+  host: configMysql.host,
+  database: configMysql.database,
+  user: configMysql.user,
+  password: configMysql.password
+});
+
+con.connect(function(err) {
+  if(err) throw err;
+  console.log("Conectado a MySQL");
+});
 
 var jugadores = server_jugador.jugadores;
 var mobs = server_mob.mobs;
@@ -49,8 +64,8 @@ var items_mundo = [
   [0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0]
 ];
 
-server_jugador.setInfo(io, tiles_mundo, items_mundo, server_mob);
-server_mob.setInfo(io, tiles_mundo, items_mundo, server_jugador);
+server_jugador.setInfo(io, con, tiles_mundo, items_mundo, server_mob);
+server_mob.setInfo(io, con, tiles_mundo, items_mundo, server_jugador);
 
 app.use(express.static(__dirname + '/public'));
 
