@@ -108,6 +108,8 @@ module.exports.borrarJugador = function(socket) {
   }
   console.log(`Se ha desconectado un jugador (${nick})`);
 
+  this.mandarTopTen(socket.id);
+
   delete this.jugadores[socket.id];
   this.io.emit('disconnect', socket.id);
 }
