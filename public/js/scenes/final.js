@@ -50,6 +50,6 @@ sceneFinal.crearTopTen = function() {
   for(var i=0; i<10; i++) {
     var nick = lineas[i] ? lineas[i].nick : '';
     var nivel = lineas[i] ? lineas[i].nivel : '';
-    this.contenedor.add(this.add.text(-75, -75 + i*20, (i+1)+". "+nick+" "+nivel, {align: 'left'}).setOrigin(0, 0.5));
+    this.contenedor.add(this.add.text(-75, -90 + i*20, (i+1)+". "+nick+" "+nivel, {align: 'left'}).setOrigin(0, 0.5));
   }
 }
