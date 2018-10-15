@@ -21,7 +21,7 @@ module.exports.setInfo = function(io, con, tiles_mundo, items_mundo, server_juga
 module.exports.crearMob = function(nivel) {
   var num_mobs = Object.keys(this.mobs).length;
   var num_players = Object.keys(this.server_jugador.jugadores).length;
-  if(num_mobs >= 1){//>= num_players * 3) {
+  if(num_mobs >= num_players * 3) {
     return;
   }
   if(!this.gridPath) {
