@@ -1,3 +1,6 @@
+var PF = require('pathfinding');
+var finder = new PF.BestFirstFinder({allowDiagonal: true, dontCrossCorners: true});
+
 module.exports.io = false;
 module.exports.items_mundo = [];
 module.exports.tiles_mundo = [];
@@ -18,8 +21,11 @@ module.exports.setInfo = function(io, con, tiles_mundo, items_mundo, server_juga
 module.exports.crearMob = function(nivel) {
   var num_mobs = Object.keys(this.mobs).length;
   var num_players = Object.keys(this.server_jugador.jugadores).length;
-  if(num_mobs >= num_players * 3) {
+  if(num_mobs >= 1){//>= num_players * 3) {
     return;
+  }
+  if(!this.gridPath) {
+    this.crearGridPath();
   }
 
   var id = this.id_mob;
@@ -41,27 +47,68 @@ module.exports.updateMobs = function() {
     if(!mob.target) {
       continue;
     }
-
     var target = this.server_jugador.jugadores[mob.target];
-    var old_coords = [mob.x, mob.y];
-    if(mob.x < target.x - mob.rango*0.5) {
-      mob.x += mob.vel;
-      mob.dir = 'derecha';
-    } else if(mob.x > target.x + mob.rango*0.5) {
-      mob.x -= mob.vel;
-      mob.dir = 'izquierda';
-    }
-    if(mob.y < target.y - mob.rango*0.5) {
-      mob.y += mob.vel;
-    } else if(mob.y > target.y + mob.rango*0.5) {
-      mob.y -= mob.vel;
+
+    //Si está en la misma casilla que el target, ir directo hacia el
+    //Si no, usar pathfinding e ir a la casilla más próxima
+    var casilla_mob = [Math.round(mob.x), Math.round(mob.y)];
+    var casilla_target = [Math.round(target.x), Math.round(target.y)];
+
+    if(casilla_mob[0] == casilla_target[0] && casilla_mob[1] == casilla_target[1]) {
+      this.irDondeTarget(mob, target, mobs_ignorados);
+    } else {
+      var camino = finder.findPath(casilla_mob[0], casilla_mob[1], casilla_target[0], casilla_target[1], this.gridPath.clone());
+      this.irDondePath(mob, camino[1], mobs_ignorados);
     }
 
-    if(this.check_colision_mob(mob, mobs_ignorados)) {
-      mobs_ignorados.push(mob.id);
-      mob.x = old_coords[0];
-      mob.y = old_coords[1];
-    }
+  }
+}
+
+module.exports.irDondePath = function(mob, casilla, mobs_ignorados) {
+  if(!casilla) {
+    return;
+  }
+
+  var old_coords = [mob.x, mob.y];
+  if(mob.x < casilla[0]-0.1) {
+    mob.x += mob.vel;
+    mob.dir = 'derecha';
+  } else if(mob.x > casilla[0]+0.1) {
+    mob.x -= mob.vel;
+    mob.dir = 'izquierda';
+  }
+  if(mob.y < casilla[1]-0.1) {
+    mob.y += mob.vel;
+  } else if(mob.y > casilla[1]+0.1) {
+    mob.y -= mob.vel;
+  }
+
+  if(this.check_colision_mob(mob, mobs_ignorados)) {
+    mobs_ignorados.push(mob.id);
+    mob.x = old_coords[0];
+    mob.y = old_coords[1];
+  }
+}
+
+module.exports.irDondeTarget = function(mob, target, mobs_ignorados) {
+  var old_coords = [mob.x, mob.y];
+  if(mob.x < target.x - mob.rango*0.5) {
+    mob.x += mob.vel;
+    mob.dir = 'derecha';
+  } else if(mob.x > target.x + mob.rango*0.5) {
+    mob.x -= mob.vel;
+    mob.dir = 'izquierda';
+  }
+  if(mob.y < target.y - mob.rango*0.5) {
+    mob.y += mob.vel;
+  } else if(mob.y > target.y + mob.rango*0.5) {
+    mob.y -= mob.vel;
+  }
+
+  if(this.check_colision_mob(mob, mobs_ignorados)) {
+    mobs_ignorados.push(mob.id);
+    mob.x = old_coords[0];
+    mob.y = old_coords[1];
   }
 }
 
@@ -200,6 +247,21 @@ module.exports.tickDrops = function() {
       this.borrarDrop(drop.id);
     }
   }
+}
+
+module.exports.crearGridPath = function() {
+  var grid = [];
+  for(var y=0,leny=this.tiles_mundo.length; y<leny; y++) {
+    grid[y] = [];
+    for(var x=0,lenx=this.tiles_mundo[y].length; x<lenx; x++) {
+      var tile = 0;
+      if(tiles_barrera.indexOf(this.tiles_mundo[y][x]) > -1 && this.items_mundo[y][x] != 1) {
+        tile = 1;
+      }
+      grid[y][x] = tile;
+    }
+  }
+  this.gridPath = new PF.Grid(grid);
 }
 
 function calcularDistancia(ent1, ent2) {
