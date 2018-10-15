@@ -255,6 +255,16 @@ module.exports.matarJugador = function(jugador) {
 
   jugador.vida = 0;
 
+  this.io.emit('matarJugador', [jugador.id]);
+  this.mandarTopTen(jugador.id);
+  delete this.jugadores[jugador.id];
+}
+
+module.exports.mandarTopTen = function(socket_id) {
+  var self = this;
+
+  var jugador = this.jugadores[socket_id];
+
   var nick = jugador.nick.toLowerCase();
   var nivel = jugador.nivel;
   this.con.query("SELECT nivel FROM jugador WHERE nick = ?", [nick], function(err, filas) {
@@ -262,30 +272,28 @@ module.exports.matarJugador = function(jugador) {
       console.log("Error al leer datos de "+nick);
     }
     if(filas && filas[0] && filas[0].nivel >= nivel) {
+      self.con.query("SELECT nick,nivel FROM jugador ORDER BY nivel DESC LIMIT 10", function(err, lineas) {
+        if(err) throw err;
+        console.log("Enviar datos a " + socket_id)
+        self.io.to(socket_id).emit('topTen', lineas);
+      });
       return;
     }
+
     var sql = "INSERT INTO jugador (nick, nivel) VALUES(?, ?) ON DUPLICATE KEY UPDATE nick=?, nivel=?";
     self.con.query(sql, [nick, nivel, nick, nivel], function(err, filas) {
       if(err) {
         console.log("Error al guardar datos de "+jugador.nick);
       } else {
         console.log("Datos de "+jugador.nick+" guardados!");
+
+        self.con.query("SELECT nick,nivel FROM jugador ORDER BY nivel DESC LIMIT 10", function(err, lineas) {
+          if(err) throw err;
+          console.log("Enviar datos a " + socket_id)
+          self.io.to(socket_id).emit('topTen', lineas);
+        });
       }
     });
-  });
-
-  delete this.jugadores[jugador.id];
-  this.io.emit('matarJugador', [jugador.id]);
-
-  this.mandarTopTen(jugador.id);
-}
-
-module.exports.mandarTopTen = function(socket_id) {
-  var self = this;
-  this.con.query("SELECT nick,nivel FROM jugador ORDER BY nivel DESC LIMIT 10", function(err, lineas) {
-    if(err) throw err;
-    console.log("Enviar datos a " + socket_id)
-    self.io.to(socket_id).emit('topTen', lineas);
   });
 }
 

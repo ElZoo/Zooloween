@@ -3,7 +3,6 @@ var sceneFinal = new Phaser.Scene('final');
 sceneFinal.preload = function() {
   var self = this;
   this.scene.get('principal').events.on('topTen', function(lineas) {
-    console.log("TOP TEN FINAL");
     self.game.datos.topTen = lineas;
     self.crearTopTen();
   });
@@ -40,8 +39,7 @@ sceneFinal.create = function() {
 
 sceneFinal.crearTopTen = function() {
   var lineas = this.game.datos.topTen;
-  console.log("CREAR TOP TEN");
-  console.log(lineas)
+  
   if(!lineas) {
     return;
   }

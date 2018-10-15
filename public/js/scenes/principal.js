@@ -91,7 +91,6 @@ scenePrincipal.create = function() {
 
   this.game.datos.socket.on('topTen', function(lineas) {
     self.game.datos.topTen = lineas;
-    console.log("TOP TEN PRINCIPAL");
     self.events.emit('topTen', lineas);
   });
 
