@@ -130,11 +130,15 @@ function calcularDistancia(ent1, ent2) {
 }
 
 function nivelMedio(jugadores) {
-  var sum = 0;
+  var filtrados = [];
   for(var id in jugadores) {
-    sum += jugadores[id].nivel;
+    filtrados.push(jugadores[id]);
   }
-  return sum;
+  if(filtrados[0]) {
+    return filtrados[Math.floor(Math.random()*filtrados.length)].nivel;
+  } else {
+    return 0/0;
+  }
 }
 
 function comprobarNick(nick) {

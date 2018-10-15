@@ -21,7 +21,7 @@ module.exports.armas = {
   },
   item_lanza: {
     nombre: "item_lanza",
-    delayAtaque: 50,
+    delayAtaque: 35,
     fuerzaAtaque: 8,
     rangoAtaque: 0.2,
     probCrit: 0.05
@@ -36,7 +36,7 @@ module.exports.armas = {
   item_martillo: {
     nombre: "item_martillo",
     delayAtaque: 75,
-    fuerzaAtaque: 50,
+    fuerzaAtaque: 35,
     rangoAtaque: 0.3,
     probCrit: 0.15
   }
@@ -51,22 +51,22 @@ module.exports.armaduras = {
   pj_cuero: {
     nombre: "pj_cuero",
     defensa: 0.1,
-    vidaMax: 60
+    vidaMax: 70
   },
   pj_chain: {
     nombre: "pj_chain",
     defensa: 0.2,
-    vidaMax: 70
+    vidaMax: 90
   },
   pj_hierro: {
     nombre: "pj_hierro",
     defensa: 0.3,
-    vidaMax: 80
+    vidaMax: 120
   },
   pj_oro: {
     nombre: "pj_oro",
     defensa: 0.5,
-    vidaMax: 100
+    vidaMax: 150
   }
 }
 
@@ -391,13 +391,13 @@ module.exports.recompensa = function(jugador) {
     case 30:
       this.ponerArma(jugador.id, "item_hacha");
       break;
-    case 50:
+    case 40:
       this.ponerArmadura(jugador.id, "pj_hierro");
       break;
-    case 75:
+    case 45:
       this.ponerArma(jugador.id, "item_martillo");
       break;
-    case 100:
+    case 60:
       this.ponerArmadura(jugador.id, "pj_oro");
       break;
   }
