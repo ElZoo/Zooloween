@@ -54,7 +54,7 @@ module.exports.updateMobs = function() {
     var casilla_mob = [Math.round(mob.x), Math.round(mob.y)];
     var casilla_target = [Math.round(target.x), Math.round(target.y)];
 
-    if(casilla_mob[0] == casilla_target[0] && casilla_mob[1] == casilla_target[1]) {
+    if(mob.volador || (casilla_mob[0] == casilla_target[0] && casilla_mob[1] == casilla_target[1])) {
       this.irDondeTarget(mob, target, mobs_ignorados);
     } else {
       var camino = finder.findPath(casilla_mob[0], casilla_mob[1], casilla_target[0], casilla_target[1], this.gridPath.clone());
@@ -268,17 +268,24 @@ function calcularDistancia(ent1, ent2) {
   return Math.sqrt(Math.pow(ent1.x - ent2.x, 2) + Math.pow(ent1.y - ent2.y, 2));
 }
 
-function getMobRandom(nivel_max, id) {
-  var rnd = Math.random() * 100;
-  var mobs = ["murcielago"];
-  if(nivel_max >= 5 && rnd < 5) {
-    mobs.push("murcielago_boss");
+function getMobRandom(nivel, id) {
+  var mobs_aptos = [];
+  for(var mob_id in lista_mobs) {
+    var mob = lista_mobs[mob_id];
+    if(!mob.nivelMin || mob.nivelMin > nivel) {
+      continue;
+    }
+
+    mobs_aptos.push(mob_id);
+    if(mob.tiene_boss && mob.nivelMax <= nivel && Math.random() <= 0.1) {
+      mobs_aptos.push(mob_id+"_boss");
+    }
   }
 
-  return getMob(mobs[Math.floor(Math.random() * mobs.length)], id);
+  return getMob(mobs_aptos[Math.floor(Math.random() * mobs_aptos.length)], nivel, id);
 }
 
-function getMob(mob_id, id) {
+function getMob(mob_id, nivel, id) {
   var mob = { ... lista_mobs[mob_id]};
   mob.id = id;
   mob.vida = mob.vidaMax;
@@ -294,12 +301,30 @@ function getMob(mob_id, id) {
     mob.tinte = false;
   }
 
+  if(mob.nivelMax) {
+    nivel = Math.min(nivel, mob.nivelMax);
+    nivel = Math.max(nivel, mob.nivelMin);
+    nivel = nivel - mob.nivelMin;
+
+    mob.nivel = nivel;
+    mob.exp += mob.exp * 0.02 * nivel;
+    mob.fuerzaAtaque += mob.fuerzaAtaque * 0.02 * nivel;
+    mob.vidaMax += mob.vidaMax * 0.02 * nivel;
+    mob.vida = mob.vidaMax;
+
+    console.log("Mob nivel: "+nivel);
+  }
+
   return mob;
 }
 
 var lista_mobs = {
   "murcielago": {
+    nivelMin: 1,
+    nivelMax: 5,
+    tiene_boss: true,
     fase: 'volar',
+    volador: true,
     tipo: "murcielago",
     vidaMax: 30,
     vel: 0.01,
@@ -312,6 +337,7 @@ var lista_mobs = {
   },
   "murcielago_boss": {
     fase: 'volar',
+    volador: true,
     tipo: "murcielago",
     vidaMax: 100,
     vel: 0.0075,
