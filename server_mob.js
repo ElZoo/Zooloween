@@ -58,13 +58,13 @@ module.exports.updateMobs = function() {
       this.irDondeTarget(mob, target, mobs_ignorados);
     } else {
       var camino = finder.findPath(casilla_mob[0], casilla_mob[1], casilla_target[0], casilla_target[1], this.gridPath.clone());
-      this.irDondePath(mob, camino[1], mobs_ignorados);
+      this.irDondePath(mob, camino[1], mobs_ignorados, target);
     }
 
   }
 }
 
-module.exports.irDondePath = function(mob, casilla, mobs_ignorados) {
+module.exports.irDondePath = function(mob, casilla, mobs_ignorados, target) {
   if(!casilla) {
     return;
   }
@@ -72,15 +72,19 @@ module.exports.irDondePath = function(mob, casilla, mobs_ignorados) {
   var old_coords = [mob.x, mob.y];
   if(mob.x < casilla[0]-0.1) {
     mob.x += mob.vel;
-    mob.dir = 'derecha';
   } else if(mob.x > casilla[0]+0.1) {
     mob.x -= mob.vel;
-    mob.dir = 'izquierda';
   }
   if(mob.y < casilla[1]-0.1) {
     mob.y += mob.vel;
   } else if(mob.y > casilla[1]+0.1) {
     mob.y -= mob.vel;
+  }
+
+  if(mob.x < target.x-0.1) {
+    mob.dir = 'derecha';
+  } else if(mob.x > target.x+0.1) {
+    mob.dir = 'izquierda';
   }
 
   if(this.check_colision_mob(mob, mobs_ignorados)) {
@@ -239,8 +243,8 @@ module.exports.crearDrop = function(x, y, item) {
     x: x,
     y: y,
     ticks: 0,
-    vidaMax: 5,
-    rango: 0.02
+    vidaMax: 20,
+    rango: 0.035
   };
 
   this.drops[drop.id] = drop;
@@ -358,7 +362,8 @@ var lista_mobs = {
     drops: ['pocion'],
     dropRate: 1,
     escala: 2,
-    tinte: 0x673ab7
+    tinte: 0x673ab7,
+    isBoss: true,
   },
 
   "tostada": {
@@ -390,7 +395,7 @@ var lista_mobs = {
     vel: 0.01,
     delayAtaque: 8,
     fuerzaAtaque: 8,
-    rango: 0.8,
+    rango: 0.5,
     exp: 8,
     drops: ['pocion'],
     dropRate: 0.2,
@@ -407,12 +412,31 @@ var lista_mobs = {
     vel: 0.01,
     delayAtaque: 20,
     fuerzaAtaque: 50,
-    rango: 1.6,
+    rango: 1,
     exp: 40,
     drops: ['pocion'],
     dropRate: 1,
     escala: 1,
     tinte: 0x673ab7,
+    flipTextura: true,
+    isBoss: true,
+  },
+
+  "calabaza": {
+    nivelMin: 10,
+    nivelMax: 15,
+    spawnRate: 1,
+    volador: false,
+    tipo: "calabaza",
+    vidaMax: 60,
+    vel: 0.01,
+    delayAtaque: 12,
+    fuerzaAtaque: 6,
+    rango: 0.5,
+    exp: 12,
+    drops: ['boost_defensa'],
+    dropRate: 0.2,
+    escala: 0.5,
     flipTextura: true,
   },
 };

@@ -70,7 +70,7 @@ scenePrecarga.init = function() {
         reverse: false
       },
       "cargar": {
-        end: 5,
+        end: 0,
         repeat: 0,
         frameRate: 8,
         reverse: false
@@ -79,6 +79,33 @@ scenePrecarga.init = function() {
         end: 3,
         repeat: 0,
         frameRate: 8,
+        reverse: false
+      },
+    },
+
+    "calabaza": {
+      "andar": {
+        end: 2,
+        repeat: -1,
+        frameRate: 4,
+        reverse: false
+      },
+      "atacar": {
+        end: 2,
+        repeat: 0,
+        frameRate: 4,
+        reverse: false
+      },
+      "cargar": {
+        end: 2,
+        repeat: 0,
+        frameRate: 4,
+        reverse: false
+      },
+      "morir": {
+        end: 2,
+        repeat: 0,
+        frameRate: 4,
         reverse: false
       },
     },
