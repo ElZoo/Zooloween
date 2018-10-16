@@ -44,7 +44,7 @@ module.exports.updateMobs = function() {
     var mob = this.mobs[id];
     this.buscarTarget(mob);
 
-    if(!mob.target) {
+    if(!mob.target || mob.fase == 'cargar') {
       continue;
     }
     var target = this.server_jugador.jugadores[mob.target];
@@ -165,7 +165,7 @@ module.exports.mob_atacar = function(mob, target) {
     } else {
       mob.fase = 'andar';
     }
-    if(mob.tickAtaque > mob.delayAtaque/2) {
+    if(mob.tickAtaque > 0) {
       mob.fase = 'cargar';
     }
     return;
