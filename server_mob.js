@@ -381,7 +381,7 @@ var lista_mobs = {
   },
 
   "araña": {
-    nivelMin: 1,
+    nivelMin: 5,
     nivelMax: 10,
     spawnRate: 1,
     volador: false,
@@ -398,9 +398,9 @@ var lista_mobs = {
     flipTextura: true,
   },
   "araña_boss": {
-    nivelMin: 1,
+    nivelMin: 5,
     nivelMax: 10,
-    spawnRate: 1,//0.05,
+    spawnRate: 0.05,
     volador: false,
     tipo: "araña",
     vidaMax: 120,
