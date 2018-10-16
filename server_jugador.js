@@ -266,6 +266,9 @@ module.exports.mandarTopTen = function(socket_id) {
   var self = this;
 
   var jugador = this.jugadores[socket_id];
+  if(!jugador || !jugador.nick) {
+    return;
+  }
 
   var nick = jugador.nick.toLowerCase();
   var nivel = jugador.nivel;
