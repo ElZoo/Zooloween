@@ -17,7 +17,7 @@ scenePrincipal.onUpdateMob = function(mobs) {
 //crear los sprites del mob
 scenePrincipal.onNuevoMob = function(mob) {
   if(mob.tipo == 'murcielago') {
-    mob.sprite = this.add.sprite(mob.x * 32, mob.y * 32, 'murcielago', 'volar_0').play('murcielago_volar')
+    mob.sprite = this.add.sprite(mob.x * 32, mob.y * 32, mob.tipo).play(mob.tipo+"_"+mob.fase);
     mob.sprite.setScale(mob.escala, mob.escala);
     if(mob.tinte) {
       mob.sprite.setTint(mob.tinte);
@@ -39,7 +39,7 @@ scenePrincipal.onMobAtacar = function(mob_id, jugador_id) {
   var mob = this.game.datos.mobs[mob_id];
   var jugador = this.game.datos.jugadores[jugador_id];
 
-  mob.sprite.play('murcielago_atacar');
+  mob.sprite.play(mob.tipo+'_atacar');
   this.sonido('pj_dano', jugador.x, jugador.y);
 
   this.tweens.addCounter({
@@ -73,7 +73,7 @@ scenePrincipal.onMatarMob = function(id) {
     mob.sprite.destroy();
     delete self.game.datos.mobs[id];
   } else {
-    mob.sprite.play('murcielago_morir', true);
+    mob.sprite.play(mob.tipo+'_morir', true);
   }
 }
 
@@ -111,10 +111,8 @@ scenePrincipal.updateSpritesMobs = function() {
     }
 
     if(mob.vida > 0) {
-      if(mob.fase == 'volar') {
-        mob.sprite.play('murcielago_volar', true);
-      } else if(mob.fase == 'cargar') {
-        mob.sprite.play('murcielago_cargar', true);
+      if(mob.fase == 'volar' || mob.fase == 'andar' || mob.fase == 'cargar') {
+        mob.sprite.play(mob.tipo+'_'+mob.fase, true);
       }
     } else {
       mob.ticksMuerto++;
