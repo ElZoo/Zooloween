@@ -337,7 +337,7 @@ var lista_mobs = {
     vidaMax: 30,
     vel: 0.01,
     delayAtaque: 10,
-    fuerzaAtaque: 3,
+    fuerzaAtaque: 4,
     rango: 0.5,
     exp: 5,
     drops: ['pocion'],
