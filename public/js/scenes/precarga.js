@@ -1,6 +1,64 @@
 var scenePrecarga = new Phaser.Scene('precarga');
 scenePrecarga.active = true;
 
+scenePrecarga.init = function() {
+  //crear lista de mobs
+  this.lista_mobs = {
+    "murcielago": {
+      "volar": {
+        end: 4,
+        repeat: -1,
+        frameRate: 8,
+        reverse: false
+      },
+      "atacar": {
+        end: 4,
+        repeat: 0,
+        frameRate: 8,
+        reverse: true
+      },
+      "cargar": {
+        end: 4,
+        repeat: 0,
+        frameRate: 8,
+        reverse: false
+      },
+      "morir": {
+        end: 4,
+        repeat: 0,
+        frameRate: 8,
+        reverse: false
+      },
+    },
+    "tostada": {
+      "andar": {
+        end: 3,
+        repeat: -1,
+        frameRate: 8,
+        reverse: false
+      },
+      "atacar": {
+        end: 6,
+        repeat: 0,
+        frameRate: 8,
+        reverse: false
+      },
+      "cargar": {
+        end: 3,
+        repeat: 0,
+        frameRate: 8,
+        reverse: false
+      },
+      "morir": {
+        end: 11,
+        repeat: 0,
+        frameRate: 8,
+        reverse: false
+      },
+    },
+  };
+}
+
 scenePrecarga.preload = function() {
   //precargar las imágenes generales
   this.load.atlas('hud', 'res/hud.png', 'res/hud.json');
@@ -21,7 +79,9 @@ scenePrecarga.preload = function() {
   this.load.atlas('item_martillo', 'res/items/item_martillo.png', 'res/pj/pj_base.json');
 
   //precargar las imágenes de los mobs
-  this.load.atlas('murcielago', 'res/murcielago.png', 'res/murcielago.json');
+  for(var mob in this.lista_mobs) {
+    this.load.atlas(mob, 'res/mobs/'+mob+'.png', 'res/mobs/'+mob+'.json');
+  }
 
   //precargar efectos
   this.load.atlas('efecto_subir_lvl', 'res/efectos/efecto_subir_lvl.png', 'res/efectos/efecto_subir_lvl.json');
@@ -156,11 +216,20 @@ scenePrecarga.crearItems = function() {
 }
 
 scenePrecarga.crearMobs = function() {
-  //animaciones del murciélago
-  this.anims.create({key: 'murcielago_volar', frames: this.anims.generateFrameNames('murcielago', {prefix: 'volar_', end: 4}), repeat: -1, frameRate: 8});
-  this.anims.create({key: 'murcielago_morir', frames: this.anims.generateFrameNames('murcielago', {prefix: 'morir_', end: 4}), repeat: 0, frameRate: 8});
-  this.anims.create({key: 'murcielago_cargar', frames: this.anims.generateFrameNames('murcielago', {prefix: 'cargar_', end: 4}), repeat: 0, frameRate: 8});
-  this.anims.create({key: 'murcielago_atacar', frames: this.anims.generateFrameNames('murcielago', {prefix: 'atacar_', end: 4}), reverse: true, repeat: 0, frameRate: 8});
+  //generar animaciones de los mobs
+  for(var mob_id in this.lista_mobs) {
+    var mob = this.lista_mobs[mob_id];
+    for(var anim_id in mob) {
+      var anim = mob[anim_id];
+      this.anims.create({
+        key: mob_id+"_"+anim_id,
+        frames: this.anims.generateFrameNames(mob_id, {prefix: anim_id+"_", end: anim.end}),
+        repeat: anim.repeat,
+        frameRate: anim.frameRate,
+        reverse: anim.reverse
+      });
+    }
+  }
 }
 
 scenePrecarga.crearEfectos = function() {

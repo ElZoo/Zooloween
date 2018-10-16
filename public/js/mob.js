@@ -16,13 +16,12 @@ scenePrincipal.onUpdateMob = function(mobs) {
 
 //crear los sprites del mob
 scenePrincipal.onNuevoMob = function(mob) {
-  if(mob.tipo == 'murcielago') {
-    mob.sprite = this.add.sprite(mob.x * 32, mob.y * 32, mob.tipo).play(mob.tipo+"_"+mob.fase);
-    mob.sprite.setScale(mob.escala, mob.escala);
-    if(mob.tinte) {
-      mob.sprite.setTint(mob.tinte);
-    }
+  mob.sprite = this.add.sprite(mob.x * 32, mob.y * 32, mob.tipo).setOrigin(mob.offset[0], mob.offset[1]).play(mob.tipo+"_"+mob.fase);
+  mob.sprite.setScale(mob.escala, mob.escala);
+  if(mob.tinte) {
+    mob.sprite.setTint(mob.tinte);
   }
+
   var vida_borde = this.add.image(0, 0, 'hud', 'vida_borde');
   var vida_fondo = this.add.image(0, 0, 'hud', 'vida_fondo');
   var vida_color = this.add.rectangle(-15, 2, 1, 5, 0xffffff).setOrigin(0.5, 1);
@@ -103,7 +102,11 @@ scenePrincipal.updateSpritesMobs = function() {
       }
     }
 
-    mob.sprite.flipX = (mob.dir == 'izquierda');
+    if(mob.flipTextura) {
+      mob.sprite.flipX = (mob.dir == 'derecha');
+    } else {
+      mob.sprite.flipX = (mob.dir == 'izquierda');
+    }
 
     var currentAnim = mob.sprite.anims.currentAnim;
     if(currentAnim && currentAnim.key.includes('_atacar') && mob.sprite.anims.isPlaying) {
