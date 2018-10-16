@@ -20,6 +20,10 @@ con.connect(function(err) {
   console.log("Conectado a MySQL");
 });
 
+setInterval(function () {
+    con.query('SELECT 1');
+}, 5000);
+
 var jugadores = server_jugador.jugadores;
 var mobs = server_mob.mobs;
 var drops = server_mob.drops;
