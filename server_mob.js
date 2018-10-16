@@ -439,6 +439,24 @@ var lista_mobs = {
     escala: 0.5,
     flipTextura: true,
   },
+
+  "fantasma": {
+    nivelMin: 15,
+    nivelMax: 20,
+    spawnRate: 1,
+    volador: true,
+    tipo: "fantasma",
+    vidaMax: 50,
+    vel: 0.01,
+    delayAtaque: 6,
+    fuerzaAtaque: 12,
+    rango: 0.5,
+    exp: 16,
+    drops: ['pocion'],
+    dropRate: 0.2,
+    escala: 0.5,
+    offset: [0.5, 1],
+  },
 };
 
 var tiles_barrera = [0, 10, 11, 12, 13, 14, 15];

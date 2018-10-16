@@ -1,0 +1,99 @@
+{
+  "frames": [
+    {
+      "filename": "volar_0",
+      "frame": {"x": 0, "y": 0, "w": 64, "h": 64}
+    },
+    {
+      "filename": "volar_1",
+      "frame": {"x": 64, "y": 0, "w": 64, "h": 64}
+    },
+    {
+      "filename": "volar_2",
+      "frame": {"x": 128, "y": 0, "w": 64, "h": 64}
+    },
+    {
+      "filename": "volar_3",
+      "frame": {"x": 192, "y": 0, "w": 64, "h": 64}
+    },
+    {
+      "filename": "volar_4",
+      "frame": {"x": 256, "y": 0, "w": 64, "h": 64}
+    },
+
+    {
+      "filename": "morir_0",
+      "frame": {"x": 0, "y": 128, "w": 64, "h": 64}
+    },
+    {
+      "filename": "morir_1",
+      "frame": {"x": 64, "y": 128, "w": 64, "h": 64}
+    },
+    {
+      "filename": "morir_2",
+      "frame": {"x": 128, "y": 128, "w": 64, "h": 64}
+    },
+    {
+      "filename": "morir_3",
+      "frame": {"x": 192, "y": 128, "w": 64, "h": 64}
+    },
+    {
+      "filename": "morir_4",
+      "frame": {"x": 256, "y": 128, "w": 64, "h": 64}
+    },
+    {
+      "filename": "morir_5",
+      "frame": {"x": 320, "y": 128, "w": 64, "h": 64}
+    },
+    {
+      "filename": "morir_6",
+      "frame": {"x": 384, "y": 128, "w": 64, "h": 64}
+    },
+    {
+      "filename": "morir_7",
+      "frame": {"x": 448, "y": 128, "w": 64, "h": 64}
+    },
+
+    {
+      "filename": "cargar_0",
+      "frame": {"x": 0, "y": 192, "w": 64, "h": 64}
+    },
+    {
+      "filename": "cargar_1",
+      "frame": {"x": 64, "y": 192, "w": 64, "h": 64}
+    },
+    {
+      "filename": "cargar_2",
+      "frame": {"x": 128, "y": 192, "w": 64, "h": 64}
+    },
+    {
+      "filename": "cargar_3",
+      "frame": {"x": 192, "y": 192, "w": 64, "h": 64}
+    },
+    {
+      "filename": "cargar_4",
+      "frame": {"x": 256, "y": 192, "w": 64, "h": 64}
+    },
+
+    {
+      "filename": "atacar_0",
+      "frame": {"x": 0, "y": 64, "w": 64, "h": 64}
+    },
+    {
+      "filename": "atacar_1",
+      "frame": {"x": 64, "y": 64, "w": 64, "h": 64}
+    },
+    {
+      "filename": "atacar_2",
+      "frame": {"x": 128, "y": 64, "w": 64, "h": 64}
+    },
+    {
+      "filename": "atacar_3",
+      "frame": {"x": 192, "y": 64, "w": 64, "h": 64}
+    },
+    {
+      "filename": "atacar_4",
+      "frame": {"x": 256, "y": 64, "w": 64, "h": 64}
+    }
+  ]
+}

@@ -109,6 +109,33 @@ scenePrecarga.init = function() {
         reverse: false
       },
     },
+
+    "fantasma": {
+      "volar": {
+        end: 4,
+        repeat: -1,
+        frameRate: 8,
+        reverse: false
+      },
+      "atacar": {
+        end: 4,
+        repeat: 0,
+        frameRate: 8,
+        reverse: true
+      },
+      "cargar": {
+        end: 4,
+        repeat: 0,
+        frameRate: 8,
+        reverse: false
+      },
+      "morir": {
+        end: 7,
+        repeat: 0,
+        frameRate: 8,
+        reverse: false
+      },
+    },
   };
 }
 
