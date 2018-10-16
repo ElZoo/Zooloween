@@ -56,6 +56,32 @@ scenePrecarga.init = function() {
         reverse: false
       },
     },
+    "araña": {
+      "andar": {
+        end: 5,
+        repeat: -1,
+        frameRate: 8,
+        reverse: false
+      },
+      "atacar": {
+        end: 4,
+        repeat: 0,
+        frameRate: 8,
+        reverse: false
+      },
+      "cargar": {
+        end: 5,
+        repeat: 0,
+        frameRate: 8,
+        reverse: false
+      },
+      "morir": {
+        end: 3,
+        repeat: 0,
+        frameRate: 8,
+        reverse: false
+      },
+    },
   };
 }
 

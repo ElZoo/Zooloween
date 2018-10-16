@@ -355,7 +355,7 @@ var lista_mobs = {
     fuerzaAtaque: 40,
     rango: 1,
     exp: 25,
-    drops: ['boost_fuerza', 'boost_defensa', 'boost_velocidad'],
+    drops: ['pocion'],
     dropRate: 1,
     escala: 2,
     tinte: 0x673ab7
@@ -378,7 +378,43 @@ var lista_mobs = {
     escala: 0.4,
     flipTextura: true,
     offset: [0.5, 1],
-  }
+  },
+
+  "araña": {
+    nivelMin: 1,
+    nivelMax: 10,
+    spawnRate: 1,
+    volador: false,
+    tipo: "araña",
+    vidaMax: 25,
+    vel: 0.01,
+    delayAtaque: 8,
+    fuerzaAtaque: 8,
+    rango: 0.8,
+    exp: 8,
+    drops: ['pocion'],
+    dropRate: 0.2,
+    escala: 0.5,
+    flipTextura: true,
+  },
+  "araña_boss": {
+    nivelMin: 1,
+    nivelMax: 10,
+    spawnRate: 1,//0.05,
+    volador: false,
+    tipo: "araña",
+    vidaMax: 120,
+    vel: 0.01,
+    delayAtaque: 20,
+    fuerzaAtaque: 50,
+    rango: 1.6,
+    exp: 40,
+    drops: ['pocion'],
+    dropRate: 1,
+    escala: 1,
+    tinte: 0x673ab7,
+    flipTextura: true,
+  },
 };
 
 var tiles_barrera = [0, 10, 11, 12, 13, 14, 15];
