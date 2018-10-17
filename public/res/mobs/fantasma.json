@@ -62,18 +62,6 @@
       "filename": "cargar_1",
       "frame": {"x": 64, "y": 192, "w": 64, "h": 64}
     },
-    {
-      "filename": "cargar_2",
-      "frame": {"x": 128, "y": 192, "w": 64, "h": 64}
-    },
-    {
-      "filename": "cargar_3",
-      "frame": {"x": 192, "y": 192, "w": 64, "h": 64}
-    },
-    {
-      "filename": "cargar_4",
-      "frame": {"x": 256, "y": 192, "w": 64, "h": 64}
-    },
 
     {
       "filename": "atacar_0",

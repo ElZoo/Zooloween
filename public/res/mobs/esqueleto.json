@@ -119,106 +119,6 @@
     },
 
     {
-      "filename": "cargar_0",
-      "frame": {
-        "x": 0,
-        "y": 32,
-        "w": 24,
-        "h": 32
-      }
-    },
-    {
-      "filename": "cargar_1",
-      "frame": {
-        "x": 24,
-        "y": 32,
-        "w": 24,
-        "h": 32
-      }
-    },
-    {
-      "filename": "cargar_2",
-      "frame": {
-        "x": 48,
-        "y": 32,
-        "w": 24,
-        "h": 32
-      }
-    },
-    {
-      "filename": "cargar_3",
-      "frame": {
-        "x": 72,
-        "y": 32,
-        "w": 24,
-        "h": 32
-      }
-    },
-    {
-      "filename": "cargar_4",
-      "frame": {
-        "x": 96,
-        "y": 32,
-        "w": 24,
-        "h": 32
-      }
-    },
-    {
-      "filename": "cargar_5",
-      "frame": {
-        "x": 120,
-        "y": 32,
-        "w": 24,
-        "h": 32
-      }
-    },
-    {
-      "filename": "cargar_6",
-      "frame": {
-        "x": 144,
-        "y": 32,
-        "w": 24,
-        "h": 32
-      }
-    },
-    {
-      "filename": "cargar_7",
-      "frame": {
-        "x": 168,
-        "y": 32,
-        "w": 24,
-        "h": 32
-      }
-    },
-    {
-      "filename": "cargar_8",
-      "frame": {
-        "x": 192,
-        "y": 32,
-        "w": 24,
-        "h": 32
-      }
-    },
-    {
-      "filename": "cargar_9",
-      "frame": {
-        "x": 216,
-        "y": 32,
-        "w": 24,
-        "h": 32
-      }
-    },
-    {
-      "filename": "cargar_10",
-      "frame": {
-        "x": 240,
-        "y": 32,
-        "w": 24,
-        "h": 32
-      }
-    },
-
-    {
       "filename": "morir_0",
       "frame": {
         "x": 0,
@@ -453,65 +353,66 @@
         "h": 36
       }
     },
+
     {
-      "filename": "atacar_11",
+      "filename": "cargar_0",
       "frame": {
-        "x": 462,
-        "y": 96,
+        "x": 0,
+        "y": 132,
         "w": 42,
         "h": 36
       }
     },
     {
-      "filename": "atacar_12",
+      "filename": "cargar_1",
       "frame": {
-        "x": 504,
-        "y": 96,
+        "x": 42,
+        "y": 132,
         "w": 42,
         "h": 36
       }
     },
     {
-      "filename": "atacar_13",
+      "filename": "cargar_2",
       "frame": {
-        "x": 546,
-        "y": 96,
+        "x": 84,
+        "y": 132,
         "w": 42,
         "h": 36
       }
     },
     {
-      "filename": "atacar_14",
+      "filename": "cargar_3",
       "frame": {
-        "x": 588,
-        "y": 96,
+        "x": 126,
+        "y": 132,
         "w": 42,
         "h": 36
       }
     },
     {
-      "filename": "atacar_15",
+      "filename": "cargar_4",
       "frame": {
-        "x": 630,
-        "y": 96,
+        "x": 168,
+        "y": 132,
         "w": 42,
         "h": 36
       }
     },
     {
-      "filename": "atacar_16",
+      "filename": "cargar_5",
       "frame": {
-        "x": 672,
-        "y": 96,
+        "x": 210,
+        "y": 132,
         "w": 42,
         "h": 36
       }
     },
     {
-      "filename": "atacar_17",
+      "filename": "cargar_6",
       "frame": {
-        "x": 714,
-        "y": 96,
+        "x": 252,
+        "y": 132,
         "w": 42,
         "h": 36
       }

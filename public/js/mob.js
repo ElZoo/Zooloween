@@ -122,7 +122,9 @@ scenePrincipal.updateSpritesMobs = function() {
     }
 
     if(mob.vida > 0) {
-      if(mob.fase == 'volar' || mob.fase == 'andar' || mob.fase == 'cargar') {
+      if(mob.fase == 'volar' || mob.fase == 'andar') {
+        mob.sprite.play(mob.tipo+'_'+mob.fase, true);
+      } else if(mob.fase == 'cargar' && currentAnim && !currentAnim.key.includes('_cargar')) {
         mob.sprite.play(mob.tipo+'_'+mob.fase, true);
       }
     } else {

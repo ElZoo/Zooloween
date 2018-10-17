@@ -19,7 +19,7 @@ scenePrecarga.init = function() {
       },
       "cargar": {
         end: 4,
-        repeat: 0,
+        repeat: -1,
         frameRate: 8,
         reverse: false
       },
@@ -97,7 +97,7 @@ scenePrecarga.init = function() {
         reverse: false
       },
       "cargar": {
-        end: 2,
+        end: 0,
         repeat: 0,
         frameRate: 4,
         reverse: false
@@ -124,8 +124,8 @@ scenePrecarga.init = function() {
         reverse: true
       },
       "cargar": {
-        end: 4,
-        repeat: 0,
+        end: 1,
+        repeat: -1,
         frameRate: 8,
         reverse: false
       },
@@ -145,13 +145,13 @@ scenePrecarga.init = function() {
         reverse: false
       },
       "atacar": {
-        end: 19,
+        end: 12,
         repeat: 0,
-        frameRate: 32,
+        frameRate: 16,
         reverse: false
       },
       "cargar": {
-        end: 17,
+        end: 6,
         repeat: 0,
         frameRate: 16,
         reverse: false
@@ -172,13 +172,13 @@ scenePrecarga.init = function() {
         reverse: false
       },
       "atacar": {
-        end: 17,
+        end: 10,
         repeat: 0,
-        frameRate: 32,
+        frameRate: 16,
         reverse: false
       },
       "cargar": {
-        end: 2,
+        end: 6,
         repeat: 0,
         frameRate: 16,
         reverse: false
