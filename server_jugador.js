@@ -336,11 +336,16 @@ module.exports.player_atacar = function(id) {
     }
     mob.vida -= danyo;
     mob.target = jugador.id;
+
+    if(!mob.repartirExp[jugador.id]) {
+      mob.repartirExp[jugador.id] = 0;
+    }
+    mob.repartirExp[jugador.id] += danyo;
+
     mobs_afectados.push(idMob);
 
     if(mob.vida <= 0) {
       this.server_mob.matarMob(mob);
-      this.subirExp(jugador, mob.exp);
     }
   }
 

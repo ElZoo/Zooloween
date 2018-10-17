@@ -21,7 +21,7 @@ module.exports.setInfo = function(io, con, tiles_mundo, items_mundo, server_juga
 module.exports.crearMob = function(nivel, ignoreMax=false, mob=false) {
   var num_mobs = Object.keys(this.mobs).length;
   var num_players = Object.keys(this.server_jugador.jugadores).length;
-  if(!ignoreMax && num_mobs >= num_players * 5) {
+  if(!ignoreMax && num_mobs >= 1){//num_players * 5) {
     return;
   }
   if(!this.gridPath) {
@@ -214,6 +214,27 @@ module.exports.matarMob = function(mob) {
   delete this.mobs[mob.id];
   this.io.emit('matarMob', mob.id);
 
+  var totalDanyo = 0;
+  for(var jugador_id in mob.repartirExp) {
+    if(!this.server_jugador.jugadores[jugador_id]) {
+      continue;
+    }
+    
+    totalDanyo += mob.repartirExp[jugador_id];
+  }
+
+  for(var jugador_id in mob.repartirExp) {
+    if(!this.server_jugador.jugadores[jugador_id]) {
+      continue;
+    }
+
+    var jugador = this.server_jugador.jugadores[jugador_id];
+    var darExp = Math.floor(mob.exp * (mob.repartirExp[jugador_id] / totalDanyo));
+    if(darExp > 0) {
+      this.server_jugador.subirExp(jugador, darExp);
+    }
+  }
+
   if(mob.drops) {
     var rnd = Math.random();
     if(rnd < mob.dropRate) {
@@ -322,6 +343,7 @@ module.exports.getMob = function(mob_id, nivel, id) {
   mob.vida = mob.vidaMax;
   mob.dir = 'derecha';
   mob.tickAtaque = 0;
+  mob.repartirExp = {};
 
   while(!spawnValido) {
     var spawnValido = false;
