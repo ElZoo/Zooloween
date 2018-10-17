@@ -596,7 +596,7 @@ var lista_mobs = {
     tipo: "golem",
     vidaMax: 600,
     vel: 0.005,
-    delayAtaque: 40,
+    delayAtaque: 30,
     fuerzaAtaque: 9999,
     rango: 0.75,
     exp: 250,
