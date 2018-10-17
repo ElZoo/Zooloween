@@ -18,10 +18,10 @@ module.exports.setInfo = function(io, con, tiles_mundo, items_mundo, server_juga
   this.server_jugador = server_jugador;
 }
 
-module.exports.crearMob = function(nivel) {
+module.exports.crearMob = function(nivel, ignoreMax=false, mob=false) {
   var num_mobs = Object.keys(this.mobs).length;
   var num_players = Object.keys(this.server_jugador.jugadores).length;
-  if(num_mobs >= num_players * 3) {
+  if(!ignoreMax && num_mobs >= num_players * 3) {
     return;
   }
   if(!this.gridPath) {
@@ -30,7 +30,11 @@ module.exports.crearMob = function(nivel) {
 
   var id = this.id_mob;
   this.id_mob++;
-  var mob = getMobRandom(nivel, id);
+  if(!mob) {
+    mob = getMobRandom(nivel, id);
+  } else {
+    mob = getMob(mob, nivel, id);
+  }
   this.mobs[id] = mob;
 
   console.log(`Nuevo mob: ${mob.tipo}-${mob.nivel} (id: ${id})`);

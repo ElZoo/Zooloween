@@ -195,5 +195,15 @@ leerConsola.on('line', function (line) {
     console.log("Dando " + comando[2] + " exp a " + jugador.nick);
     return;
   }
+  if(comando[0].toLowerCase() == 'spawn') {
+    if(!comando[1]) {
+      console.log("spawn <mob>");
+      return;
+    }
+
+    server_mob.crearMob(9999, true, comando[1])
+    return;
+  }
+
   console.log("Comando no encontrado");
 });
