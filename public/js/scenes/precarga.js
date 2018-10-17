@@ -217,6 +217,33 @@ scenePrecarga.init = function() {
         reverse: false
       },
     },
+
+    "golem": {
+      "andar": {
+        end: 6,
+        repeat: -1,
+        frameRate: 4,
+        reverse: false
+      },
+      "atacar": {
+        end: 2,
+        repeat: 0,
+        frameRate: 4,
+        reverse: false
+      },
+      "cargar": {
+        end: 3,
+        repeat: 0,
+        frameRate: 4,
+        reverse: false
+      },
+      "morir": {
+        end: 5,
+        repeat: 0,
+        frameRate: 4,
+        reverse: false
+      },
+    },
   };
 }
 
