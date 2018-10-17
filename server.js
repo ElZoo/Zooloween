@@ -6,6 +6,7 @@ var fs = require('fs');
 var io = require('socket.io').listen(server);
 var server_mob = require('./server_mob.js');
 var server_jugador = require('./server_jugador.js');
+var readline = require('readline');
 
 var configMysql = JSON.parse(fs.readFileSync("conexion.json"));
 var con = mysql.createConnection({
@@ -157,3 +158,42 @@ function comprobarNick(nick) {
 
   return true;
 }
+
+function buscarPlayerPorNick(nick) {
+  for(var id in jugadores) {
+    if(jugadores[id].nick.toLowerCase().includes(nick.toLowerCase())) {
+      return jugadores[id];
+    }
+  }
+  return false;
+}
+
+var leerConsola = readline.createInterface({
+  input: process.stdin
+});
+
+leerConsola.on('line', function (line) {
+  var comando = line.split(" ");
+  if(comando[0].toLowerCase() == 'darexp') {
+    if(!comando[1]) {
+      console.log("darexp <nick> <nivel>");
+      return;
+    }
+
+    var jugador = buscarPlayerPorNick(comando[1]);
+    if(!jugador) {
+      console.log("Jugador no encontrado");
+      return;
+    }
+
+    if(!comando[2]) {
+      console.log("darexp "+jugador.nick+" <nivel>");
+      return;
+    }
+
+    server_jugador.subirExp(jugador, comando[2]);
+    console.log("Dando " + comando[2] + " exp a " + jugador.nick);
+    return;
+  }
+  console.log("Comando no encontrado");
+});
