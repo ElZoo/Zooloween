@@ -190,6 +190,33 @@ scenePrecarga.init = function() {
         reverse: false
       },
     },
+
+    "imp": {
+      "andar": {
+        end: 3,
+        repeat: -1,
+        frameRate: 4,
+        reverse: false
+      },
+      "atacar": {
+        end: 2,
+        repeat: 0,
+        frameRate: 4,
+        reverse: false
+      },
+      "cargar": {
+        end: 0,
+        repeat: 0,
+        frameRate: 4,
+        reverse: false
+      },
+      "morir": {
+        end: 2,
+        repeat: 0,
+        frameRate: 4,
+        reverse: false
+      },
+    },
   };
 }
 

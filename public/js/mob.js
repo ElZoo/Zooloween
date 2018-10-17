@@ -92,7 +92,7 @@ scenePrincipal.updateSpritesMobs = function() {
     var mob = mobs[id];
     mob.sprite.x = mob.x * 32;
     mob.sprite.y = mob.y * 32;
-    mob.sprite.depth = mob.sprite.y;
+    mob.sprite.depth = mob.sprite.y+mob.sprite.height*0.25;
 
     if(mob.barra_vida.visible && mob.barra_vida.getAt(1)) {
       mob.barra_vida.x = mob.x * 32;
