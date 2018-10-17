@@ -163,6 +163,33 @@ scenePrecarga.init = function() {
         reverse: false
       },
     },
+
+    "esqueleto": {
+      "andar": {
+        end: 12,
+        repeat: -1,
+        frameRate: 16,
+        reverse: false
+      },
+      "atacar": {
+        end: 17,
+        repeat: 0,
+        frameRate: 32,
+        reverse: false
+      },
+      "cargar": {
+        end: 2,
+        repeat: 0,
+        frameRate: 16,
+        reverse: false
+      },
+      "morir": {
+        end: 14,
+        repeat: 0,
+        frameRate: 16,
+        reverse: false
+      },
+    },
   };
 }
 
