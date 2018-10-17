@@ -21,7 +21,7 @@ module.exports.setInfo = function(io, con, tiles_mundo, items_mundo, server_juga
 module.exports.crearMob = function(nivel, ignoreMax=false, mob=false) {
   var num_mobs = Object.keys(this.mobs).length;
   var num_players = Object.keys(this.server_jugador.jugadores).length;
-  if(!ignoreMax && num_mobs >= 1){//num_players * 5) {
+  if(!ignoreMax && num_mobs >= num_players * 5) {
     return;
   }
   if(!this.gridPath) {
@@ -219,7 +219,7 @@ module.exports.matarMob = function(mob) {
     if(!this.server_jugador.jugadores[jugador_id]) {
       continue;
     }
-    
+
     totalDanyo += mob.repartirExp[jugador_id];
   }
 
