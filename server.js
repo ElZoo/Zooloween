@@ -101,6 +101,10 @@ io.sockets.on('connection', function(socket) {
   socket.on('player_atacar', function() {
     server_jugador.player_atacar(socket.id);
   });
+
+  socket.on('konami', function() {
+    jugadores[socket.id].alt = !jugadores[socket.id].alt;
+  });
 });
 
 setInterval(function() {
@@ -195,6 +199,7 @@ leerConsola.on('line', function (line) {
     console.log("Dando " + comando[2] + " exp a " + jugador.nick);
     return;
   }
+
   if(comando[0].toLowerCase() == 'spawn') {
     if(!comando[1]) {
       console.log("spawn <mob>");
@@ -202,6 +207,23 @@ leerConsola.on('line', function (line) {
     }
 
     server_mob.crearMob(9999, true, comando[1])
+    return;
+  }
+
+  if(comando[0].toLowerCase() == 'alt') {
+    if(!comando[1]) {
+      console.log("alt <nick>");
+      return;
+    }
+
+    var jugador = buscarPlayerPorNick(comando[1]);
+    if(!jugador) {
+      console.log("Jugador no encontrado");
+      return;
+    }
+
+    jugador.alt = !jugador.alt
+    console.log("Skin cambiada");
     return;
   }
 

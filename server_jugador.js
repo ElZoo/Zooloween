@@ -95,7 +95,8 @@ module.exports.crearJugador = function(socket, nick) {
     vel: 0.02,
     tickAtaque: 100,
     boost: false,
-    ticksBoost: 0
+    ticksBoost: 0,
+    alt: false,
   }
   this.ponerArma(socket.id, "item_mano");
   this.ponerArmadura(socket.id, "pj_tela");

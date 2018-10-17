@@ -258,6 +258,9 @@ scenePrecarga.preload = function() {
   this.load.atlas('pj_chain', 'res/pj/pj_chain.png', 'res/pj/pj_base.json');
   this.load.atlas('pj_hierro', 'res/pj/pj_hierro.png', 'res/pj/pj_base.json');
   this.load.atlas('pj_oro', 'res/pj/pj_oro.png', 'res/pj/pj_base.json');
+  this.load.atlas('pj_tela_alt', 'res/pj/pj_tela_alt.png', 'res/pj/pj_base.json');
+  this.load.atlas('pj_cuero_alt', 'res/pj/pj_cuero_alt.png', 'res/pj/pj_base.json');
+  this.load.atlas('pj_chain_alt', 'res/pj/pj_chain_alt.png', 'res/pj/pj_base.json');
 
   //precargar las imágenes de los items
   this.load.atlas('item_mano', 'res/items/item_mano.png', 'res/pj/pj_base.json');
@@ -299,7 +302,7 @@ scenePrecarga.crearPj = function() {
   var self = this;
 
   //armaduras y direcciones de las animaciones
-  var armaduras = ['pj_tela', 'pj_cuero', 'pj_chain', 'pj_hierro', 'pj_oro'];
+  var armaduras = ['pj_tela', 'pj_cuero', 'pj_chain', 'pj_hierro', 'pj_oro', 'pj_tela_alt', 'pj_cuero_alt', 'pj_chain_alt'];
   var anims = ['arriba', 'abajo', 'izquierda', 'derecha'];
 
   //configuración para las animaciones de correr

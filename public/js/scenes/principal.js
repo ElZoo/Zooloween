@@ -174,6 +174,12 @@ scenePrincipal.create = function() {
   //comenzar música
   this.musica_fondo = this.sound.add('cancion', {loop: true, volume: 0.15});
   this.musica_fondo.play();
+
+  //secreto
+  var combo = this.input.keyboard.createCombo([38, 38, 40, 40, 37, 39, 37, 39], { resetOnMatch: true });
+  this.input.keyboard.on('keycombomatch', function(event) {
+    self.game.datos.socket.emit('konami');
+  });
 }
 
 //actualizar la barra de vida y las sprites de los jugadores y mobs
@@ -277,7 +283,7 @@ scenePrincipal.borrarDrop = function(drop_id) {
   if(!drop) {
     return;
   }
-  
+
   drop.sprite.destroy();
   delete this.drops[drop_id];
   this.sonido('coger_item', drop.x, drop.y);

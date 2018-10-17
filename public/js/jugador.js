@@ -23,12 +23,18 @@ scenePrincipal.onUpdateJugador = function(jugadores) {
     j.delayAtaque = jugador.delayAtaque;
     j.nivel = jugador.nivel;
     j.defensa = jugador.defensa;
+    j.alt = jugador.alt;
   }
 }
 
 //crear sprites del jugador y el texto con el nivel
 scenePrincipal.crearJugador = function(jugador) {
-  jugador.sprite = this.add.sprite(jugador.x * 32, jugador.y * 32, jugador.armadura, 'abajo_0').setOrigin(0.5, 0.9).setScale(0.5, 0.5).setFrame('quieto_abajo');
+  if(jugador.alt && (jugador.armadura == 'pj_tela' || jugador.armadura == 'pj_cuero' || jugador.armadura == 'pj_chain')) {
+    jugador.sprite = this.add.sprite(jugador.x * 32, jugador.y * 32, jugador.armadura+'_alt', 'abajo_0').setOrigin(0.5, 0.9).setScale(0.5, 0.5).setFrame('quieto_abajo');
+  } else {
+    jugador.sprite = this.add.sprite(jugador.x * 32, jugador.y * 32, jugador.armadura, 'abajo_0').setOrigin(0.5, 0.9).setScale(0.5, 0.5).setFrame('quieto_abajo');
+  }
+
   jugador.spriteArma = this.add.sprite(jugador.x * 32, jugador.y * 32, jugador.arma, 'abajo_0').setOrigin(0.5, 0.9).setScale(0.5, 0.5).setFrame('abajo_0');
   this.game.datos.jugadores[jugador.id] = jugador;
 
@@ -48,7 +54,11 @@ scenePrincipal.onDisconnectJugador = function(id) {
     return;
   }
 
-  var spriteMuerte = this.add.sprite(jugador.x * 32, jugador.y * 32, jugador.armadura).setOrigin(0.5, 0.9).setScale(0.5, 0.5);
+  if(jugador.alt && (jugador.armadura == 'pj_tela' || jugador.armadura == 'pj_cuero' || jugador.armadura == 'pj_chain')) {
+    var spriteMuerte = this.add.sprite(jugador.x * 32, jugador.y * 32, jugador.armadura+'_alt').setOrigin(0.5, 0.9).setScale(0.5, 0.5);
+  } else {
+    var spriteMuerte = this.add.sprite(jugador.x * 32, jugador.y * 32, jugador.armadura).setOrigin(0.5, 0.9).setScale(0.5, 0.5);
+  }
   spriteMuerte.depth = spriteMuerte.y;
   spriteMuerte.on('animationcomplete', function() {
     self.tweens.addCounter({
@@ -137,23 +147,26 @@ scenePrincipal.updateSpritesJugadores = function() {
     if(currentAnim && (currentAnim.key.includes(jugador.armadura+'_atacar') || currentAnim.key.includes(jugador.armadura+'_lanza')) && jugador.sprite.anims.isPlaying) {
       continue;
     }
+    if(jugador.alt && (jugador.armadura == 'pj_tela' || jugador.armadura == 'pj_cuero' || jugador.armadura == 'pj_chain') && currentAnim && (currentAnim.key.includes(jugador.armadura+'_alt_atacar') || currentAnim.key.includes(jugador.armadura+'_lanza')) && jugador.sprite.anims.isPlaying) {
+      continue;
+    }
     switch (jugador.dirX) {
       case 'izquierda':
-        jugador.sprite.anims.play(jugador.armadura+'_izquierda', true);
+        jugador.sprite.anims.play(jugador.armadura+(jugador.alt && (jugador.armadura == 'pj_tela' || jugador.armadura == 'pj_cuero' || jugador.armadura == 'pj_chain') ? '_alt' : '')+'_izquierda', true);
         jugador.spriteArma.anims.play(jugador.arma+'_izquierda', true);
         break;
       case 'derecha':
-        jugador.sprite.anims.play(jugador.armadura+'_derecha', true);
+        jugador.sprite.anims.play(jugador.armadura+(jugador.alt && (jugador.armadura == 'pj_tela' || jugador.armadura == 'pj_cuero' || jugador.armadura == 'pj_chain') ? '_alt' : '')+'_derecha', true);
         jugador.spriteArma.anims.play(jugador.arma+'_derecha', true);
         break;
       default:
         switch(jugador.dirY) {
           case 'arriba':
-            jugador.sprite.anims.play(jugador.armadura+'_arriba', true);
+            jugador.sprite.anims.play(jugador.armadura+(jugador.alt && (jugador.armadura == 'pj_tela' || jugador.armadura == 'pj_cuero' || jugador.armadura == 'pj_chain') ? '_alt' : '')+'_arriba', true);
             jugador.spriteArma.anims.play(jugador.arma+'_arriba', true);
             break;
           case 'abajo':
-            jugador.sprite.anims.play(jugador.armadura+'_abajo', true);
+            jugador.sprite.anims.play(jugador.armadura+(jugador.alt && (jugador.armadura == 'pj_tela' || jugador.armadura == 'pj_cuero' || jugador.armadura == 'pj_chain') ? '_alt' : '')+'_abajo', true);
             jugador.spriteArma.anims.play(jugador.arma+'_abajo', true);
             break;
           default:
@@ -213,19 +226,19 @@ scenePrincipal.ataque_player = function(player_id, mob_ids) {
   }
   switch (jugador.lastDir) {
     case 'quieto_abajo':
-      jugador.sprite.play(jugador.armadura+'_'+spr_arm+'_abajo');
+      jugador.sprite.play(jugador.armadura+(jugador.alt && (jugador.armadura == 'pj_tela' || jugador.armadura == 'pj_cuero' || jugador.armadura == 'pj_chain') ? '_alt' : '')+'_'+spr_arm+'_abajo');
       jugador.spriteArma.play(jugador.arma+'_'+spr_atc+'_abajo');
       break;
     case 'quieto_arriba':
-      jugador.sprite.play(jugador.armadura+'_'+spr_arm+'_arriba');
+      jugador.sprite.play(jugador.armadura+(jugador.alt && (jugador.armadura == 'pj_tela' || jugador.armadura == 'pj_cuero' || jugador.armadura == 'pj_chain') ? '_alt' : '')+'_'+spr_arm+'_arriba');
       jugador.spriteArma.play(jugador.arma+'_'+spr_atc+'_arriba');
       break;
     case 'quieto_derecha':
-      jugador.sprite.play(jugador.armadura+'_'+spr_arm+'_derecha');
+      jugador.sprite.play(jugador.armadura+(jugador.alt && (jugador.armadura == 'pj_tela' || jugador.armadura == 'pj_cuero' || jugador.armadura == 'pj_chain') ? '_alt' : '')+'_'+spr_arm+'_derecha');
       jugador.spriteArma.play(jugador.arma+'_'+spr_atc+'_derecha');
       break;
     case 'quieto_izquierda':
-      jugador.sprite.play(jugador.armadura+'_'+spr_arm+'_izquierda');
+      jugador.sprite.play(jugador.armadura+(jugador.alt && (jugador.armadura == 'pj_tela' || jugador.armadura == 'pj_cuero' || jugador.armadura == 'pj_chain') ? '_alt' : '')+'_'+spr_arm+'_izquierda');
       jugador.spriteArma.play(jugador.arma+'_'+spr_atc+'_izquierda');
       break;
   }
