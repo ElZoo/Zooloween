@@ -1,5 +1,5 @@
 var PF = require('pathfinding');
-var finder = new PF.BestFirstFinder({allowDiagonal: true, dontCrossCorners: true});
+var finder = new PF.AStarFinder({allowDiagonal: true, dontCrossCorners: true});
 
 module.exports.io = false;
 module.exports.items_mundo = [];
@@ -64,7 +64,24 @@ module.exports.updateMobs = function() {
     if(mob.volador || (casilla_mob[0] == casilla_target[0] && casilla_mob[1] == casilla_target[1])) {
       this.irDondeTarget(mob, target, mobs_ignorados);
     } else {
-      var camino = finder.findPath(casilla_mob[0], casilla_mob[1], casilla_target[0], casilla_target[1], this.gridPath.clone());
+      var nuevoGrid = this.gridPath.clone();
+
+      for(var mob_id in this.mobs) {
+        if(mob_id == mob.id) {
+          continue;
+        }
+        var mob_path = this.mobs[mob_id];
+        if(mob_path.volador) {
+          continue;
+        }
+        var casilla_path = [Math.round(mob_path.x), Math.round(mob_path.y)];
+        if(casilla_path[0] == casilla_target[0] && casilla_path[1] == casilla_target[1]) {
+          continue;
+        }
+        nuevoGrid.setWalkableAt(casilla_path[0], casilla_path[1], false);
+      }
+
+      var camino = finder.findPath(casilla_mob[0], casilla_mob[1], casilla_target[0], casilla_target[1], nuevoGrid);
       this.irDondePath(mob, camino[1], mobs_ignorados, target);
     }
 
