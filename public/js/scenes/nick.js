@@ -77,7 +77,7 @@ sceneNick.comenzarJuego = function() {
       self.comenzando = false;
       return;
     }
-    Cookies.set('nick_zooloween', self.texto.text);
+    Cookies.set('nick_zooloween', self.texto.text, { expires: 30 });
 
     self.game.datos.jugadores = datos[0];
     self.game.datos.mobs = datos[1];
