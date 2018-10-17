@@ -274,6 +274,10 @@ scenePrincipal.crearDrop = function(drop) {
 
 scenePrincipal.borrarDrop = function(drop_id) {
   var drop = this.drops[drop_id];
+  if(!drop) {
+    return;
+  }
+  
   drop.sprite.destroy();
   delete this.drops[drop_id];
   this.sonido('coger_item', drop.x, drop.y);

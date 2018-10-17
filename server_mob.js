@@ -21,7 +21,7 @@ module.exports.setInfo = function(io, con, tiles_mundo, items_mundo, server_juga
 module.exports.crearMob = function(nivel, ignoreMax=false, mob=false) {
   var num_mobs = Object.keys(this.mobs).length;
   var num_players = Object.keys(this.server_jugador.jugadores).length;
-  if(!ignoreMax && num_mobs >= num_players * 3) {
+  if(!ignoreMax && num_mobs >= num_players * 5) {
     return;
   }
   if(!this.gridPath) {
@@ -31,9 +31,9 @@ module.exports.crearMob = function(nivel, ignoreMax=false, mob=false) {
   var id = this.id_mob;
   this.id_mob++;
   if(!mob) {
-    mob = getMobRandom(nivel, id);
+    mob = this.getMobRandom(nivel, id);
   } else {
-    mob = getMob(mob, nivel, id);
+    mob = this.getMob(mob, nivel, id);
   }
   this.mobs[id] = mob;
 
@@ -57,6 +57,9 @@ module.exports.updateMobs = function() {
     //Si no, usar pathfinding e ir a la casilla más próxima
     var casilla_mob = [Math.round(mob.x), Math.round(mob.y)];
     var casilla_target = [Math.round(target.x), Math.round(target.y)];
+    if(!casilla_mob || !casilla_target) {
+      continue;
+    }
 
     if(mob.volador || (casilla_mob[0] == casilla_target[0] && casilla_mob[1] == casilla_target[1])) {
       this.irDondeTarget(mob, target, mobs_ignorados);
@@ -284,7 +287,7 @@ function calcularDistancia(ent1, ent2) {
   return Math.sqrt(Math.pow(ent1.x - ent2.x, 2) + Math.pow(ent1.y - ent2.y, 2));
 }
 
-function getMobRandom(nivel, id) {
+module.exports.getMobRandom = function(nivel, id) {
   var mobs_aptos = [];
   for(var mob_id in lista_mobs) {
     var mob = lista_mobs[mob_id];
@@ -293,17 +296,26 @@ function getMobRandom(nivel, id) {
     }
   }
 
-  return getMob(mobs_aptos[Math.floor(Math.random() * mobs_aptos.length)], nivel, id);
+  return this.getMob(mobs_aptos[Math.floor(Math.random() * mobs_aptos.length)], nivel, id);
 }
 
-function getMob(mob_id, nivel, id) {
+module.exports.getMob = function(mob_id, nivel, id) {
   var mob = { ... lista_mobs[mob_id]};
   mob.id = id;
   mob.vida = mob.vidaMax;
-  mob.x = Math.random() * 16;
-  mob.y = Math.random() * 16;
   mob.dir = 'derecha';
   mob.tickAtaque = 0;
+
+  while(!spawnValido) {
+    var spawnValido = false;
+    mob.x = Math.random() * (this.tiles_mundo.length-1);
+    mob.y = Math.random() * (this.tiles_mundo[0].length-1);
+
+    var tile = this.tiles_mundo[Math.floor(mob.y)][Math.floor(mob.x)];
+    if(tiles_barrera.indexOf(tile) == -1) {
+      spawnValido = true;
+    }
+  }
 
   if(!mob.escala) {
     mob.escala = 1;

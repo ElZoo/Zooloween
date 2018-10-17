@@ -318,6 +318,9 @@ scenePrincipal.onBoost = function(player_id, item) {
   jugador.spriteCurar = this.add.sprite(0, 0, ef).setOrigin(0.5, 0.75);
   jugador.spriteCurar.depth = 99999;
   jugador.spriteCurar.on('animationcomplete', function() {
+    if(!jugador.spriteCurar) {
+      return;
+    }
     jugador.spriteCurar.destroy();
     delete jugador.spriteCurar;
   }, this);

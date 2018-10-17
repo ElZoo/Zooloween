@@ -422,9 +422,9 @@ scenePrecarga.crearMobs = function() {
 
 scenePrecarga.crearEfectos = function() {
   //animaciones de efectos
-  this.anims.create({key: 'efecto_subir_lvl', frames: this.anims.generateFrameNames('efecto_subir_lvl', {prefix: 'efecto_subir_lvl_', end: 48}), repeat: 0, frameRate: 60});
-  this.anims.create({key: 'efecto_curar', frames: this.anims.generateFrameNames('efecto_curar', {prefix: 'curar_', end: 3}), repeat: 0, frameRate: 8});
-  this.anims.create({key: 'boost_velocidad', frames: this.anims.generateFrameNames('efecto_curar', {prefix: 'boost_velocidad_', end: 3}), repeat: 0, frameRate: 8});
-  this.anims.create({key: 'boost_fuerza', frames: this.anims.generateFrameNames('efecto_curar', {prefix: 'boost_fuerza_', end: 3}), repeat: 0, frameRate: 8});
-  this.anims.create({key: 'boost_defensa', frames: this.anims.generateFrameNames('efecto_curar', {prefix: 'boost_defensa_', end: 3}), repeat: 0, frameRate: 8});
+  this.anims.create({key: 'efecto_subir_lvl', hideOnComplete: true, frames: this.anims.generateFrameNames('efecto_subir_lvl', {prefix: 'efecto_subir_lvl_', end: 48}), repeat: 0, frameRate: 60});
+  this.anims.create({key: 'efecto_curar', hideOnComplete: true, frames: this.anims.generateFrameNames('efecto_curar', {prefix: 'curar_', end: 3}), repeat: 0, frameRate: 8});
+  this.anims.create({key: 'boost_velocidad', hideOnComplete: true, frames: this.anims.generateFrameNames('efecto_curar', {prefix: 'boost_velocidad_', end: 3}), repeat: 0, frameRate: 8});
+  this.anims.create({key: 'boost_fuerza', hideOnComplete: true, frames: this.anims.generateFrameNames('efecto_curar', {prefix: 'boost_fuerza_', end: 3}), repeat: 0, frameRate: 8});
+  this.anims.create({key: 'boost_defensa', hideOnComplete: true, frames: this.anims.generateFrameNames('efecto_curar', {prefix: 'boost_defensa_', end: 3}), repeat: 0, frameRate: 8});
 }
