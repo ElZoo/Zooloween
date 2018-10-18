@@ -39,6 +39,13 @@ module.exports.armas = {
     fuerzaAtaque: 35,
     rangoAtaque: 0.3,
     probCrit: 0.15
+  },
+  item_tridente: {
+    nombre: "item_tridente",
+    delayAtaque: 35,
+    fuerzaAtaque: 20,
+    rangoAtaque: 0.3,
+    probCrit: 0.2
   }
 }
 
@@ -428,6 +435,9 @@ module.exports.recompensa = function(jugador) {
       break;
     case 60:
       this.ponerArmadura(jugador.id, "pj_oro");
+      break;
+    case 80:
+      this.ponerArma(jugador.id, "item_tridente");
       break;
   }
 }

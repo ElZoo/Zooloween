@@ -295,6 +295,7 @@ scenePrecarga.preload = function() {
   this.load.atlas('item_lanza', 'res/items/item_lanza.png', 'res/pj/pj_base.json');
   this.load.atlas('item_hacha', 'res/items/item_hacha.png', 'res/pj/pj_base.json');
   this.load.atlas('item_martillo', 'res/items/item_martillo.png', 'res/pj/pj_base.json');
+  this.load.atlas('item_tridente', 'res/items/item_tridente.png', 'res/pj/pj_base.json');
 
   //precargar las imágenes de los mobs
   for(var mob in this.lista_mobs) {
@@ -385,7 +386,7 @@ scenePrecarga.crearItems = function() {
   var self = this;
 
   //items y direcciones de las animaciones
-  var items = ['item_mano', 'item_daga', 'item_lanza', 'item_hacha', 'item_martillo'];
+  var items = ['item_mano', 'item_daga', 'item_lanza', 'item_hacha', 'item_martillo', 'item_tridente'];
   var anims = ['abajo', 'arriba', 'izquierda', 'derecha'];
 
   //configuración para las animaciones de correr

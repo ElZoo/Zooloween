@@ -70,6 +70,10 @@
       "filename": "item_martillo",
       "frame": {"x": 32, "y": 100, "w": 32, "h": 32}
     },
+    {
+      "filename": "item_tridente",
+      "frame": {"x": 64, "y": 100, "w": 32, "h": 32}
+    },
 
     {
       "filename": "pj_tela",

@@ -220,7 +220,7 @@ scenePrincipal.ataque_player = function(player_id, mob_ids) {
   var jugador = this.game.datos.jugadores[player_id];
   var spr_arm = "atacar";
   var spr_atc = "ataque";
-  if(jugador.arma == "item_lanza") {
+  if(jugador.arma == "item_lanza" || jugador.arma == "item_tridente") {
     spr_arm = "lanza";
     spr_atc = "lanza";
   }

@@ -68,6 +68,7 @@ sceneHud.create = function() {
     'item_mano': 'Puño',
     'item_daga': 'Daga',
     'item_lanza': 'Lanza',
+    'item_tridente': 'Tridente',
     'item_hacha': 'Hacha',
     'item_martillo': 'Martillo'
   };
@@ -75,6 +76,7 @@ sceneHud.create = function() {
     'item_mano': 'normal',
     'item_daga': 'muy rápida',
     'item_lanza': 'rápida',
+    'item_tridente': 'normal',
     'item_hacha': 'rápida',
     'item_martillo': 'lenta'
   };
