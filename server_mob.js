@@ -492,6 +492,7 @@ var lista_mobs = {
     drops: ['boost_defensa'],
     dropRate: 0.2,
     escala: 0.5,
+    offset: [0.5, 1],
     flipTextura: true,
   },
 
