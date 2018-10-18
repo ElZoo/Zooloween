@@ -34,6 +34,23 @@
     },
 
     {
+      "filename": "altavoz_on",
+      "frame": {"x": 112, "y": 0, "w": 16, "h": 16}
+    },
+    {
+      "filename": "altavoz_off",
+      "frame": {"x": 112, "y": 16, "w": 16, "h": 16}
+    },
+    {
+      "filename": "musica_on",
+      "frame": {"x": 112, "y": 32, "w": 16, "h": 16}
+    },
+    {
+      "filename": "musica_off",
+      "frame": {"x": 112, "y": 48, "w": 16, "h": 16}
+    },
+
+    {
       "filename": "item_mano",
       "frame": {"x": 32, "y": 36, "w": 32, "h": 32}
     },

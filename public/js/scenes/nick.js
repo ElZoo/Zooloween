@@ -67,6 +67,8 @@ sceneNick.comenzarJuego = function() {
 
   //crear conexión con el servidor
   this.game.datos = {};
+  this.game.datos.mute_sonidos = false;
+  this.game.datos.mute_musica = false;
   this.game.datos.socket = io({query: "nick="+this.texto.text});
   this.texto_error.text = 'Conectando...';
 

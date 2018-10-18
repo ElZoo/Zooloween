@@ -15,6 +15,32 @@ sceneHud.create = function() {
   this.containerArribaDer = this.add.container(this.game.config.width-220, 10).setScale(1.5, 1.5);
   this.containerArribaDer.add(this.add.text(0, 0, "Jugadores: " + Object.keys(this.game.datos.jugadores).length));
 
+  this.containerAbajoDer = this.add.container(this.game.config.width-50, this.game.config.height-20).setScale(2, 2);
+  var mute_sonidos = this.add.sprite(8+1, 0, 'hud', 'altavoz_on').setInteractive();
+  var mute_musica = this.add.sprite(-8-1, 0, 'hud', 'musica_on').setInteractive();
+  this.containerAbajoDer.add(mute_sonidos);
+  this.containerAbajoDer.add(mute_musica);
+
+  mute_sonidos.on('pointerdown', function(pointer) {
+    self.game.datos.mute_sonidos = !self.game.datos.mute_sonidos;
+    if(self.game.datos.mute_sonidos) {
+      mute_sonidos.setFrame('altavoz_off');
+    } else {
+      mute_sonidos.setFrame('altavoz_on');
+    }
+  });
+
+  mute_musica.on('pointerdown', function(pointer) {
+    self.game.datos.mute_musica = !self.game.datos.mute_musica;
+    if(self.game.datos.mute_musica) {
+      mute_musica.setFrame('musica_off');
+      self.scene.get('principal').musica_fondo.pause();
+    } else {
+      mute_musica.setFrame('musica_on');
+      self.scene.get('principal').musica_fondo.resume();
+    }
+  });
+
   var container = this.add.container(640, 650).setScale(4, 4);
 
   var boton2 = this.add.image(8+1, 0, 'hud', 'boton').setInteractive();
@@ -145,7 +171,7 @@ sceneHud.create = function() {
       infoDano.getAt(5).text = 'Rango: ' + self.game.datos.jugador.rangoAtaque;
 
       infoDano.visible = true;
-    } else {
+    } else if(objects[0] == boton2){
       infoArmadura.x = this.input.mousePointer.x;
       infoArmadura.y = this.input.mousePointer.y;
 

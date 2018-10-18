@@ -11,6 +11,14 @@ scenePrincipal.init = function() {
 scenePrincipal.create = function() {
   var self = this;
 
+  this.game.datos.mute_pausa = false;
+  this.game.events.on('blur', function() {
+    this.game.datos.mute_pausa = true;
+  }, this);
+  this.game.events.on('focus', function() {
+    this.game.datos.mute_pausa = false;
+  }, this);
+
   //pintar el mundo, los jugadores y los mobs usando los datos del servidor
   this.pintarMundo();
   this.pintarDrops();
@@ -290,6 +298,9 @@ scenePrincipal.borrarDrop = function(drop_id) {
 }
 
 scenePrincipal.sonido = function(sonido, x1, y1) {
+  if(this.game.datos.mute_sonidos || this.game.datos.mute_pausa) {
+    return;
+  }
   var x2 = this.game.datos.jugador.x;
   var y2 = this.game.datos.jugador.y;
   var distancia = calcularDistancia({x: x1, y: y1}, {x: x2, y: y2});
