@@ -120,7 +120,7 @@ module.exports.borrarJugador = function(socket) {
 //  console.log("Jugadores activos: " + contar)   //log para jugadores activos
   if (contar == 0) {
     for (var idMob in this.server_mob.mobs) {
-      this.server_mob.matarMob(this.server_mob.mobs[idMob]);
+      this.server_mob.matarMob(this.server_mob.mobs[idMob], false);
     }
   }
 }

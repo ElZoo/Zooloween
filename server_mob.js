@@ -214,7 +214,7 @@ module.exports.mob_atacar = function(mob, target) {
   }
 }
 
-module.exports.matarMob = function(mob) {
+module.exports.matarMob = function(mob, drops=true) {
   mob.vida = 0;
   delete this.mobs[mob.id];
   this.io.emit('matarMob', mob.id);
@@ -240,7 +240,7 @@ module.exports.matarMob = function(mob) {
     }
   }
 
-  if(mob.drops) {
+  if(drops && mob.drops) {
     var rnd = Math.random();
     if(rnd < mob.dropRate) {
       var item = mob.drops[Math.floor(Math.random() * mob.drops.length)];
