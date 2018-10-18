@@ -113,6 +113,16 @@ module.exports.borrarJugador = function(socket) {
 
   delete this.jugadores[socket.id];
   this.io.emit('disconnect', socket.id);
+  var contar = 0;
+  for (var id in this.jugadores) {
+    contar++;
+  }
+//  console.log("Jugadores activos: " + contar)   //log para jugadores activos
+  if (contar == 0) {
+    for (var idMob in this.server_mob.mobs) {
+      this.server_mob.matarMob(this.server_mob.mobs[idMob]);
+    }
+  }
 }
 
 module.exports.moverJugador = function(socket, teclas) {
