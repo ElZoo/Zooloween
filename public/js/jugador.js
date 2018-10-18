@@ -147,7 +147,7 @@ scenePrincipal.updateSpritesJugadores = function() {
     if(currentAnim && (currentAnim.key.includes(jugador.armadura+'_atacar') || currentAnim.key.includes(jugador.armadura+'_lanza')) && jugador.sprite.anims.isPlaying) {
       continue;
     }
-    if(jugador.alt && (jugador.armadura == 'pj_tela' || jugador.armadura == 'pj_cuero' || jugador.armadura == 'pj_chain') && currentAnim && (currentAnim.key.includes(jugador.armadura+'_alt_atacar') || currentAnim.key.includes(jugador.armadura+'_lanza')) && jugador.sprite.anims.isPlaying) {
+    if(jugador.alt && (jugador.armadura == 'pj_tela' || jugador.armadura == 'pj_cuero' || jugador.armadura == 'pj_chain') && currentAnim && (currentAnim.key.includes(jugador.armadura+'_alt_atacar') || currentAnim.key.includes(jugador.armadura+'_alt_lanza')) && jugador.sprite.anims.isPlaying) {
       continue;
     }
     switch (jugador.dirX) {
