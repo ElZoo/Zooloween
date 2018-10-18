@@ -61,17 +61,22 @@ module.exports.updateMobs = function() {
       continue;
     }
 
-    if(mob.volador || (casilla_mob[0] == casilla_target[0] && casilla_mob[1] == casilla_target[1])) {
+    if(casilla_mob[0] == casilla_target[0] && casilla_mob[1] == casilla_target[1]) {
       this.irDondeTarget(mob, target, mobs_ignorados);
     } else {
-      var nuevoGrid = this.gridPath.clone();
+      var nuevoGrid;
+      if(mob.volador) {
+        nuevoGrid = new PF.Grid(this.items_mundo[0].length, this.items_mundo.length);
+      } else {
+        nuevoGrid = this.gridPath.clone();
+      }
 
       for(var mob_id in this.mobs) {
         if(mob_id == mob.id) {
           continue;
         }
         var mob_path = this.mobs[mob_id];
-        if(mob_path.volador) {
+        if(mob_path.volador != mob.volador) {
           continue;
         }
         var casilla_path = [Math.round(mob_path.x), Math.round(mob_path.y)];
