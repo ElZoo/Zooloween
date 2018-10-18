@@ -244,6 +244,33 @@ scenePrecarga.init = function() {
         reverse: false
       },
     },
+
+    "caballero": {
+      "andar": {
+        end: 7,
+        repeat: -1,
+        frameRate: 8,
+        reverse: false
+      },
+      "atacar": {
+        end: 4,
+        repeat: 0,
+        frameRate: 8,
+        reverse: false
+      },
+      "cargar": {
+        end: 4,
+        repeat: 0,
+        frameRate: 8,
+        reverse: false
+      },
+      "morir": {
+        end: 7,
+        repeat: 0,
+        frameRate: 8,
+        reverse: false
+      }
+    }
   };
 }
 

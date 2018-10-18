@@ -1,0 +1,103 @@
+{
+  "frames": [
+    {
+      "filename": "andar_0",
+      "frame": {"x": 0, "y": 0, "w": 42, "h": 42}
+    },
+    {
+      "filename": "andar_1",
+      "frame": {"x": 42, "y": 0, "w": 42, "h": 42}
+    },
+    {
+      "filename": "andar_2",
+      "frame": {"x": 84, "y": 0, "w": 42, "h": 42}
+    },
+    {
+      "filename": "andar_3",
+      "frame": {"x": 126, "y": 0, "w": 42, "h": 42}
+    },
+    {
+      "filename": "andar_4",
+      "frame": {"x": 168, "y": 0, "w": 42, "h": 42}
+    },
+    {
+      "filename": "andar_5",
+      "frame": {"x": 210, "y": 0, "w": 42, "h": 42}
+    },
+    {
+      "filename": "andar_6",
+      "frame": {"x": 252, "y": 0, "w": 42, "h": 42}
+    },
+    {
+      "filename": "andar_7",
+      "frame": {"x": 294, "y": 0, "w": 42, "h": 42}
+    },
+
+    {
+      "filename": "cargar_0",
+      "frame": {"x": 0, "y": 42, "w": 42, "h": 42}
+    },
+    {
+      "filename": "cargar_2",
+      "frame": {"x": 84, "y": 42, "w": 42, "h": 42}
+    },
+    {
+      "filename": "cargar_3",
+      "frame": {"x": 126, "y": 42, "w": 42, "h": 42}
+    },
+    {
+      "filename": "cargar_4",
+      "frame": {"x": 168, "y": 42, "w": 42, "h": 42}
+    },
+
+    {
+      "filename": "atacar_0",
+      "frame": {"x": 0, "y": 84, "w": 42, "h": 42}
+    },
+    {
+      "filename": "atacar_2",
+      "frame": {"x": 84, "y": 84, "w": 42, "h": 42}
+    },
+    {
+      "filename": "atacar_3",
+      "frame": {"x": 126, "y": 84, "w": 42, "h": 42}
+    },
+    {
+      "filename": "atacar_4",
+      "frame": {"x": 168, "y": 84, "w": 42, "h": 42}
+    },
+
+    {
+      "filename": "morir_0",
+      "frame": {"x": 0, "y": 126, "w": 42, "h": 42}
+    },
+    {
+      "filename": "morir_1",
+      "frame": {"x": 42, "y": 126, "w": 42, "h": 42}
+    },
+    {
+      "filename": "morir_2",
+      "frame": {"x": 84, "y": 126, "w": 42, "h": 42}
+    },
+    {
+      "filename": "morir_3",
+      "frame": {"x": 126, "y": 126, "w": 42, "h": 42}
+    },
+    {
+      "filename": "morir_4",
+      "frame": {"x": 168, "y": 126, "w": 42, "h": 42}
+    },
+    {
+      "filename": "morir_5",
+      "frame": {"x": 210, "y": 126, "w": 42, "h": 42}
+    },
+    {
+      "filename": "morir_6",
+      "frame": {"x": 252, "y": 126, "w": 42, "h": 42}
+    },
+    {
+      "filename": "morir_7",
+      "frame": {"x": 294, "y": 126, "w": 42, "h": 42}
+    }
+  ]
+}

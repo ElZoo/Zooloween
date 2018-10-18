@@ -146,7 +146,7 @@ function nivelMedio(jugadores) {
   if(filtrados[0]) {
     return filtrados[Math.floor(Math.random()*filtrados.length)].nivel;
   }
-  return 0/0;
+  return 1;
 }
 
 function comprobarNick(nick) {

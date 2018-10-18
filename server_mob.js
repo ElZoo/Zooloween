@@ -342,7 +342,7 @@ module.exports.getMobRandom = function(nivel, id) {
   return this.getMob(mobs_aptos[Math.floor(Math.random() * mobs_aptos.length)], nivel, id);
 }
 
-module.exports.getMob = function(mob_id, nivel, id) {
+module.exports.getMob = function(mob_id, nivel_max, id) {
   var mob = { ... lista_mobs[mob_id]};
   mob.id = id;
   mob.vida = mob.vidaMax;
@@ -376,17 +376,19 @@ module.exports.getMob = function(mob_id, nivel, id) {
     mob.fase = 'andar';
   }
 
-  if(mob.nivelMax) {
-    nivel = Math.min(nivel, mob.nivelMax);
-    nivel = Math.max(nivel, mob.nivelMin);
-    nivel = nivel - mob.nivelMin;
+  var nivel = Math.min(nivel_max, mob.nivelMax);
+  nivel = Math.max(nivel, mob.nivelMin);
+  nivel = nivel - mob.nivelMin;
 
-    mob.nivel = nivel;
-    mob.exp += mob.exp * 0.02 * nivel;
-    mob.fuerzaAtaque += mob.fuerzaAtaque * 0.02 * nivel;
-    mob.vidaMax += mob.vidaMax * 0.02 * nivel;
-    mob.vida = mob.vidaMax;
+  if(mob.nivelMax == -1) {
+    nivel = nivel_max;
   }
+
+  mob.nivel = nivel;
+  mob.exp += mob.exp * 0.02 * nivel;
+  mob.fuerzaAtaque += mob.fuerzaAtaque * 0.02 * nivel;
+  mob.vidaMax += mob.vidaMax * 0.02 * nivel;
+  mob.vida = mob.vidaMax;
 
   return mob;
 }
@@ -661,6 +663,43 @@ var lista_mobs = {
     dropRate: 1,
     escala: 1.25,
     offset: [0.5, 1],
+    tinte: 0x673ab7,
+    isBoss: true,
+  },
+
+  "caballero": {
+    nivelMin: 80,
+    nivelMax: -1,
+    spawnRate: 1,
+    volador: false,
+    tipo: "caballero",
+    vidaMax: 400,
+    vel: 0.015,
+    delayAtaque: 10,
+    fuerzaAtaque: 80,
+    rango: 0.5,
+    exp: 80,
+    drops: ['boost_velocidad', 'boost_fuerza', 'boost_defensa', 'pocion'],
+    dropRate: 0.2,
+    escala: 1,
+    offset: [0.5, 0.75],
+  },
+  "caballero_boss": {
+    nivelMin: 100,
+    nivelMax: -1,
+    spawnRate: 0.05,
+    volador: false,
+    tipo: "caballero",
+    vidaMax: 1000,
+    vel: 0.015,
+    delayAtaque: 15,
+    fuerzaAtaque: 120,
+    rango: 0.75,
+    exp: 400,
+    drops: ['boost_velocidad', 'boost_fuerza', 'boost_defensa', 'pocion'],
+    dropRate: 1,
+    escala: 1.5,
+    offset: [0.5, 0.75],
     tinte: 0x673ab7,
     isBoss: true,
   },

@@ -97,7 +97,7 @@ scenePrincipal.updateSpritesMobs = function() {
     if(mob.barra_vida.visible && mob.barra_vida.getAt(1)) {
       mob.barra_vida.x = mob.x * 32;
       mob.barra_vida.y = mob.y * 32 - 12*mob.escala;
-      if(mob.offset[1] == 1) {
+      if(mob.offset[1] > 0.5) {
         mob.barra_vida.y -= mob.sprite.height * mob.escala * 0.5;
       }
       mob.barra_vida.getAt(1).width = Math.round(mob.vida / mob.vidaMax * 32);
