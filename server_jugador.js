@@ -126,7 +126,7 @@ module.exports.borrarJugador = function(socket) {
   for (var id in this.jugadores) {
     contar++;
   }
-//  console.log("Jugadores activos: " + contar)   //log para jugadores activos
+
   if (contar == 0) {
     for (var idMob in this.server_mob.mobs) {
       this.server_mob.matarMob(this.server_mob.mobs[idMob], false);
@@ -299,7 +299,7 @@ module.exports.mandarTopTen = function(socket_id) {
     if(filas && filas[0] && filas[0].nivel >= nivel) {
       self.con.query("SELECT nick,nivel FROM jugador ORDER BY nivel DESC LIMIT 10", function(err, lineas) {
         if(err) throw err;
-        console.log("Enviar datos a " + socket_id)
+        ZooLog.log("Enviar datos a " + socket_id)
         self.io.to(socket_id).emit('topTen', lineas);
       });
       return;
@@ -314,7 +314,7 @@ module.exports.mandarTopTen = function(socket_id) {
 
         self.con.query("SELECT nick,nivel FROM jugador ORDER BY nivel DESC LIMIT 10", function(err, lineas) {
           if(err) throw err;
-          console.log("Enviar datos a " + socket_id)
+          ZooLog.log("Enviar datos a " + socket_id)
           self.io.to(socket_id).emit('topTen', lineas);
         });
       }
