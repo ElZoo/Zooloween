@@ -1,3 +1,5 @@
+var ZooLog = require('./zoolog.js');
+
 module.exports.io = false;
 module.exports.items_mundo = [];
 module.exports.tiles_mundo = [];
@@ -86,7 +88,7 @@ module.exports.setInfo = function(io, con, tiles_mundo, items_mundo, server_mob)
 }
 
 module.exports.crearJugador = function(socket, nick) {
-  console.log(`Se ha conectado un jugador (${nick})`);
+  ZooLog.log(`Se ha conectado un jugador (${nick})`);
 
   this.jugadores[socket.id] = {
     id: socket.id,
@@ -114,7 +116,7 @@ module.exports.borrarJugador = function(socket) {
   if(this.jugadores[socket.id]) {
     nick = this.jugadores[socket.id].nick;
   }
-  console.log(`Se ha desconectado un jugador (${nick})`);
+  ZooLog.log(`Se ha desconectado un jugador (${nick})`);
 
   this.mandarTopTen(socket.id);
 
@@ -292,7 +294,7 @@ module.exports.mandarTopTen = function(socket_id) {
   var nivel = jugador.nivel;
   this.con.query("SELECT nivel FROM jugador WHERE nick = ?", [nick], function(err, filas) {
     if(err) {
-      console.log("Error al leer datos de "+nick);
+      ZooLog.log("Error al leer datos de "+nick);
     }
     if(filas && filas[0] && filas[0].nivel >= nivel) {
       self.con.query("SELECT nick,nivel FROM jugador ORDER BY nivel DESC LIMIT 10", function(err, lineas) {
@@ -306,9 +308,9 @@ module.exports.mandarTopTen = function(socket_id) {
     var sql = "INSERT INTO jugador (nick, nivel) VALUES(?, ?) ON DUPLICATE KEY UPDATE nick=?, nivel=?";
     self.con.query(sql, [nick, nivel, nick, nivel], function(err, filas) {
       if(err) {
-        console.log("Error al guardar datos de "+jugador.nick);
+        ZooLog.log("Error al guardar datos de "+jugador.nick);
       } else {
-        console.log("Datos de "+jugador.nick+" guardados!");
+        ZooLog.log("Datos de "+jugador.nick+" guardados!");
 
         self.con.query("SELECT nick,nivel FROM jugador ORDER BY nivel DESC LIMIT 10", function(err, lineas) {
           if(err) throw err;

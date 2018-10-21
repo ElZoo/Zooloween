@@ -1,4 +1,5 @@
 var PF = require('pathfinding');
+var ZooLog = require('./zoolog.js');
 var finder = new PF.AStarFinder({allowDiagonal: true, dontCrossCorners: true});
 
 module.exports.io = false;
@@ -37,7 +38,7 @@ module.exports.crearMob = function(nivel, ignoreMax=false, mob=false) {
   }
   this.mobs[id] = mob;
 
-  console.log(`Nuevo mob: ${mob.tipo}-${mob.nivel} (id: ${id})`);
+  ZooLog.log(`Nuevo mob: ${mob.tipo}-${mob.nivel} (id: ${id})`);
   this.io.emit('nuevoMob', mob);
 }
 

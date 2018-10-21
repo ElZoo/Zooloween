@@ -7,6 +7,7 @@ var io = require('socket.io').listen(server);
 var server_mob = require('./server_mob.js');
 var server_jugador = require('./server_jugador.js');
 var readline = require('readline');
+var ZooLog = require('./zoolog.js');
 
 var configMysql = JSON.parse(fs.readFileSync("conexion.json"));
 var con = mysql.createConnection({
@@ -18,7 +19,7 @@ var con = mysql.createConnection({
 
 con.connect(function(err) {
   if(err) throw err;
-  console.log("Conectado a MySQL");
+  ZooLog.log("Conectado a MySQL");
 });
 
 setInterval(function () {
@@ -131,7 +132,7 @@ setInterval(function() {
 }, 100);
 
 server.listen(8081, function() {
-  console.log(`Escuchando en ${server.address().port}`);
+  ZooLog.log(`Escuchando en ${server.address().port}`);
 });
 
 function calcularDistancia(ent1, ent2) {
@@ -180,29 +181,29 @@ leerConsola.on('line', function (line) {
   var comando = line.split(" ");
   if(comando[0].toLowerCase() == 'darexp') {
     if(!comando[1]) {
-      console.log("darexp <nick> <nivel>");
+      ZooLog.log("darexp <nick> <nivel>");
       return;
     }
 
     var jugador = buscarPlayerPorNick(comando[1]);
     if(!jugador) {
-      console.log("Jugador no encontrado");
+      ZooLog.log("Jugador no encontrado");
       return;
     }
 
     if(!comando[2]) {
-      console.log("darexp "+jugador.nick+" <nivel>");
+      ZooLog.log("darexp "+jugador.nick+" <nivel>");
       return;
     }
 
     server_jugador.subirExp(jugador, comando[2]);
-    console.log("Dando " + comando[2] + " exp a " + jugador.nick);
+    ZooLog.log("Dando " + comando[2] + " exp a " + jugador.nick);
     return;
   }
 
   if(comando[0].toLowerCase() == 'spawn') {
     if(!comando[1]) {
-      console.log("spawn <mob>");
+      ZooLog.log("spawn <mob>");
       return;
     }
 
@@ -212,20 +213,20 @@ leerConsola.on('line', function (line) {
 
   if(comando[0].toLowerCase() == 'alt') {
     if(!comando[1]) {
-      console.log("alt <nick>");
+      ZooLog.log("alt <nick>");
       return;
     }
 
     var jugador = buscarPlayerPorNick(comando[1]);
     if(!jugador) {
-      console.log("Jugador no encontrado");
+      ZooLog.log("Jugador no encontrado");
       return;
     }
 
     jugador.alt = !jugador.alt
-    console.log("Skin cambiada");
+    ZooLog.log("Skin cambiada");
     return;
   }
 
-  console.log("Comando no encontrado");
+  ZooLog.log("Comando no encontrado");
 });
