@@ -645,7 +645,7 @@ var lista_mobs = {
     drops: ['boost_velocidad'],
     dropRate: 0.2,
     escala: 0.75,
-    offset: [0.5, 1],
+    offset: [0.5, 0.75],
   },
   "golem_boss": {
     nivelMin: 80,
@@ -662,7 +662,7 @@ var lista_mobs = {
     drops: ['boost_velocidad'],
     dropRate: 1,
     escala: 1.25,
-    offset: [0.5, 1],
+    offset: [0.5, 0.75],
     tinte: 0x673ab7,
     isBoss: true,
   },
