@@ -1,13 +1,21 @@
 var express = require('express');
 var app = express();
 var fs = require('fs');
-var http = require('https');
-var server = http.createServer({
-  key: fs.readFileSync('./claves/elzoo_key.key'),
-  cert: fs.readFileSync('./claves/elzoo_crt.cer'),
+
+var https = require('https');
+var server = https.createServer({
+  key: fs.readFileSync('./claves/www.elzoo.es_private_key.key'),
+  cert: fs.readFileSync('./claves/www.elzoo.es_ssl_certificate.cer'),
   requestCert: true,
   rejectUnauthorized: false
 }, app);
+
+var http = require('http');
+http.createServer(function (req, res) {
+    res.writeHead(301, { "Location": "https://" + req.headers['host'] + req.url });
+    res.end();
+}).listen(80);
+
 var mysql = require('mysql');
 var io = require('socket.io').listen(server);
 var server_mob = require('./server_mob.js');
