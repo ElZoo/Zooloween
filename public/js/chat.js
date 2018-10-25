@@ -73,3 +73,7 @@ scenePrincipal.crearMensaje = function(nick, msg, propio=false) {
 
   cajaChat.scrollTop = cajaChat.scrollHeight;
 }
+
+scenePrincipal.borrarChat = function() {
+  document.getElementById("chat").remove();  
+}
