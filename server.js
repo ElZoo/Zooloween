@@ -120,6 +120,18 @@ io.sockets.on('connection', function(socket) {
   socket.on('konami', function() {
     jugadores[socket.id].alt = !jugadores[socket.id].alt;
   });
+
+  socket.on('enviarChat', function(msg) {
+    if(!msg || msg.lenght == 0 || !jugadores[socket.id]) {
+      return;
+    }
+
+    msg = msg.substring(0, 64);
+
+    var nick =  jugadores[socket.id].nick
+    ZooLog.log("Chat: "+nick+" -> "+msg);
+    socket.broadcast.emit('nuevoChat', [nick, msg]);
+  });
 });
 
 setInterval(function() {

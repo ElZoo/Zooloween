@@ -24,6 +24,9 @@ scenePrincipal.create = function() {
   this.pintarDrops();
   this.pintarJugadores();
   this.pintarMobs();
+
+  this.crearChat();
+
   //evento para cuando el server manda datos nuevos sobre los jugadores y los mobs
   this.game.datos.socket.on('update', function(datos) {
     self.onUpdateJugador(datos[0]);
@@ -90,6 +93,11 @@ scenePrincipal.create = function() {
   this.game.datos.socket.on('boost', function(datos) {
     self.onBoost(datos[0], datos[1]);
   });
+
+  //evento para cuando se recibe un nuevo mensaje de chat
+  this.game.datos.socket.on('nuevoChat', function(datos) {
+    self.crearMensaje(datos[0], datos[1]);
+  })
 
   //listener del click del ratón
   this.input.on('pointerdown', function(pointer) {

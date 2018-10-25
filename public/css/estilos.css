@@ -22,6 +22,7 @@ h1 {
   width: fit-content;
   height: fit-content;
   background: white;
+  position: relative;
 }
 canvas {
   height: 100%;
@@ -68,4 +69,96 @@ canvas {
   right: 0;
   bottom: 0;
   z-index: -1;
+}
+
+
+#chat {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  padding: 10px;
+}
+
+#cajaChat {
+  width: 400px;
+  height: 120px;
+  background: rgba(0,0,0, 0.25);
+  overflow-y: scroll;
+}
+::-webkit-scrollbar {
+  display: none;
+}
+
+#chat:hover #cajaChat {
+  background: rgba(0,0,0, 0.75);
+}
+
+#inputChat {
+  display: flex;
+  margin-top: 5px;
+}
+
+#inputChat input {
+  width: 100%;
+  background: rgba(0,0,0, 0.25);
+  color: rgba(255,255,255, 0.75);
+  border: none;
+  padding: 2px;
+  color: white;
+}
+
+#chat:hover #inputChat input {
+  background: rgba(0,0,0, 0.75);
+}
+
+#inputChat button {
+  background: rgba(103,58,183, 0.25);
+  border: none;
+  width: 20px;
+  height: 20px;
+  margin-left: 5px;
+  text-align: center;
+  color: rgba(255,255,255, 0.25);
+}
+
+#chat:hover #inputChat button {
+  background: rgba(103,58,183, 0.75);
+  color: rgba(255,255,255, 0.75);
+}
+
+#inputChat input:focus, #inputChat button:focus {
+  outline: none;
+}
+
+#chat .mensaje {
+  display: flex;
+  color: rgba(255,255,255, 0.25);
+  padding: 2px;
+  font-size: small;
+}
+
+#chat:hover .mensaje {
+  color: rgba(255,255,255, 0.75);
+}
+
+#chat .mensaje .nick {
+  margin-right: 10px;
+  color: rgba(255,193,7, 0.25);
+}
+
+#chat:hover .mensaje .nick {
+  color: rgba(255,193,7, 0.75);
+}
+
+#chat .mensaje .nick.propio {
+  color: rgba(3,169,244, 0.25);
+}
+
+#chat:hover .mensaje .nick.propio {
+  color: rgba(3,169,244, 0.75);
+}
+
+#chat .mensaje .txt {
+  text-align: left;
+  word-break: break-word;
 }

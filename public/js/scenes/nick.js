@@ -25,7 +25,7 @@ sceneNick.create = function() {
   this.input.keyboard.on('keydown', function(event) {
     if(event.keyCode == 8 && self.texto.text.length > 0) {
       self.texto.text = self.texto.text.substr(0, self.texto.text.length - 1);
-    } else if(event.keyCode >= 48 && event.keyCode < 90 && self.texto.text.length < 16) {
+    } else if(event.keyCode >= 48 && event.keyCode <= 90 && self.texto.text.length < 16) {
       self.texto.text += event.key;
     }
   });
